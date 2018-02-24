@@ -1,7 +1,7 @@
 package prueba;
 import logica.vo.VOAlumnoListado;
 
-public class TestAlumno {
+public class TestVOAlumno {
 	
 	public static void main( String args[] ) {
 		VOAlumnoListado voal = new VOAlumnoListado( 38580006, "Guillermo", "Osores" );
