@@ -2,8 +2,6 @@ package prueba;
 
 import java.util.Iterator;
 
-import javax.crypto.ExemptionMechanismSpi;
-
 import exception.AsignaturaNoExisteException;
 import exception.ListaLlenaException;
 import logica.asignatura.Asignatura;
@@ -16,12 +14,13 @@ public class TestAsignaturas {
 	public static void main( String args[] ) {
 		as = new Asignaturas();
 		boolean hayerrores = false;
-		Asignatura a;
 		
-		hayerrores = hayerrores || existeAsignatura( "lala" );
+		hayerrores = hayerrores || existeAsignatura( "lala", false );
 		hayerrores = hayerrores || obtengoAsignatura( "lala", true );
 		hayerrores = hayerrores || addAsignatura( "1", "primero", "la primera", false );
-		hayerrores = hayerrores || existeAsignatura( "1" );
+		hayerrores = hayerrores || existeAsignatura( "1", true );
+		
+		hayerrores = hayerrores || estaLlena( false );
 
 		hayerrores = hayerrores || addAsignatura( "2", "segundo", "el segundo", false );
 		hayerrores = hayerrores || addAsignatura( "3", "tercero", "el tercero", false );
@@ -34,31 +33,30 @@ public class TestAsignaturas {
 		hayerrores = hayerrores || addAsignatura( "10", "decimo", "el decimo", false );
 		hayerrores = hayerrores || addAsignatura( "11", "decimpo primero", "el decimpo primero", true );
 		
-		System.out.print( "esta llena?: " );
-		System.out.println( as.estaLlena() );
+		hayerrores = hayerrores || estaLlena( true );
 		
+		hayerrores = hayerrores || compararDatos( "5", "quinto", "el quinto" );
 		
-		try {
-			a = as.obtenerAsignatura( "5" );
-			System.out.println("codigo: " + a.getCodigo() );
-			System.out.println("nombre: " + a.getNombre() );
-			System.out.println("descripcion: " + a.getDescripcion() );
-		} catch (AsignaturaNoExisteException e) {
-			System.out.println( "esto no se deberia ver" );
+		if( !hayerrores ) {
+			System.out.println( "0 errores" );
+		}else {
+			System.out.println( "\n\nHAY ERRORES" );
 		}
-		/*
+		
+		
 		//List<VOAsignatura> voas = as.listarAsignaturas();
+		System.out.println( "\n\nLISTADO:" );
 		Iterator<VOAsignatura> it = as.listarAsignaturas().iterator();
 		while( it.hasNext() ) {
 			VOAsignatura voa = it.next();
 			System.out.println( "codigo: " + voa.getCodigo() + ", nombre: " + voa.getNombre() + ", descripcion: " + voa.getDescripcion() );
 		}
-		*/
+		
 	}
 	
-	private static boolean existeAsignatura( String codigo ) {
-		if( as.existeAsignatura( codigo ) ) {
-			System.out.println( "Error en Existe Asignatura" );
+	private static boolean existeAsignatura( String codigo, boolean existe ) {
+		if( as.existeAsignatura( codigo ) != existe ) {
+			System.out.println( "Error en Existe Asignatura: " + codigo );
 			return true;
 		}
 		return false;
@@ -67,6 +65,7 @@ public class TestAsignaturas {
 	private static boolean obtengoAsignatura( String codigo, boolean error ) {
 		try {
 			Asignatura a = as.obtenerAsignatura( codigo );
+			a.getDescripcion();
 			if( error )
 				System.out.println( "error en obtengoAsignatura, la asignatura NO debe existir" );
 			return error;
@@ -88,5 +87,42 @@ public class TestAsignaturas {
 				System.out.println( "error la asignatura SI deberia haberse agregado" );
 			return !error;
 		}
+	}
+	
+	private static boolean estaLlena( boolean llena ) {
+		if( as.estaLlena() != llena ) {
+			System.out.print( "error la lista deberia estar " );
+			if( llena ) {
+				System.out.println( "llena" );
+			}else {
+				System.out.println( "NO llena" );
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	private static boolean compararDatos( String codigo, String nombre, String descripcion ) {
+		try {
+			Asignatura a = as.obtenerAsignatura( "5" );
+			if( a.getCodigo() != codigo ) {
+				System.out.println( "el codigo no coincide: " + codigo );
+				return true;
+			}
+			
+			if( a.getNombre() != nombre ) {
+				System.out.println( "el nombre no coincide: " + nombre );
+				return true;
+			}
+			
+			if( a.getDescripcion() != descripcion ) {
+				System.out.println( "la descripcion no coincide: " + descripcion );
+				return true;
+			}
+		} catch (AsignaturaNoExisteException e) {
+			System.out.println( "error al obtener la asignatura: " + codigo );
+			return true;
+		}
+		return false;
 	}
 }
