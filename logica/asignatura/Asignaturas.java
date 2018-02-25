@@ -16,6 +16,11 @@ public class Asignaturas {
 		asignaturas = new ArrayList<Asignatura>();
 	}
 	
+	//public Asignaturas( ArrayList<Asignatura> asignaturas ) {
+	public Asignaturas( Asignaturas asignaturas ) {
+		this.asignaturas = asignaturas.asignaturas;
+	}
+	
 	public void addAsignatura( Asignatura asignatura ) throws ListaLlenaException {
 		if( !estaLlena() ) {
 			asignaturas.add( asignatura );
