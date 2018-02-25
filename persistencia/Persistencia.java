@@ -6,45 +6,42 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import exception.PersistenciaException;
-import logica.vo.VOFachadaPersistencia;
+import logica.alumno.Alumnos;
+import logica.asignatura.Asignaturas;
+import logica.vo.VOFachada;
 
 public class Persistencia {
 	
-	public void respaldar (String nomArch, VOFachadaPersistencia fachada) throws PersistenciaException {
-		try
-		{ // Abro el archivo y creo un flujo de comunicación hacia él
-			FileOutputStream f = new FileOutputStream(nomArch);
-			ObjectOutputStream o = new ObjectOutputStream(f);
-			// Escribo el arreglo de vehículos en el archivo a través del flujo
-			o.writeObject (fachada);
-			o.close();
-			f.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new PersistenciaException("error respaldar");
-		}
+	public static void respaldar ( String nomArch, VOFachada vofachada ) throws IOException {
+		// Abro el archivo y creo un flujo de comunicación hacia él
+		FileOutputStream f = new FileOutputStream( nomArch );
+		ObjectOutputStream o = new ObjectOutputStream( f );
+		
+		// Escribo el arreglo de vehículos en el archivo a través del flujo
+		o.writeObject( vofachada );
+		o.close();
+		f.close();
 	}
 	
-	public VOFachadaPersistencia recuperar (String nomArch) throws PersistenciaException {
-		try
-		{ // Abro el archivo y creo un flujo de comunicación hacia él
-			FileInputStream f = new FileInputStream(nomArch);
+	public static VOFachada recuperar ( String nomArch ) throws IOException, ClassNotFoundException {
+		VOFachada voFachada;
+		
+		try {
+			// Abro el archivo y creo un flujo de comunicación hacia él
+			FileInputStream f = new FileInputStream( nomArch );
 			ObjectInputStream o = new ObjectInputStream(f);
+			
 			// Leo el arreglo de vehículos desde el archivo a través del flujo
-			VOFachadaPersistencia fachada = (VOFachadaPersistencia) o.readObject();
+			voFachada = (VOFachada) o.readObject();
 			o.close();
 			f.close();
-			return fachada;
+		} catch( java.io.EOFException ex ) {
+			//no hay info grabada
+		} finally {
+			voFachada = new VOFachada( new Asignaturas(), new Alumnos() );
 		}
-			catch (IOException e)
-		{ 
-				e.printStackTrace();
-				throw new PersistenciaException("error recuperar");
-		} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-				throw new PersistenciaException("error recuperar");
-			}
+		
+		return voFachada;
 	}
 
 
