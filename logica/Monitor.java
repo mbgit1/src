@@ -23,12 +23,12 @@ public class Monitor {
 	
 	public synchronized void terminoLectura() {
 		cantLectores --;
-		
-		notify();
+		if( cantLectores == 0 )
+			notify();
 	}
 	
 	public synchronized void comienzoEscritura() {
-		while (cantLectores > 0 || escribiendo) {
+		while (cantLectores != 0 || escribiendo) {
 			try {
 				wait();
 			} catch (InterruptedException e) {
