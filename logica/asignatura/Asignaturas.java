@@ -10,13 +10,13 @@ import logica.asignatura.Asignatura;
 import logica.vo.VOAsignatura;
 
 public class Asignaturas {
-	ArrayList<Asignatura> asignaturas;
+	private ArrayList<Asignatura> asignaturas;
+	private static final int MAX = 10;
 
 	public Asignaturas() {
 		asignaturas = new ArrayList<Asignatura>();
 	}
 	
-	//public Asignaturas( ArrayList<Asignatura> asignaturas ) {
 	public Asignaturas( Asignaturas asignaturas ) {
 		this.asignaturas = asignaturas.asignaturas;
 	}
@@ -54,13 +54,13 @@ public class Asignaturas {
 	}
 	
 	public boolean estaLlena() {
-		return ( asignaturas.size() == 10 );
+		return ( asignaturas.size() == MAX );
 	}
 	
 	public List<VOAsignatura> listarAsignaturas() {
 		List<VOAsignatura> lista = new LinkedList<VOAsignatura>();
 		
-		for( int i = 0; i < 10; i++) {
+		for( int i = 0; i < asignaturas.size(); i++) {
 			Asignatura a = asignaturas.get( i );
 			lista.add( new VOAsignatura( a.codigo, a.nombre, a.descripcion ) );
 		}
