@@ -1,6 +1,9 @@
 package logica.vo;
 
-public class VOEscolaridad {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class VOEscolaridad implements Serializable  {
 	private int numero;
 	private int aniLectivo;
 	private int montoBase;

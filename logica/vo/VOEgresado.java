@@ -1,6 +1,9 @@
 package logica.vo;
 
-public class VOEgresado {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class VOEgresado implements Serializable  {
 	private int cedula;
 	private String nombre;
 	private String apellido;

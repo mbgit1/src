@@ -5,16 +5,13 @@ import java.io.Serializable;
 import logica.alumno.Alumnos;
 import logica.asignatura.Asignaturas;
 
-
-
 @SuppressWarnings("serial")
-public class VOFachadaPersistencia implements Serializable {
+public class VOFachada implements Serializable {
 	
 	private Asignaturas asignaturas;
 	private Alumnos alumnos;
 	
-	public VOFachadaPersistencia(Asignaturas asignaturas, Alumnos alumnos ) {
-		super();
+	public VOFachada(Asignaturas asignaturas, Alumnos alumnos ) {
 		this.asignaturas = asignaturas;
 		this.alumnos = alumnos;
 	}
