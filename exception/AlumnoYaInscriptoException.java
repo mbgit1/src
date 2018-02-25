@@ -1,5 +1,6 @@
 package exception;
 
-public class AlumnoYaInscriptoException {
-	public AlumnoYaInscriptoException() {	super(); }
+@SuppressWarnings("serial")
+public class AlumnoYaInscriptoException extends Exception {
+	public AlumnoYaInscriptoException() { super(); }
 }
