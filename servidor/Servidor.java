@@ -15,7 +15,7 @@ public class Servidor {
 		String ipServidor;
 		String puertoServidor;
 
-		ipServidor = Configuracion.getProperty("ServidorIP");
+		ipServidor = Configuracion.getProperty("ServidorIp");
 		puertoServidor = Configuracion.getProperty("ServidorPuerto");
 		
 		// pongo a correr el rmiregistry
