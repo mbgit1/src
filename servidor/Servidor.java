@@ -19,7 +19,7 @@ public class Servidor {
 		puertoServidor = Configuracion.getProperty("ServidorPuerto");
 		
 		// pongo a correr el rmiregistry
-		LocateRegistry.createRegistry(1099);
+		LocateRegistry.createRegistry(Integer.parseInt(puertoServidor));
 		// instancio mi Objeto Remoto y lo publico
 		Fachada fachada = new Fachada();
 		System.out.println("Antes de publicar");
