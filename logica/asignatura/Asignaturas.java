@@ -1,5 +1,6 @@
 package logica.asignatura;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,7 +10,8 @@ import exception.ListaLlenaException;
 import logica.asignatura.Asignatura;
 import logica.vo.VOAsignatura;
 
-public class Asignaturas {
+@SuppressWarnings("serial")
+public class Asignaturas implements Serializable {
 	private ArrayList<Asignatura> asignaturas;
 	private static final int MAX = 10;
 
