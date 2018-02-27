@@ -24,11 +24,11 @@ public class Alumnos extends Diccionario<String,Alumno> implements Serializable 
 	public Alumnos() {
 		super();	
     }
-	/*
-	public Alumnos( Alumnos alumnos) {
-		this.alumnos = alumnos.alumnos;
+	
+	public Alumnos( Alumnos alumnos ) {
+		this.ponerTodos(alumnos);
 	}
-	*/
+	
 	public void addAlumno(Alumno alumno) {
 		 
 		poner(Integer.toString(alumno.getCedula()), alumno);
