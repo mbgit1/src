@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import exception.AsignaturaNoExisteException;
-import exception.ListaLlenaException;
 import logica.asignatura.Asignatura;
 import logica.vo.VOAsignatura;
 
 @SuppressWarnings("serial")
 public class Asignaturas implements Serializable {
+	
 	private ArrayList<Asignatura> asignaturas;
 	private static final int MAX = 10;
 
@@ -23,24 +22,22 @@ public class Asignaturas implements Serializable {
 		this.asignaturas = asignaturas.asignaturas;
 	}
 	
-	public void addAsignatura( Asignatura asignatura ) throws ListaLlenaException {
-		if( !estaLlena() ) {
-			asignaturas.add( asignatura );
-		}else {
-			throw new ListaLlenaException();
-		}
+	public void addAsignatura( Asignatura asignatura ) {
+		asignaturas.add( asignatura );
 	}
 	
-	public Asignatura obtenerAsignatura( String codigo ) throws AsignaturaNoExisteException {
+	public Asignatura obtenerAsignatura( String codigo ) {
+		Asignatura a = null;
 		int i = 0;
+		boolean encontrada = false;
 		
-		while( i < asignaturas.size() ) {
-			Asignatura a = asignaturas.get( i );
+		while( i < asignaturas.size() && !encontrada ) {
+			a = asignaturas.get( i );
 			if( a.codigo == codigo )
-				return a;
+				encontrada = true;
 			i++;
 		}
-		throw new AsignaturaNoExisteException(); 
+		return a;
 	}
 	
 	public boolean existeAsignatura( String codigo ) {
