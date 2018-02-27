@@ -1,6 +1,7 @@
 package logica.alumno;
 
 import exception.AlumnoYaExisteException;
+import logica.inscripcion.Inscripciones;
 
 @SuppressWarnings("serial")
 public class Becado extends Alumno {
@@ -8,7 +9,7 @@ public class Becado extends Alumno {
 	private int descuento;
 	private String descripcion;
 	
-public Becado(int cedula, String nombre, String apellido, String domicilio, int telefono, String email,int descuento, String descripcion) throws AlumnoYaExisteException {
+public Becado(int cedula, String nombre, String apellido, String domicilio, int telefono, String email, int descuento, String descripcion) {
 	
 	
 	super(cedula,nombre,apellido,domicilio,telefono,email);
@@ -32,11 +33,9 @@ public void setDescripcion(String descripcion) {
 	this.descripcion = descripcion;
 }
 
-//public int montoRecaudado(int anio) {
-//	
-//	return super.getPrecioFinal(anio).subtract(descuento); 
-//}
+public int montoRecaudado(int anio) {
+	
+	return  super.montoRecaudado(anio) - ((super.montoRecaudado(anio) * this.descuento)/100);       
 
-
-
+}
 }

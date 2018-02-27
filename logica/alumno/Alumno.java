@@ -1,9 +1,24 @@
 package logica.alumno;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
+import exception.AlumnoYaExisteException;
+import logica.inscripcion.Inscripcion;
 import logica.inscripcion.Inscripciones;
+
+import logica.vo.VOAlumno;
+import logica.vo.VOAlumnoListado;
+import logica.vo.VOEgresado;
+import logica.vo.VOEscolaridad;
+import logica.vo.VOInscripcion;
+
+
+ 
 
 @SuppressWarnings("serial")
 public class Alumno implements Serializable {
@@ -14,10 +29,10 @@ public class Alumno implements Serializable {
 	private String domicilio;
 	private int telefono;
 	private String email;
-	//private Inscripciones inscpripciones;
+	private Inscripciones inscpripciones;
 
 
-public Alumno(int cedula, String nombre, String apellido, String domicilio, int telefono, String email){
+public Alumno(int cedula, String nombre, String apellido, String domicilio, int telefono, String email)	{
 	
 	this.cedula = cedula;
 	this.nombre = nombre;
@@ -25,6 +40,7 @@ public Alumno(int cedula, String nombre, String apellido, String domicilio, int 
 	this.domicilio = domicilio;
 	this.telefono = telefono;
 	this.email = email;
+	this.inscpripciones = new Inscripciones();
 	
 	
 }
@@ -72,131 +88,102 @@ public void setEmail(String email) {
 }
  
 
-//public void addInscripcion(Inscripcion inscripcion) throw alumnoYaInscriptoException, asignaturaYaAprobadaException, errorAnioInscripcionException {
-// 
-//
-//inscripciones.addInscripcion();
-//de aqui para abajo no va lo hacen en inscripcion
-//Inscripcion ins;
-//Iterador<Inscripcion> iteInscripciones = iterador();
-//
-//	int nroInscripcion = inscripcion.getNumero();
-//	int anioLectivo = inscripcion.getAnioLectivo();
-//	String codigoAsignatrura = ;
-//	if(anioLectivo > ultimoAnioInscripcion) {
-//
-//  while(iteradorExcursiones.hasNext()) {	
-//		ins = iteInscripciones.next();
-//        if (ins. CODIGO ASIGNATURA == CODIGO ASIGNATURA ) {
-//        	if(ins.getCalificacion() < 6){
-//            if(ins.getCalificacion() != 0 && anioLectivo == anioCorriente()){// fijarme esto
-//               inscripciones.addInscripcion(inscripcion);
-//
-//            }
-//            else throw alumnoYaInscriptoException();
-//          }
-//          else throw new asignaturaYaAprobadaException();
-//        }
-//	}
 
-        			
-//	}
-//	else
-//		throw new errorAnioInscripcionException();
-
-//}
-
-//public int ultimoAnioInscripcion() {
-//        	return inscripciones.getUltima().getAnioLectivo();
-//        	
-//}
+public void addInscripcion(Inscripcion inscripcion){
  
-public int anioCorriente() {
-	Calendar c = Calendar.getInstance();
-	 return   c.YEAR;   	
+	this.inscpripciones.addInscripcion(inscripcion); 
+ 
+}
+
+
+public int montoRecaudado (int anio) {
+
+ return this.inscpripciones.montoRecaudado(anio);	
+ 
+}
+
+
+
+public List<VOEscolaridad> escolaridad(boolean parcial){
+
+	List<VOEscolaridad> listaEscolaridad = new ArrayList<VOEscolaridad>();
+	List<Inscripcion> inscripciones = this.getInscripciones();
+
+	
+	for(Inscripcion i: inscripciones) {
+		VOEscolaridad voe = new VOEscolaridad(i.getNumero(),i.getAnio(),i.getMonto(),i.getCalificacion()," ");
+		if(parcial) {
+			if(i.aprobada()) {
+		      listaEscolaridad.add(voe);
+			}
+			 
+		}
+		else {
+			listaEscolaridad.add(voe);
+		}
+		
+	}
+	return listaEscolaridad;
+}
+
+ 
+public List<VOInscripcion> getListaInscripciones(){
+ 		
+	return (List<VOInscripcion>) this.inscpripciones;
+   
+}
+
+public List<Inscripcion> getInscripciones(){
+		
+	return (List<Inscripcion>) this.inscpripciones;
+   
+}
+
+public boolean egresado() {
+
+	return this.inscpripciones.egresado();
+
+}
+
+public VOAlumno voSalida() {
+	return new VOAlumno(cedula,nombre,  apellido,  domicilio,  telefono,  email);
+}
+
+public VOAlumnoListado voAlumnoListado() {
+	return new VOAlumnoListado(cedula,nombre,  apellido);
 }
 
 
 
 
-//public int montoRecaudado (int anio) {
-//	int monto = 0;
-//	while (Inscripciones != null) {
-//		if(inscripcion.anioLectivo == anio)
-//				monto = monto + inscripcion.montoBase();	
-//	}
-//	return monto;
-//}
 
-
-
-//public List<VOEscolaridad> escolaridad(boolean parcial){
-
-//	List<VOEscolaridad> listaEscolaridad = new ArrayList<VOEscolaridad>();
-//	Inscripcion inscripcion;
-//  Iterador<Inscripcion> iteInscripciones = iterador();
-//	while(iteradorExcursiones.hasNext()) {
-//		inscripcion = iteInscripciones.next();
-//		if(parcial) {
-//			if(inscripcion.getCalificacion > 0) {
-//			ListaEscolaridad.add(inscripcion);
-//			}
-//		}
-//		else {
-//			ListaEscolaridad.add(inscripcion);
-//		}
-//		
-//	}
-//	return listaEscolaridad;
-//}
-
-
+//El aux sería un entero, el cual si es -1 significará que la cadena no se encontraba en la apellido.
+//Si no es -1 nos devolverá el índice de la primera ocurrencia de la cadena dentro del apellido.
+public boolean contienePalabra(String cadena, String apellido) {
  
-//public List<VOInscripciones> getListaInscripciones(){
-// 		
-//return inscripciones.listarInscripciones();
-//   
-//}
+	int aux = apellido.indexOf("cadena");
+	return aux !=-1;
+ 
+}
 
+public void modificarAlumno(String domicilio, int telefono, String email) {
+     this.setDomicilio(domicilio);
+	 this.setTelefono(telefono);
+	 this.setEmail(email);
+}
 
+//aqui va el promedio de las materias que tienen mayor o igual que 6
+public float promedioTotal(Alumno alumno) {
+	// TODO Auto-generated method stub
+	return 0;
+}
 
-//public boolean egresado() {
+//Aqui va el promedio de todas las materias (incluso si la calificacion es cero)
+public float promedioAprobacion(Alumno alumno) {
+	// TODO Auto-generated method stub
+	return 0;
+}
 
-//inscripciones.egresado();
-
-/*	
-*boolean egresado = false;
-*
-*	int cantAsignaturas =0;
-*Inscripcion inscripcion;
-*Iterador<Inscripcion> iteInscripciones = iterador();
-*while(iteradorExcursiones.hasNext()) {	
-*		inscripcion = iteInscripciones.next();
-*		if(inscripcion.getCalificacion() > 6 )
-*			cantAsignaturas ++;
-*	}
-*	if (cantAsignaturas==10) {
-*		egresado = true;
-*	}
- * return egresado;
-*/
-//}
-
-//esto no iria deberia estar en inscripciones
-//public int promedio() {
-// 	int promedio =0;
-//	if (egresado) {
-//Inscripcion inscripcion;
-//Iterador<Inscripcion> iteInscripciones = iterador();
-//  while(iteradorExcursiones.hasNext()) {	
-//		 inscripcion = iteInscripciones.next();
-//	     promedio = promedio + inscripcion.getCalificacion();
-//				 
-//		}		
-//	}
-//  return promedio/10;
-//}
 	
-	
-	
+		
 }
