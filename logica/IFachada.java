@@ -5,6 +5,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import exception.AsignaturaYaExisteException;
 import exception.ListaLlenaException;
 import exception.PersistenciaException;
 import logica.vo.VOAlumno;
@@ -19,7 +20,7 @@ import logica.vo.VOEscolaridad;
 
 public interface IFachada extends Remote {
 	
-	public void registrarAsignatura( VOAsignatura voAsignatura) throws RemoteException, ListaLlenaException ;
+	public void registrarAsignatura( VOAsignatura voAsignatura) throws RemoteException, ListaLlenaException, AsignaturaYaExisteException ;
 	
 	public void registrarAlumno( VOAlumno voAlumno ) throws RemoteException;
 	
