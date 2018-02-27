@@ -1,17 +1,9 @@
 package logica.alumno;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
-import exception.AlumnoYaExisteException;
 import logica.inscripcion.Inscripciones;
-
-
- 
 
 @SuppressWarnings("serial")
 public class Alumno implements Serializable {
@@ -25,7 +17,7 @@ public class Alumno implements Serializable {
 	//private Inscripciones inscpripciones;
 
 
-public Alumno(int cedula, String nombre, String apellido, String domicilio, int telefono, String email)	throws AlumnoYaExisteException{
+public Alumno(int cedula, String nombre, String apellido, String domicilio, int telefono, String email){
 	
 	this.cedula = cedula;
 	this.nombre = nombre;
