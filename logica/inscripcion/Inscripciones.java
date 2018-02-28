@@ -66,24 +66,81 @@ public class Inscripciones {
 		return cantAprobadas == 10;
 	}	
 
-	public boolean validarInscripcion(String codigoAsignatura, int anioLectivo) {
+	public boolean anioInscripcionValido(int anioLectivo) {
+		boolean anioValido = anioLectivo >= this.inscripciones.getLast().anioLectivo;
+		return anioValido;
+	}
+	
+	public boolean asignaturaAprobada(String codigoAsignatura) {
+		boolean yaAprobada = false;
+		LinkedList<Inscripcion> i = this.inscripciones;
 		
-		boolean esValida = false;
-		
-		for(Inscripcion i: inscripciones) {
-			if (i.getCodigoAsignatura() == codigoAsignatura) {
-				if (i.aprobada() || (i.getAnio() >= anioLectivo))
-					esValida = false;
-				else  
-					esValida = true;
-			}	
+		while( !i.isEmpty() && !yaAprobada) {
+			
+		    Inscripcion ins = i.getFirst();
+			
+			if( ins.getCodigoAsignatura() == codigoAsignatura) {
+				if(ins.aprobada()) 
+					yaAprobada = true;					
+			}
+			
+			i.iterator();
 		}
 		
-		if (esValida)
-			esValida = anioLectivo >= this.inscripciones.getLast().anioLectivo;
+		return yaAprobada;
+	}
+	
+	public boolean asignaturaEnCurso(String codigoAsignatura, int anioLectivo) {
+		boolean enCurso = false;
+		LinkedList<Inscripcion> i = this.inscripciones;
+		
+		while( !i.isEmpty() && !enCurso) {
 			
+		    Inscripcion ins = i.getFirst();
+			
+			if( ins.getCodigoAsignatura() == codigoAsignatura) {
+				if(ins.getAnio() == anioLectivo) 
+					enCurso = true;					
+			}
+			
+			i.iterator();
+		}
+		
+		return enCurso;		
+	}	
+
+/*	
+	public boolean validarInscripcion(String codigoAsignatura, int anioLectivo) {
+
+		LinkedList<Inscripcion> i = this.inscripciones;
+		
+		boolean yaAprobada = false;
+		boolean enCurso = false;
+		boolean anioValido = anioLectivo >= i.getLast().anioLectivo;
+		boolean esValida = false;
+		
+		if (anioValido) {
+			while( !i.isEmpty() && !yaAprobada && !enCurso) {
+				
+			    Inscripcion ins = i.getFirst();
+				
+				if( ins.getCodigoAsignatura() == codigoAsignatura) {
+					if(ins.aprobada()) 
+						yaAprobada = true;
+					else if (ins.getAnio() == anioLectivo)
+						enCurso = true;
+						
+				}
+				
+				i.iterator();
+			}
+			
+			if (!yaAprobada || !enCurso)
+				esValida = true;		
+		}
+				
 		return esValida;
 			
 	}	
-	
+*/	
 }
