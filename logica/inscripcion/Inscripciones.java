@@ -67,8 +67,23 @@ public class Inscripciones {
 	}	
 
 	public boolean validarInscripcion(String codigoAsignatura, int anioLectivo) {
-		//terminar. //mirar .7 requerimiento verificaciones
-		return false;
+		
+		boolean esValida = false;
+		
+		for(Inscripcion i: inscripciones) {
+			if (i.getCodigoAsignatura() == codigoAsignatura) {
+				if (i.aprobada() || (i.getAnio() >= anioLectivo))
+					esValida = false;
+				else  
+					esValida = true;
+			}	
+		}
+		
+		if (esValida)
+			esValida = anioLectivo >= this.inscripciones.getLast().anioLectivo;
+			
+		return esValida;
+			
 	}	
 	
 }
