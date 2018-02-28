@@ -6,6 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 import configuracion.Configuracion;
+import exception.AsignaturaYaExisteException;
 import exception.ListaLlenaException;
 import logica.alumno.Alumno;
 import logica.alumno.Alumnos;
@@ -36,9 +37,15 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 			VOFachada voFachadaPersistencia;
 			try {
 				voFachadaPersistencia = Persistencia.recuperar( Configuracion.getProperty("ArchivoRespaldo") );
-			
-				asignaturas = new Asignaturas( voFachadaPersistencia.getAsignaturas() );
-				alumnos = new Alumnos( voFachadaPersistencia.getAlumnos() );
+				
+				if ( voFachadaPersistencia != null ) {
+					asignaturas = new Asignaturas( voFachadaPersistencia.getAsignaturas() );
+					alumnos = new Alumnos( voFachadaPersistencia.getAlumnos() );
+				}else {
+					asignaturas = new Asignaturas();
+					alumnos = new Alumnos();
+				}
+				
 				monitor = new Monitor();
 			} catch (ClassNotFoundException | IOException e) {
 				// TODO Auto-generated catch block
@@ -55,11 +62,23 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 			monitor.terminoEscritura();
 		}
 		
-		public void registrarAsignatura( VOAsignatura voAsignatura) throws ListaLlenaException {
-			Asignatura asignatura = new Asignatura( voAsignatura.getCodigo(), voAsignatura.getNombre(), voAsignatura.getDescripcion() );
+		public void registrarAsignatura( VOAsignatura voAsignatura) throws ListaLlenaException, AsignaturaYaExisteException {
+			monitor.comienzoEscritura();
+			
 			if( !asignaturas.estaLlena() ) {
-				asignaturas.addAsignatura( asignatura );
+				if( !asignaturas.existeAsignatura( voAsignatura.getCodigo() ) ) {
+					Asignatura asignatura = new Asignatura( voAsignatura.getCodigo(), voAsignatura.getNombre(), voAsignatura.getDescripcion() );
+					asignaturas.addAsignatura( asignatura );
+				}else {
+					monitor.terminoEscritura();
+					throw new AsignaturaYaExisteException();
+				}
+			}else {
+				monitor.terminoEscritura();
+				throw new ListaLlenaException();
 			}
+			
+			monitor.terminoEscritura();
 		}
 		
 		public void registrarAlumno( VOAlumno voAlumno ){
@@ -78,7 +97,11 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		}
 		
 		public List<VOAsignatura> listarAsignaturas(){//revisar si no deberia devolver un vo especifico para el listado
-			return asignaturas.listarAsignaturas();
+			monitor.comienzoLectura();
+			List<VOAsignatura> lista = asignaturas.listarAsignaturas();
+			monitor.terminoLectura();
+			
+			return lista;
 		}
 		
 		public List<VOAlumnoListado> listarAlumnos( String apellido ){

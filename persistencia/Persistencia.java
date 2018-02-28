@@ -1,5 +1,6 @@
 package persistencia;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,21 +25,24 @@ public class Persistencia {
 	}
 	
 	public static VOFachada recuperar ( String nomArch ) throws IOException, ClassNotFoundException {
-		VOFachada voFachada;
+		VOFachada voFachada = null;
+		File file = new File(nomArch);
 		
-		try {
-			// Abro el archivo y creo un flujo de comunicación hacia él
-			FileInputStream f = new FileInputStream( nomArch );
-			ObjectInputStream o = new ObjectInputStream(f);
-			
-			// Leo el arreglo de vehículos desde el archivo a través del flujo
-			voFachada = (VOFachada) o.readObject();
-			o.close();
-			f.close();
-		} catch( java.io.EOFException ex ) {
-			//no hay info grabada
-		} finally {
-			voFachada = new VOFachada( new Asignaturas(), new Alumnos() );
+		if( file.exists() ) {
+			try {
+				// Abro el archivo y creo un flujo de comunicación hacia él
+				FileInputStream f = new FileInputStream( nomArch );
+				ObjectInputStream o = new ObjectInputStream(f);
+				
+				// Leo el arreglo de vehículos desde el archivo a través del flujo
+				voFachada = (VOFachada) o.readObject();
+				o.close();
+				f.close();
+			} catch( java.io.EOFException ex ) {
+				//no hay info grabada
+			} finally {
+				voFachada = new VOFachada( new Asignaturas(), new Alumnos() );
+			}
 		}
 		
 		return voFachada;

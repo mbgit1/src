@@ -16,6 +16,10 @@ public abstract class Diccionario<K, V> {
 		mapa.put(clave, valor);
 	}
 	
+	public void ponerTodos(Diccionario<K, V> diccionario) {
+		mapa.putAll( diccionario.mapa );
+	}
+	
 	public V quitar(K clave) {
 		return mapa.remove(clave);
 	}
