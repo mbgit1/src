@@ -4,7 +4,8 @@ import java.util.List;
 
 import logica.inscripcion.Inscripcion;
 import logica.inscripcion.Inscripciones;
-import logica.vo.VOInscripcion;
+import logica.asignatura.Asignatura;
+import logica.vo.VOEscolaridad;
 
 public class TestInscripciones { 
 	private static Inscripciones ins;
@@ -22,19 +23,20 @@ public class TestInscripciones {
 		//System.out.println("//Consultamos su califcación:");
 		System.out.println();
 		
+		Asignatura as = new Asignatura("as1", "Asignatura 1", "Desc As 1");
 		
-		ins.addInscripcion(new Inscripcion(++idIns, 2015, 1000, "as1"));	
+		ins.addInscripcion(new Inscripcion(++idIns, 2015, 1000, as));	
 		
 		Inscripcion i = ins.obtenerInscripcion(1);			
 		
-		System.out.println("La calificación actual para la asignatura con códico: " + i.getCodigoAsignatura() + ", es: " + i.getCalificacion());
+		System.out.println("La calificación actual para la asignatura con códico: " + i.getAsignatura().getCodigo() + ", es: " + i.getCalificacion());
 
 		
 		//System.out.println();
 		//System.out.println("//Consultamos si está aprobada:");
 		//System.out.println();
 		
-		System.out.println("La asignatura con códico: " + i.getCodigoAsignatura() + ", está aprobada?: " + i.aprobada());
+		System.out.println("La asignatura con códico: " + i.getAsignatura().getCodigo() + ", está aprobada?: " + i.aprobada());
 
 		System.out.println();
 		System.out.println("//La calificamos con nota=4:");
@@ -42,7 +44,7 @@ public class TestInscripciones {
 		
 		ins.registrarCalificacion(1, 4);
 
-		System.out.println("La asignatura con códico: " + i.getCodigoAsignatura() + ", está aprobada?: " + i.aprobada());		
+		System.out.println("La asignatura con códico: " + i.getAsignatura().getCodigo() + ", está aprobada?: " + i.aprobada());		
 
 		System.out.println();
 		System.out.println("//La calificamos con nota=6:");
@@ -50,7 +52,7 @@ public class TestInscripciones {
 	
 		ins.registrarCalificacion(1, 6);
 	
-		System.out.println("La asignatura con códico: " + i.getCodigoAsignatura() + ", está aprobada?: " + i.aprobada());			
+		System.out.println("La asignatura con códico: " + i.getAsignatura().getCodigo() + ", está aprobada?: " + i.aprobada());			
 
 		System.out.println();
 		System.out.println("//Consultamos si está aprobada (pasando código de asignatura)");
@@ -63,31 +65,40 @@ public class TestInscripciones {
 		System.out.println();			
 		
 		idIns = ins.ultimaInscripcion();
-		ins.addInscripcion(new Inscripcion(++idIns, 2015, 1000, "as2"));
+		Asignatura as2 = new Asignatura("as2", "Asignatura 2", "Desc As 2");
+		ins.addInscripcion(new Inscripcion(++idIns, 2015, 1000, as2));
 		
 		idIns = ins.ultimaInscripcion();
-		ins.addInscripcion(new Inscripcion(++idIns, 2015, 1000, "as3"));
+		Asignatura as3 = new Asignatura("as3", "Asignatura 3", "Desc As 3");
+		ins.addInscripcion(new Inscripcion(++idIns, 2015, 1000, as3));
 		
 		idIns = ins.ultimaInscripcion();
-		ins.addInscripcion(new Inscripcion(++idIns, 2015, 1000, "as4"));
+		Asignatura as4 = new Asignatura("as4", "Asignatura 4", "Desc As 4");
+		ins.addInscripcion(new Inscripcion(++idIns, 2015, 1000, as4));
 		
 		idIns = ins.ultimaInscripcion();
-		ins.addInscripcion(new Inscripcion(++idIns, 2016, 1000, "as5"));
+		Asignatura as5 = new Asignatura("as5", "Asignatura 5", "Desc As 5");
+		ins.addInscripcion(new Inscripcion(++idIns, 2016, 1000, as5));
 		
 		idIns = ins.ultimaInscripcion();
-		ins.addInscripcion(new Inscripcion(++idIns, 2016, 1000, "as6"));
+		Asignatura as6 = new Asignatura("as6", "Asignatura 6", "Desc As 6");
+		ins.addInscripcion(new Inscripcion(++idIns, 2016, 1000, as6));
 		
 		idIns = ins.ultimaInscripcion();
-		ins.addInscripcion(new Inscripcion(++idIns, 2016, 1000, "as7"));
+		Asignatura as7 = new Asignatura("as7", "Asignatura 7", "Desc As 7");
+		ins.addInscripcion(new Inscripcion(++idIns, 2016, 1000, as7));
 		
 		idIns = ins.ultimaInscripcion();
-		ins.addInscripcion(new Inscripcion(++idIns, 2017, 1000, "as8"));
+		Asignatura as8 = new Asignatura("as8", "Asignatura 8", "Desc As 8");
+		ins.addInscripcion(new Inscripcion(++idIns, 2017, 1000, as8));
 		
 		idIns = ins.ultimaInscripcion();
-		ins.addInscripcion(new Inscripcion(++idIns, 2017, 1000, "as9"));		
+		Asignatura as9 = new Asignatura("as9", "Asignatura 9", "Desc As 9");
+		ins.addInscripcion(new Inscripcion(++idIns, 2017, 1000, as9));		
 		
 		idIns = ins.ultimaInscripcion();
-		ins.addInscripcion(new Inscripcion(++idIns, 2018, 1000, "as10"));	
+		Asignatura as10 = new Asignatura("as10", "Asignatura 10", "Desc As 10");
+		ins.addInscripcion(new Inscripcion(++idIns, 2018, 1000, as10));	
 
 		//System.out.println();
 		//System.out.println("//Consultamos el monto recaudado para el año 2015: (debiera ser: 4000)");
@@ -142,22 +153,25 @@ public class TestInscripciones {
 		if (ins.anioInscripcionValido(2018)){
 			
 			idIns = ins.ultimaInscripcion();
-			if (!ins.asignaturaEnCurso("as2", 2018) && !ins.asignaturaAprobada("as2")){
-				ins.addInscripcion(new Inscripcion(++idIns, 2018, 1000, "as2"));
+			as2 = new Asignatura("as2", "Asignatura 2", "Desc As 2");
+			if (!ins.asignaturaEnCurso(as2.getCodigo(), 2018) && !ins.asignaturaAprobada(as3.getCodigo())){
+				ins.addInscripcion(new Inscripcion(++idIns, 2018, 1000, as2));
 				ins.registrarCalificacion(ins.ultimaInscripcion(), 6);
 			}else 
 				System.out.println("La asignatura está en curso.");			
 			
 			idIns = ins.ultimaInscripcion();
-			if (!ins.asignaturaEnCurso("as3", 2018) && !ins.asignaturaAprobada("as3")){
-				ins.addInscripcion(new Inscripcion(++idIns, 2018, 1000, "as3"));
+			as3 = new Asignatura("as3", "Asignatura 3", "Desc As 3");
+			if (!ins.asignaturaEnCurso(as3.getCodigo(), 2018) && !ins.asignaturaAprobada(as3.getCodigo())){
+				ins.addInscripcion(new Inscripcion(++idIns, 2018, 1000, as3));
 				ins.registrarCalificacion(ins.ultimaInscripcion(), 10);
 			}else 
 				System.out.println("La asignatura está en curso.");			
 			
 			idIns = ins.ultimaInscripcion();
-			if (!ins.asignaturaEnCurso("as4", 2018) && !ins.asignaturaAprobada("as4")){
-				ins.addInscripcion(new Inscripcion(++idIns, 2018, 1000, "as4"));
+			as4 = new Asignatura("as4", "Asignatura 4", "Desc As 4");
+			if (!ins.asignaturaEnCurso(as4.getCodigo(), 2018) && !ins.asignaturaAprobada(as4.getCodigo())){
+				ins.addInscripcion(new Inscripcion(++idIns, 2018, 1000, as4));
 				ins.registrarCalificacion(ins.ultimaInscripcion(), 12);
 			}else 
 				System.out.println("La asignatura está en curso.");			
@@ -176,13 +190,11 @@ public class TestInscripciones {
 		
 		System.out.println("Listado de inscripciones (escolaridad) total:");
 		System.out.println();
-		List<VOInscripcion> lista = ins.listarInscripciones(true);
+		List<VOEscolaridad> lista = ins.listarEscolaridad(false);
 		
-		for(VOInscripcion voi: lista) {
-
-			//voi.getMontoBase();
-			
-			System.out.println("N° inscripción: "+voi.getNumero()+"| Año lectivo: "+voi.getAnioLectivo()+"| Código asignatura: "+voi.getCodigo()+"| Calificación: "+voi.getCalificacion());
+		for(VOEscolaridad voe: lista) {
+		
+			System.out.println("N° inscripción: "+voe.getNumero()+"| Nombre asignatura: "+voe.getAsignaturaNombre()+"| Monto base: "+voe.getMontoBase() +"| Año lectivo: "+voe.getAnioLectivo()+"| Calificación: "+voe.getCalificacion());
 			
 		}
 		
@@ -190,13 +202,11 @@ public class TestInscripciones {
 		System.out.println();			
 		System.out.println("Listado de inscripciones (escolaridad) parcial:");
 		System.out.println();
-		lista = ins.listarInscripciones(false);
+		lista = ins.listarEscolaridad(true);
 		
-		for(VOInscripcion voi: lista) {
-
-			//voi.getMontoBase();
-			
-			System.out.println("N° inscripción: "+voi.getNumero()+"| Año lectivo: "+voi.getAnioLectivo()+"| Código asignatura: "+voi.getCodigo()+"| Calificación: "+voi.getCalificacion());
+		for(VOEscolaridad voe: lista) {
+		
+			System.out.println("N° inscripción: "+voe.getNumero()+"| Nombre asignatura: "+voe.getAsignaturaNombre()+"| Año lectivo: "+voe.getAnioLectivo()+"| Calificación: "+voe.getCalificacion());
 			
 		}		
 		
