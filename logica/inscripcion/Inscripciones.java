@@ -5,7 +5,7 @@ import java.util.List;
 
 import logica.alumno.Alumno;
 import logica.inscripcion.Inscripcion;
-import logica.vo.VOInscripcion;
+import logica.vo.VOEscolaridad;
 
 public class Inscripciones {
 	LinkedList<Inscripcion> inscripciones;
@@ -18,15 +18,14 @@ public class Inscripciones {
 		inscripciones.add( inscripcion );
 	}	
 	
-
-	public List<VOInscripcion> listarInscripciones(boolean total) {
-		List<VOInscripcion> lista = new LinkedList<VOInscripcion>();
+	public List<VOEscolaridad> listarEscolaridad(boolean parcial) {
+		List<VOEscolaridad> lista = new LinkedList<VOEscolaridad>();
 
 		for(Inscripcion i: inscripciones) {
 			if (i.aprobada())
-				lista.add( new VOInscripcion( i.numero, i.codigoAsignatura, i.anioLectivo, i.montoBase, i.calificacion ) );
-			else if (total)
-				lista.add( new VOInscripcion( i.numero, i.codigoAsignatura, i.anioLectivo, i.montoBase, i.calificacion ) );
+				lista.add( new VOEscolaridad( i.numero, i.anioLectivo, 0 , i.calificacion, i.asignatura.getNombre() ) );
+			else if (!parcial)
+				lista.add( new VOEscolaridad( i.numero, i.anioLectivo, i.montoBase, i.calificacion, i.asignatura.getNombre() ) );
 		}
 		
 		return lista;
@@ -65,7 +64,7 @@ public class Inscripciones {
 				monto+= i.montoBase;
 		}
 		
-		return monto;
+		return monto*10;
 	}
 
 	public boolean egresado() {
@@ -93,7 +92,7 @@ public class Inscripciones {
 			
 		    Inscripcion ins = inscripciones.getFirst();
 			
-			if( ins.getCodigoAsignatura() == codigoAsignatura) {
+			if( ins.getAsignatura().getCodigo() == codigoAsignatura) {
 				if(ins.aprobada()) 
 					yaAprobada = true;					
 			}
@@ -114,7 +113,7 @@ public class Inscripciones {
 			
 		    Inscripcion ins = inscripciones.getFirst();
 			
-			if( ins.getCodigoAsignatura() == codigoAsignatura) {
+			if( ins.getAsignatura().getCodigo() == codigoAsignatura) {
 				if(ins.getAnio() == anioLectivo) 
 					enCurso = true;					
 			}
@@ -126,7 +125,7 @@ public class Inscripciones {
 		return enCurso;	
 	}	
 
-	//0= parcial, 1= total
+	//1= parcial, 0= total
 	public float promedioAprobacion (boolean total) {
 		int suma = 0;
 		int cantidad = 0;
@@ -150,39 +149,4 @@ public class Inscripciones {
 	}
 	
 	
-	
-/*	
-	public boolean validarInscripcion(String codigoAsignatura, int anioLectivo) {
-
-		LinkedList<Inscripcion> i = this.inscripciones;
-		
-		boolean yaAprobada = false;
-		boolean enCurso = false;
-		boolean anioValido = anioLectivo >= i.getLast().anioLectivo;
-		boolean esValida = false;
-		
-		if (anioValido) {
-			while( !i.isEmpty() && !yaAprobada && !enCurso) {
-				
-			    Inscripcion ins = i.getFirst();
-				
-				if( ins.getCodigoAsignatura() == codigoAsignatura) {
-					if(ins.aprobada()) 
-						yaAprobada = true;
-					else if (ins.getAnio() == anioLectivo)
-						enCurso = true;
-						
-				}
-				
-				i.iterator();
-			}
-			
-			if (!yaAprobada || !enCurso)
-				esValida = true;		
-		}
-				
-		return esValida;
-			
-	}	
-*/	
 }
