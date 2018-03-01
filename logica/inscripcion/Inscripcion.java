@@ -1,18 +1,19 @@
 package logica.inscripcion;
+import logica.asignatura.Asignatura;
 
 public class Inscripcion {
 	int numero;
 	int anioLectivo;
 	int montoBase;
 	int calificacion;
-	String codigoAsignatura;
+	Asignatura asignatura;
 	
-	public Inscripcion( int numero, int anioLectivo, int montoBase, String codigoAsignatura ) {
+	public Inscripcion( int numero, int anioLectivo, int montoBase, Asignatura asignatura ) {
 		this.numero				= numero;
 		this.anioLectivo		= anioLectivo;
 		this.montoBase			= montoBase;
 		this.calificacion		= 0;
-		this.codigoAsignatura	= codigoAsignatura;
+		this.asignatura	= asignatura;
 	}
 	
 	public int getNumero() {
@@ -31,8 +32,8 @@ public class Inscripcion {
 		return calificacion;
 	}
 	
-	public String getCodigoAsignatura() {
-		return codigoAsignatura;
+	public Asignatura getAsignatura() {
+		return asignatura;
 	}		
 	
 	public void setCalificacion(int calificacion) {
@@ -42,8 +43,6 @@ public class Inscripcion {
 	public boolean aprobada() {
 		return calificacion >= 6;
 	}	
-
-	//public boolean inscripcionActiva(int anioLectivo) {}		
 	
 	public boolean calificada() {
 		return calificacion != 0;
