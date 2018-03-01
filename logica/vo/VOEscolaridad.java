@@ -18,11 +18,11 @@ public class VOEscolaridad implements Serializable  {
 		this.asignaturaNombre	= asignaturaNombre;
 	}
 	
-	public int getCedula() {
+	public int getNumero() {
 		return numero;
 	}
 	
-	public int getAniLectivo() {
+	public int getAnioLectivo() {
 		return aniLectivo;
 	}
 	
