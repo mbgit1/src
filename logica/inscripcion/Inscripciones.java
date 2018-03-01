@@ -3,6 +3,7 @@ package logica.inscripcion;
 import java.util.LinkedList;
 import java.util.List;
 
+import logica.alumno.Alumno;
 import logica.inscripcion.Inscripcion;
 import logica.vo.VOInscripcion;
 
@@ -17,31 +18,43 @@ public class Inscripciones {
 		inscripciones.add( inscripcion );
 	}	
 	
-	public List<VOInscripcion> listarInscripciones() {
+
+	public List<VOInscripcion> listarInscripciones(boolean total) {
 		List<VOInscripcion> lista = new LinkedList<VOInscripcion>();
 
 		for(Inscripcion i: inscripciones) {
-			lista.add( new VOInscripcion( i.numero, i.codigoAsignatura, i.anioLectivo, i.montoBase ) );
+			if (i.aprobada())
+				lista.add( new VOInscripcion( i.numero, i.codigoAsignatura, i.anioLectivo, i.montoBase, i.calificacion ) );
+			else if (total)
+				lista.add( new VOInscripcion( i.numero, i.codigoAsignatura, i.anioLectivo, i.montoBase, i.calificacion ) );
 		}
 		
 		return lista;
 	}	
 	
 	public Inscripcion obtenerInscripcion( int numero ) { 
+		int pos = --numero; 
 		
-		return inscripciones.get(numero);
+		return inscripciones.get(pos);
 	}
 	
 	public int ultimaInscripcion() {
-		return inscripciones.getLast().numero;
+		int ultimaIns = 0;
+		
+		if (!inscripciones.isEmpty())
+			ultimaIns = inscripciones.getLast().numero;
+		
+		return ultimaIns;
 	}
 	
-	public void registrarInscripcion(int numero, int calificacion) {
-		inscripciones.get(numero).setCalificacion(calificacion);
+	public void registrarCalificacion(int numero, int calificacion) {
+		int pos = --numero;
+		inscripciones.get(pos).setCalificacion(calificacion);
 	}	
 	
 	public boolean calificada(int numero) {
-		return inscripciones.get(numero).calificada();
+		int pos = --numero;
+		return inscripciones.get(pos).calificada();
 	}	
 
 	public int montoRecaudado(int anioLectivo) {
@@ -73,18 +86,20 @@ public class Inscripciones {
 	
 	public boolean asignaturaAprobada(String codigoAsignatura) {
 		boolean yaAprobada = false;
-		LinkedList<Inscripcion> i = this.inscripciones;
 		
-		while( !i.isEmpty() && !yaAprobada) {
+		int num = 0;
+		
+		while( inscripciones.size() > num && !yaAprobada) {
 			
-		    Inscripcion ins = i.getFirst();
+		    Inscripcion ins = inscripciones.getFirst();
 			
 			if( ins.getCodigoAsignatura() == codigoAsignatura) {
 				if(ins.aprobada()) 
 					yaAprobada = true;					
 			}
 			
-			i.iterator();
+			num++;
+			
 		}
 		
 		return yaAprobada;
@@ -92,23 +107,50 @@ public class Inscripciones {
 	
 	public boolean asignaturaEnCurso(String codigoAsignatura, int anioLectivo) {
 		boolean enCurso = false;
-		LinkedList<Inscripcion> i = this.inscripciones;
 		
-		while( !i.isEmpty() && !enCurso) {
+		int num = 0;
+		
+		while( inscripciones.size() > num && !enCurso) {
 			
-		    Inscripcion ins = i.getFirst();
+		    Inscripcion ins = inscripciones.getFirst();
 			
 			if( ins.getCodigoAsignatura() == codigoAsignatura) {
 				if(ins.getAnio() == anioLectivo) 
 					enCurso = true;					
 			}
 			
-			i.iterator();
+			num++;
+			
 		}
 		
-		return enCurso;		
+		return enCurso;	
 	}	
 
+	//0= parcial, 1= total
+	public float promedioAprobacion (boolean total) {
+		int suma = 0;
+		int cantidad = 0;
+		float promedio = 0;
+
+		if (!inscripciones.isEmpty()) {
+			for(Inscripcion i: inscripciones) {
+				if (i.aprobada()) {
+					suma+= i.getCalificacion();
+					cantidad++;
+				}else if (total) {
+					suma+= i.getCalificacion();
+					cantidad++;				
+				}				
+			}	
+			
+			promedio = suma/cantidad;
+		}
+		
+		return promedio;
+	}
+	
+	
+	
 /*	
 	public boolean validarInscripcion(String codigoAsignatura, int anioLectivo) {
 
