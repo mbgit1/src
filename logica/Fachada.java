@@ -106,6 +106,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 		
 		public List<VOAlumnoListado> listarAlumnos( String apellido ){
 			return null;
+			//puto
 		}
 		
 		public List<VOAlumno> listadoDetalleAlumnos( int noMeAcuerdo ){
