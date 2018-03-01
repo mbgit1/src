@@ -4,20 +4,22 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class VOInscripcion implements Serializable  {
-	private int cedula;
+	private int numero;
 	private String codigo;
 	private int anioLectivo;
 	private int montoBase;
+	private int calificacion;
 	
-	public VOInscripcion( int cedula, String codigo, int anioLectivo, int montoBase ) {
-		this.cedula			= cedula;
+	public VOInscripcion( int numero, String codigo, int anioLectivo, int montoBase, int calificacion ) {
+		this.numero			= numero;
 		this.codigo			= codigo;
 		this.anioLectivo	= anioLectivo;
 		this.montoBase		= montoBase;
+		this.calificacion		= calificacion;
 	}
 	
-	public int getCedula() {
-		return cedula;
+	public int getNumero() {
+		return numero;
 	}
 	
 	public String getCodigo() {
@@ -31,4 +33,8 @@ public class VOInscripcion implements Serializable  {
 	public int getMontoBase() {
 		return montoBase;
 	}
+	
+	public int getCalificacion() {
+		return calificacion;
+	}	
 }
