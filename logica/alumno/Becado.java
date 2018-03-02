@@ -64,13 +64,13 @@ public VOBecado voBecado() {
 	 
 	return new VOBecado(getCedula(),getApellido(), getNombre(),getDomicilio(),getTelefono(),getEmail(),descuento,descripcion);
 }
-
+/*
 public int calcularCuota( ) {
 	
 	return super.calcularCuota()  - ((super.calcularCuota()* descuento)/100); 
 }
 
-
+*/
 
 }
 	

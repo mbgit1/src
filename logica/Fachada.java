@@ -35,7 +35,7 @@ import logica.Monitor;
 import exception.InscripcionNoExisteException;
  
 
-
+//  fachada mercedes
 @SuppressWarnings("serial")
 public class Fachada extends UnicastRemoteObject implements IFachada {
  
@@ -198,22 +198,22 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 			//	public void inscripcionAsignatura( String codigo, int cedula, VOAlumnoListado voAlumnoListado )throws AlumnoNoExisteException,AsignaturaYaAprobadaException,ErrorAnioInscripcionException,AlumnoYaInscriptoException {
 		   	public void inscripcionAsignatura( String codigo, int cedula, VOInscripcion voInscripcion )throws AlumnoNoExisteException,AsignaturaYaAprobadaException,ErrorAnioInscripcionException,AlumnoYaInscriptoException {
 			                    
-					monitor.comienzoEscritura();
+/*					monitor.comienzoEscritura();
 					
 					if(alumnos.contiene( Integer.toString(cedula)) ) {
 						monitor.terminoEscritura();
 						throw new AlumnoNoExisteException("No existe  alumno con la misma cedula");
 					}
-					else {
+					else {//falta un if para ver si existe la asignatura
 						Alumno alumno = alumnos.obtener(Integer.toString(cedula));
-						Inscripciones inscripciones = (Inscripciones) alumno.getInscripciones();
-						if(inscripciones.asignaturaAprobada(codigo)) {
+						 
+						if(alumno.asignaturaAprobada(codigo)) {
 							monitor.terminoEscritura();
 							throw new AsignaturaYaAprobadaException("La asignatura ya fue aprobada");
 							
 						}
 						else {
-							
+							//hacerme un asignatrua en curso en alumno q llame al de insc
 							if(inscripciones.asignaturaEnCurso(codigo, inscripciones.obtenerInscripcion(inscripciones.ultimaInscripcion()).getAnio())) {
 								monitor.terminoEscritura();
 								throw new AlumnoYaInscriptoException("El alumno ya esta inscripto a dicha asignatura");
@@ -238,7 +238,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 						
 					}
 	
-					
+	*/				
 				}
 				
 				
@@ -252,22 +252,22 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 					}
 					else {
 						Alumno alumno = alumnos.obtener(Integer.toString(cedula));
-						Inscripciones inscripciones = (Inscripciones) alumno.getInscripciones();
-						if(inscripciones.ultimaInscripcion()< nroInscripcion) { //chequea que exista ese nro de inscripcion
+						
+						if(alumno.ultimaInscripcion() < nroInscripcion) { //chequea que exista ese nro de inscripcion
 							
 						monitor.terminoEscritura();
 						throw new InscripcionNoExisteException("No existe una inscripcion con ese numero para el alumno");
 						}
 						else {
 							
-							Inscripcion i = inscripciones.obtenerInscripcion(nroInscripcion);
+							Inscripcion i = alumno.obtenerInscripcion(nroInscripcion);
 							if(i.getCalificacion()>5) { //chqeuea que no este aprobada la asignatura
 								monitor.terminoEscritura();
 								throw new AsignaturaYaAprobadaException("El alumno ya aprobo esa asignatura");
 								
 							}
 							else {
-								inscripciones.registrarCalificacion(nroInscripcion, nota);
+								i.setCalificacion(nota);
 								monitor.terminoEscritura();
 							}
 							

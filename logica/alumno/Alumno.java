@@ -30,7 +30,7 @@ public class Alumno implements Serializable {
 	private String domicilio;
 	private int telefono;
 	private String email;
-	private Inscripciones inscpripciones;
+	private Inscripciones inscripciones;
 
 
 public Alumno(int cedula, String nombre, String apellido, String domicilio, int telefono, String email)	{
@@ -41,7 +41,7 @@ public Alumno(int cedula, String nombre, String apellido, String domicilio, int 
 	this.domicilio = domicilio;
 	this.telefono = telefono;
 	this.email = email;
-	this.inscpripciones = new Inscripciones();
+	this.inscripciones = new Inscripciones();
 	
 	
 }
@@ -236,14 +236,14 @@ public void setEmail(String email) {
 
 public void addInscripcion(Inscripcion inscripcion){
  
-	this.inscpripciones.addInscripcion(inscripcion); 
+	this.inscripciones.addInscripcion(inscripcion); 
  
 }
 
  
 public int montoRecaudado (int anio) {
 
- return this.inscpripciones.montoRecaudado(anio);	
+ return this.inscripciones.montoRecaudado(anio);	
  
 }
  
@@ -251,7 +251,7 @@ public int montoRecaudado (int anio) {
 
 public List<VOEscolaridad> escolaridad(boolean parcial){
 
-	 return this.inscpripciones.listarEscolaridad(parcial);
+	 return this.inscripciones.listarEscolaridad(parcial);
 	  
 
 }
@@ -263,15 +263,15 @@ public List<VOInscripcion> getListaInscripciones(){
    
 }
 
-public List<Inscripcion> getInscripciones(){
+public Inscripciones getInscripciones(){
 		
-	return this.getInscripciones();
+	return this.inscripciones;
    
 }
 
 public boolean egresado() {
 
-	return this.inscpripciones.egresado();
+	return this.inscripciones.egresado();
 
 }
 
@@ -288,14 +288,14 @@ public VOAlumnoListado voAlumnoListado() {
 public VOAlumnoDetallado voAlumnoDetallado() {
 	return new VOAlumnoDetallado(cedula,apellido,nombre,domicilio,telefono,email,0, " ");
 }
-
+/*
 public int calcularCuota( ) {
 	
 	 
 	 int anioLectivo = this.inscpripciones.obtenerInscripcion(this.inscpripciones.ultimaInscripcion()).getAnio();
 	 return this.montoRecaudado(anioLectivo);
 }
-
+*/
 public void modificarAlumno(String domicilio, int telefono, String email  ) {
      this.setDomicilio(domicilio);
      this.setTelefono(telefono);
@@ -321,7 +321,7 @@ public VOAlumnoDetallado listadoDetalleAlumno(){
 			  voad.setDomicilio(becado.getDomicilio());
 			  voad.setTelefono(becado.getTelefono());
 			  voad.setEmail(becado.getEmail());
-			  voad.setMontoCuota(becado.calcularCuota());
+			 // voad.setMontoCuota(becado.calcularCuota());
 			  voad.setTipo("becado");
  
 			
@@ -333,7 +333,7 @@ public VOAlumnoDetallado listadoDetalleAlumno(){
 			  voad.setDomicilio(this.getDomicilio());
 			  voad.setTelefono(this.getTelefono());
 			  voad.setEmail(this.getEmail());
-			  voad.setMontoCuota(this.calcularCuota());
+			 // voad.setMontoCuota(this.calcularCuota());
 			  voad.setTipo("comun");
 		}	
          return voad;
@@ -342,11 +342,23 @@ public VOAlumnoDetallado listadoDetalleAlumno(){
 
 //Aqui va el promedio de todas las materias (incluso si la calificacion es cero)
 public float promedioAprobacion(boolean total) {
-	 return this.inscpripciones.promedioAprobacion(total);
+	 return this.inscripciones.promedioAprobacion(total);
 	 
 }
 
+public int ultimaInscripcion() {
+	return inscripciones.ultimaInscripcion();
 	
+}
+public Inscripcion obtenerInscripcion(int nroIns) {
+	
+	return inscripciones.obtenerInscripcion(nroIns);
+}
+
+public boolean asignaturaAprobada(String codigo) {
+	return inscripciones.asignaturaAprobada(codigo);
+	
+}
 	
 }
 
