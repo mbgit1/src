@@ -12,6 +12,7 @@ import logica.inscripcion.Inscripcion;
 import logica.inscripcion.Inscripciones;
 
 import logica.vo.VOAlumno;
+import logica.vo.VOAlumnoDetallado;
 import logica.vo.VOAlumnoListado;
 import logica.vo.VOEgresado;
 import logica.vo.VOEscolaridad;
@@ -44,7 +45,7 @@ public Alumno(int cedula, String nombre, String apellido, String domicilio, int 
 	
 	
 }
-
+/*
 public int getCedula() {
 	return cedula;
 }
@@ -187,3 +188,132 @@ public float promedioAprobacion(Alumno alumno) {
 	
 		
 }
+*/
+
+public int getCedula() {
+	return cedula;
+}
+
+
+
+public String getNombre() {
+	return nombre;
+}
+
+
+
+public String getApellido() {
+	return apellido;
+}
+
+
+
+public String getDomicilio() {
+	return domicilio;
+}
+
+public void setDomicilio(String domicilio) {
+	this.domicilio = domicilio;
+}
+
+public int getTelefono() {
+	return telefono;
+}
+
+public void setTelefono(int telefono) {
+	this.telefono = telefono;
+}
+
+public String getEmail() {
+	return email;
+}
+
+public void setEmail(String email) {
+	this.email = email;
+}
+ 
+
+
+public void addInscripcion(Inscripcion inscripcion){
+ 
+	this.inscpripciones.addInscripcion(inscripcion); 
+ 
+}
+
+
+public int montoRecaudado (int anio) {
+
+ return this.inscpripciones.montoRecaudado(anio);	
+ 
+}
+
+
+
+public List<VOEscolaridad> escolaridad(boolean parcial){
+
+	 //return this.getInscripciones().escolardidad(parcial);
+	 return null;
+
+}
+
+ 
+public List<VOInscripcion> getListaInscripciones(){
+ 		
+	return (List<VOInscripcion>) this.inscpripciones;
+   
+}
+
+public List<Inscripcion> getInscripciones(){
+		
+	return (List<Inscripcion>) this.inscpripciones;
+   
+}
+
+public boolean egresado() {
+
+	return this.inscpripciones.egresado();
+
+}
+
+public VOAlumno voSalida() {
+	return new VOAlumno(cedula,nombre,  apellido,  domicilio,  telefono,  email);
+}
+
+public VOAlumnoListado voAlumnoListado() {
+	return new VOAlumnoListado(cedula,nombre,  apellido," ");
+}
+
+
+		
+public VOAlumnoDetallado voAlumnoDetallado() {
+	return new VOAlumnoDetallado(cedula,apellido,nombre,domicilio,telefono,email,0, " ");
+}
+
+public float calcularCuota(Alumno alumno) {
+	
+	//return alumno.getInscripciones().calcularCuota();
+	return 0; 
+}
+
+public void modificarAlumno(Alumno alumno) {
+     alumno.setDomicilio(alumno.getDomicilio());
+     alumno.setTelefono(alumno.getTelefono());
+     alumno.setEmail(alumno.getEmail());
+}
+
+//aqui va el promedio de las materias que tienen mayor o igual que 6
+//public float promedioTotal(Alumno alumno) {
+	// return this.inscripciones.promedioTotal(alumno);
+//	return 0;
+//}
+
+//Aqui va el promedio de todas las materias (incluso si la calificacion es cero)
+public float promedioAprobacion(boolean total) {
+	// return this.getInscripciones().promedioAprobacion(total);
+	return 0;
+}
+
+	
+	
+}
+

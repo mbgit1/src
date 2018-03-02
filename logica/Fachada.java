@@ -6,13 +6,17 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 import configuracion.Configuracion;
+import exception.AlumnoNoExisteException;
+import exception.AlumnoYaExisteException;
 import exception.AsignaturaYaExisteException;
 import exception.ListaLlenaException;
 import logica.alumno.Alumno;
 import logica.alumno.Alumnos;
 import logica.asignatura.Asignatura;
 import logica.asignatura.Asignaturas;
+import logica.inscripcion.Inscripciones;
 import logica.vo.VOAlumno;
+import logica.vo.VOAlumnoDetallado;
 import logica.vo.VOAlumnoListado;
 import logica.vo.VOAlumnoModificar;
 import logica.vo.VOAsignatura;
@@ -28,7 +32,7 @@ import logica.Monitor;
 
 @SuppressWarnings("serial")
 public class Fachada extends UnicastRemoteObject implements IFachada {
-
+ 
 		private Asignaturas asignaturas;
 		private Alumnos alumnos;
 		private Monitor monitor;
@@ -52,7 +56,8 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 				e.printStackTrace();
 			}
 		}
-		
+
+		/*
 		public void respaldar() throws RemoteException, IOException {
 			monitor.comienzoEscritura();
 			
@@ -80,57 +85,158 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 			
 			monitor.terminoEscritura();
 		}
-		
-		public void registrarAlumno( VOAlumno voAlumno ){
-			Alumno alumno = new Alumno( voAlumno.getCedula(), voAlumno.getNombre(), voAlumno.getApellido(), voAlumno.getDomicilio(), voAlumno.getTelefono(), voAlumno.getEmail() );
-			/*if( !alumnos.contiene( alumno.getCedula() ) ) {
-				alumnos.poner( alumno.getCedula(), alumno);
-			}*/
+*/
+		//Requerimiento 1: Registro de Asignatura		
+				public void registrarAsignatura( VOAsignatura voAsignatura) throws AsignaturaYaExisteException, ListaLlenaException {
+					
+					monitor.comienzoEscritura();
+					Asignatura asignatura = new Asignatura( voAsignatura.getCodigo(), voAsignatura.getNombre(), voAsignatura.getDescripcion() );
+					if(asignaturas.estaLlena() ) {
+						monitor.terminoEscritura();
+						throw new ListaLlenaException("Ya se ingresaron 10 asignaturas");
+					}
+					else {
+						
+						if(asignaturas.existeAsignatura(asignatura.getCodigo())) {
+							monitor.terminoEscritura();
+							throw new AsignaturaYaExisteException("Ya existe una asignatura con el mismo codigo");
+							
+						}
+					}
+					asignaturas.addAsignatura( asignatura );
+					monitor.terminoEscritura();
+				}
+				
+				
+		//Requerimiento 2:Inscripcion de Alumno	
+				
+				public void registrarAlumno( VOAlumno voAlumno ) throws AlumnoYaExisteException{
+					
+					monitor.comienzoEscritura();
+					Alumno alumno = new Alumno( voAlumno.getCedula(), voAlumno.getNombre(), voAlumno.getApellido(), voAlumno.getDomicilio(), voAlumno.getTelefono(), voAlumno.getEmail() );
+					
+					if(alumnos.contiene( Integer.toString(alumno.getCedula()) ) ) {
+						monitor.terminoEscritura();
+						throw new AlumnoYaExisteException("Ya se registro un alumno con la misma cedula");
+					}
+					else {
+						//la pregunta de si es becado o no, la  hace el metodo addAlumno en Alumnos
+					    alumnos.addAlumno(alumno); 
+					    monitor.terminoEscritura();
+					}
+		}
+				
+				public void registrarBecado( VOBecado voBecado ) {
+					
+				}
+				
+		//Requerimiento 3: Modificacion de datos de alumno		
+				public void modificarAlumno( VOAlumnoModificar voAlumnoModificar ) throws AlumnoNoExisteException{
+					
+					monitor.comienzoEscritura();
+					Alumno alumno = alumnos.obtener(Integer.toString(voAlumnoModificar.getCedula()));
+					 
+					if(!alumnos.contiene(Integer.toString(voAlumnoModificar.getCedula()))) {
+						monitor.terminoEscritura();
+						throw new AlumnoNoExisteException("No existe un alumno con esa cedula");
+					}	
+					else {
+						
+						alumno.modificarAlumno(alumno);
+						monitor.terminoEscritura();
+					}
+						 
+					 
+					 
+					
+			  }
+				
+		//Requerimiento 4: Listado de asignaturas
+				public List<VOAsignatura> listarAsignaturas(){//revisar si no deberia devolver un vo especifico para el listado
+					return asignaturas.listarAsignaturas();
+				}
+
+		//Requerimiento 5:Listado de alumnos por apellido
+				
+				public List<VOAlumnoListado> listarAlumnos( String apellido ){
+					    return alumnos.listarAlumnosPorApellido(apellido);
+				}
+				
+		//Requerimiento 6: Listado detallado por cedula
+				public VOAlumnoDetallado listadoDetalleAlumno( int cedula ) throws AlumnoNoExisteException{
+					 
+					monitor.comienzoLectura();
+					Alumno alumno = alumnos.obtener(Integer.toString(cedula));
+					 
+					if(!alumnos.contiene(Integer.toString(cedula))) {
+						monitor.terminoLectura();
+						throw new AlumnoNoExisteException("No existe un alumno con esa cedula");
+					}	
+					else {
+						
+						monitor.terminoLectura(); 
+						return alumno.voAlumnoDetallado();
+						
+					}
+				//	monitor.terminoLectura();
+					
+				}
+
+		//Requerimiento 7: Inscripcion a asignatura
+				public void inscripcionAsignatura( String codigo, int cedula, VOAlumnoListado voAlumnoListado ) {
+				//lo dejo para hacerlo con lo de gaby.. cuando lo baje
+				}
+				
+				
+		//Requerimiento 8: Registro de resultado de una asignatura		
+				public void registrarCalificacion( int cedula, int nroInscripcion, int nota ) {
+					monitor.comienzoEscritura();
+					Alumno alumno = alumnos.obtener(Integer.toString(cedula));
+					Inscripciones inscripciones = (Inscripciones) alumno.getInscripciones();
+					
+					inscripciones.registrarCalificacion(nroInscripcion, nota); 	
+					monitor.terminoEscritura();
+				}
+				
+		//Requerimiento 9: Monto recaudado por inscripciones
+				public int montoRecaudado( int cedula, int anioLectivo ) {
+					monitor.comienzoLectura();
+					Alumno alumno = alumnos.obtener(Integer.toString(cedula));
+					monitor.terminoLectura();
+					return alumno.montoRecaudado(anioLectivo);
+					
+				}
+		//Requerimiento 10: Respaldo de datos
+				public void respaldar() throws RemoteException, IOException {
+					monitor.comienzoEscritura();
+					
+					VOFachada voFachada = new VOFachada( asignaturas, alumnos );
+					Persistencia.respaldar( Configuracion.getProperty("ArchivoRespaldo"), voFachada );
+					
+					monitor.terminoEscritura();
+				}
+
+		//Requerimiento 11: Consulta de escolaridad
+				public List<VOEscolaridad> escolaridad( int cedula, boolean parcial ){
+					monitor.comienzoLectura();
+					List<VOEscolaridad> listaVoe = null; 
+					Alumno alumno = alumnos.obtener(Integer.toString(cedula));
+					
+					listaVoe =  alumno.escolaridad(parcial);
+					monitor.terminoLectura();
+					return listaVoe;
+				}
+
+				
+		//Requerimiento 12: Listado de egresados
+				public List<VOEgresado> listadoEgresados( boolean parcial ){
+					monitor.comienzoLectura();
+					List<VOEgresado> listaEgre = null;
+					monitor.terminoLectura();
+					listaEgre =  alumnos.listadoEgresados(parcial); 
+					monitor.terminoLectura(); 
+					return listaEgre;
+				}
+				
 		}
 		
-		public void registrarBecado( VOBecado voBecado ) {
-			
-		}
-		
-		public void modificarAlumno( VOAlumnoModificar voAlumnoModificar ){
-			
-		}
-		
-		public List<VOAsignatura> listarAsignaturas(){//revisar si no deberia devolver un vo especifico para el listado
-			monitor.comienzoLectura();
-			List<VOAsignatura> lista = asignaturas.listarAsignaturas();
-			monitor.terminoLectura();
-			
-			return lista;
-		}
-		
-		public List<VOAlumnoListado> listarAlumnos( String apellido ){
-			return null;
-			//puto
-		}
-		
-		public List<VOAlumno> listadoDetalleAlumnos( int noMeAcuerdo ){
-			return null;
-		}
-		
-		public void inscripcionAsignatura( String niIdea1, int niIdea2, VOAlumnoListado voAlumnoListado ) {
-			
-		}
-		
-		public void registrarCalificacion( int cedula, int niIdea, int nota ) {
-			
-		}
-		
-		public int montoRecaudado( int cedula, int niIdea ) {
-			return 1;
-		}
-		
-		public List<VOEscolaridad> escolaridad( int cedula, boolean listadCorto ){
-			return null;
-		}
-		
-		public List<VOEgresado> listadoEgresados( boolean listadoCorto ){
-			return null;
-		}
-		
-}
