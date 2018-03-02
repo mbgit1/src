@@ -240,32 +240,32 @@ public void addInscripcion(Inscripcion inscripcion){
  
 }
 
-
+ 
 public int montoRecaudado (int anio) {
 
  return this.inscpripciones.montoRecaudado(anio);	
  
 }
-
+ 
 
 
 public List<VOEscolaridad> escolaridad(boolean parcial){
 
-	 //return this.getInscripciones().escolardidad(parcial);
-	 return null;
+	 return this.inscpripciones.listarEscolaridad(parcial);
+	  
 
 }
 
  
 public List<VOInscripcion> getListaInscripciones(){
  		
-	return (List<VOInscripcion>) this.inscpripciones;
+	return  this.getListaInscripciones();
    
 }
 
 public List<Inscripcion> getInscripciones(){
 		
-	return (List<Inscripcion>) this.inscpripciones;
+	return this.getInscripciones();
    
 }
 
@@ -289,28 +289,61 @@ public VOAlumnoDetallado voAlumnoDetallado() {
 	return new VOAlumnoDetallado(cedula,apellido,nombre,domicilio,telefono,email,0, " ");
 }
 
-public float calcularCuota(Alumno alumno) {
+public int calcularCuota( ) {
 	
-	//return alumno.getInscripciones().calcularCuota();
-	return 0; 
+	 
+	 int anioLectivo = this.inscpripciones.obtenerInscripcion(this.inscpripciones.ultimaInscripcion()).getAnio();
+	 return this.montoRecaudado(anioLectivo);
 }
 
-public void modificarAlumno(Alumno alumno) {
-     alumno.setDomicilio(alumno.getDomicilio());
-     alumno.setTelefono(alumno.getTelefono());
-     alumno.setEmail(alumno.getEmail());
+public void modificarAlumno(String domicilio, int telefono, String email  ) {
+     this.setDomicilio(domicilio);
+     this.setTelefono(telefono);
+     this.setEmail(email);
 }
 
-//aqui va el promedio de las materias que tienen mayor o igual que 6
-//public float promedioTotal(Alumno alumno) {
-	// return this.inscripciones.promedioTotal(alumno);
-//	return 0;
-//}
+public VOAlumnoDetallado listadoDetalleAlumno(){
+	 
+	//Alumno alumno;
+	//Iterator<Alumno> iteradorAlumno = iterador();
+	//List<VOAlumnoDetallado> alumnoSalida = new ArrayList<VOAlumnoDetallado>();
+	VOAlumnoDetallado voad = new VOAlumnoDetallado(0," "," "," ",0," ",0," "); 
+	//while (iteradorAlumno.hasNext()) {
+	//	alumno = iteradorAlumno.next();
+		if ( this instanceof Becado) {
+			 Becado becado = new Becado(this.getCedula(),this.getApellido(),this.getNombre(),this.getDomicilio(),this.getTelefono(),this.getEmail(),((Becado) this).getDescuento(),((Becado) this).getDescripcion());
+		//aca preguntar con instans of si es becado o no.. y ahi hacer la diferencia de vo.. 
+		//tomo de aqui si es becado (me devuelvo true) saco el tipo. 
+		//agregar en VOAlumnoListado el atributo tipo 
+			  voad.setCedula(becado.getCedula());
+			  voad.setApellido(becado.getApellido());
+			  voad.setNombre(becado.getNombre());
+			  voad.setDomicilio(becado.getDomicilio());
+			  voad.setTelefono(becado.getTelefono());
+			  voad.setEmail(becado.getEmail());
+			  voad.setMontoCuota(becado.calcularCuota());
+			  voad.setTipo("becado");
+ 
+			
+		}
+		else {
+			  voad.setCedula(this.getCedula());
+			  voad.setApellido(this.getApellido());
+			  voad.setNombre(this.getNombre());
+			  voad.setDomicilio(this.getDomicilio());
+			  voad.setTelefono(this.getTelefono());
+			  voad.setEmail(this.getEmail());
+			  voad.setMontoCuota(this.calcularCuota());
+			  voad.setTipo("comun");
+		}	
+         return voad;
+	
+}
 
 //Aqui va el promedio de todas las materias (incluso si la calificacion es cero)
 public float promedioAprobacion(boolean total) {
-	// return this.getInscripciones().promedioAprobacion(total);
-	return 0;
+	 return this.inscpripciones.promedioAprobacion(total);
+	 
 }
 
 	

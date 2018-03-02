@@ -27,8 +27,6 @@ public interface IFachada extends Remote {
 	
 	public void registrarAlumno( VOAlumno voAlumno ) throws RemoteException, AlumnoYaExisteException;
 	
-	public void registrarBecado( VOBecado voBecado ) throws RemoteException;
-	
 	public void modificarAlumno( VOAlumnoModificar voAlumnoModificar ) throws RemoteException,AlumnoNoExisteException;
 	
 	public List<VOAsignatura> listarAsignaturas() throws RemoteException; //revisar si no deberia devolver un vo especifico para el listado

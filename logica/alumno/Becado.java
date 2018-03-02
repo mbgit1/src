@@ -65,9 +65,9 @@ public VOBecado voBecado() {
 	return new VOBecado(getCedula(),getApellido(), getNombre(),getDomicilio(),getTelefono(),getEmail(),descuento,descripcion);
 }
 
-public int montoRecaudado(int anio) {
+public int calcularCuota( ) {
 	
-	return super.montoRecaudado(anio) - ((super.montoRecaudado(anio)* descuento)/100); 
+	return super.calcularCuota()  - ((super.calcularCuota()* descuento)/100); 
 }
 
 

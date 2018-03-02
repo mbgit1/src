@@ -148,7 +148,7 @@ public List<VOEgresado> listadoEgresados (boolean parcial){
 		
 		return obtener(Integer.toString(cedula));
 	}
-	
+/*	
 	public List<VOAlumnoDetallado> listarAlumnos(){
 		 
 		Alumno alumno;
@@ -162,11 +162,11 @@ public List<VOEgresado> listadoEgresados (boolean parcial){
 			//aca preguntar con instans of si es becado o no.. y ahi hacer la diferencia de vo.. 
 			//tomo de aqui si es becado (me devuelvo true) saco el tipo. 
 			//agregar en VOAlumnoListado el atributo tipo 
-				 ((VOAlumnoDetallado) alumnoSalida).setMontoCuota(alumno.calcularCuota(alumno)); 
+				 ((VOAlumnoDetallado) alumnoSalida).setMontoCuota(alumno.calcularCuota()); 
 				 ((VOAlumnoDetallado) alumnoSalida).setTipo("becado");
 				 alumnoSalida.add(becado.voAlumnoDetallado());
 			}	
-//			 ((VOAlumnoDetallado) alumnoSalida).setMontoCuota(alumno.calcularCuota(alumno));     
+    		 ((VOAlumnoDetallado) alumnoSalida).setMontoCuota(alumno.calcularCuota());     
 			((VOAlumnoListado) alumnoSalida).setTipo("comun");
 				alumnoSalida.add(alumno.voAlumnoDetallado());
 		}
@@ -175,7 +175,8 @@ public List<VOEgresado> listadoEgresados (boolean parcial){
 	return alumnoSalida;
 		
 	}
- 
+ */
+	
 public List<VOAlumnoListado> listarAlumnosPorApellido(String palabra){
 	
 	Alumno alumno;
@@ -190,10 +191,11 @@ public List<VOAlumnoListado> listarAlumnosPorApellido(String palabra){
 			//aca preguntar con instans of si es becado o no.. y ahi hacer la diferencia de vo.. 
 			//tomo de aqui si es becado (me devuelvo true) saco el tipo. 
 			//agregar en VOAlumnoListado el atributo tipo 
-				 ((VOAlumnoListado) alumnoSalida).setTipo("becado");
-				 alumnoSalida.add(becado.voAlumnoListado());
+		
+				 becado.voAlumnoListado().setTipo("becado");
+				 alumnoSalida  .add(becado.voAlumnoListado());
 			}	
-			    ((VOAlumnoListado) alumnoSalida).setTipo("comun");
+			    alumno.voAlumnoListado().setTipo("comun");
 				alumnoSalida.add(alumno.voAlumnoListado());
 		}
 	}
@@ -201,11 +203,12 @@ public List<VOAlumnoListado> listarAlumnosPorApellido(String palabra){
 	return alumnoSalida;
 
 }
-
+/*
 public void modificarAlumno(Alumno alumno) {
-   alumno.modificarAlumno(alumno);
+   alumno.modificarAlumno(alumno.getDomicilio(),alumno.getTelefono(),alumno.getEmail());
 	
 }
+*/
 
 //aqui va el promedio de las materias que tienen mayor o igual que 6
 public float promedioAprobacion (int cedula,boolean total) {

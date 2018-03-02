@@ -124,11 +124,9 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 					    alumnos.addAlumno(alumno); 
 					    monitor.terminoEscritura();
 					}
-		}
+		         }
 				
-				public void registrarBecado( VOBecado voBecado ) {
-					
-				}
+
 				
 		//Requerimiento 3: Modificacion de datos de alumno		
 				public void modificarAlumno( VOAlumnoModificar voAlumnoModificar ) throws AlumnoNoExisteException{
@@ -142,24 +140,32 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 					}	
 					else {
 						
-						alumno.modificarAlumno(alumno);
+						alumno.modificarAlumno(alumno.getDomicilio(),alumno.getTelefono(),alumno.getEmail());
 						monitor.terminoEscritura();
 					}
-						 
-					 
-					 
-					
+		
 			  }
 				
 		//Requerimiento 4: Listado de asignaturas
-				public List<VOAsignatura> listarAsignaturas(){//revisar si no deberia devolver un vo especifico para el listado
-					return asignaturas.listarAsignaturas();
+				public List<VOAsignatura> listarAsignaturas(){
+					
+					monitor.comienzoLectura();
+					List<VOAsignatura> listaAsignaturas = null;
+					
+					listaAsignaturas = asignaturas.listarAsignaturas();
+					monitor.terminoLectura();
+					
+					return listaAsignaturas;
 				}
 
 		//Requerimiento 5:Listado de alumnos por apellido
 				
 				public List<VOAlumnoListado> listarAlumnos( String apellido ){
-					    return alumnos.listarAlumnosPorApellido(apellido);
+					monitor.comienzoLectura();
+					List<VOAlumnoListado> listarAlumnos = null;
+					listarAlumnos=  alumnos.listarAlumnosPorApellido(apellido);
+					monitor.terminoLectura();
+					return listarAlumnos;
 				}
 				
 		//Requerimiento 6: Listado detallado por cedula
@@ -167,19 +173,19 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 					 
 					monitor.comienzoLectura();
 					Alumno alumno = alumnos.obtener(Integer.toString(cedula));
-					 
+					VOAlumnoDetallado voad = new VOAlumnoDetallado(0," "," "," ",0," ",0," "); 
 					if(!alumnos.contiene(Integer.toString(cedula))) {
 						monitor.terminoLectura();
 						throw new AlumnoNoExisteException("No existe un alumno con esa cedula");
 					}	
 					else {
 						
-						monitor.terminoLectura(); 
-						return alumno.voAlumnoDetallado();
+						voad = alumno.listadoDetalleAlumno(); 
+						 
 						
 					}
-				//	monitor.terminoLectura();
-					
+					monitor.terminoLectura();
+					return voad;
 				}
 
 		//Requerimiento 7: Inscripcion a asignatura
