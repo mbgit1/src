@@ -9,12 +9,14 @@ import configuracion.Configuracion;
 import exception.AlumnoNoExisteException;
 import exception.AlumnoYaExisteException;
 import exception.AlumnoYaInscriptoException;
+import exception.AsignaturaNoExisteException;
 import exception.AsignaturaYaAprobadaException;
 import exception.AsignaturaYaExisteException;
 import exception.ErrorAnioInscripcionException;
 import exception.ListaLlenaException;
 import logica.alumno.Alumno;
 import logica.alumno.Alumnos;
+import logica.alumno.Becado;
 import logica.asignatura.Asignatura;
 import logica.asignatura.Asignaturas;
 import logica.inscripcion.Inscripcion;
@@ -35,7 +37,7 @@ import logica.Monitor;
 import exception.InscripcionNoExisteException;
  
 
-//  fachada mercedes
+ 
 @SuppressWarnings("serial")
 public class Fachada extends UnicastRemoteObject implements IFachada {
  
@@ -63,35 +65,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 			}
 		}
 
-		/*
-		public void respaldar() throws RemoteException, IOException {
-			monitor.comienzoEscritura();
-			
-			VOFachada voFachada = new VOFachada( asignaturas, alumnos );
-			Persistencia.respaldar( Configuracion.getProperty("ArchivoRespaldo"), voFachada );
-			
-			monitor.terminoEscritura();
-		}
-		
-		public void registrarAsignatura( VOAsignatura voAsignatura) throws ListaLlenaException, AsignaturaYaExisteException {
-			monitor.comienzoEscritura();
-			
-			if( !asignaturas.estaLlena() ) {
-				if( !asignaturas.existeAsignatura( voAsignatura.getCodigo() ) ) {
-					Asignatura asignatura = new Asignatura( voAsignatura.getCodigo(), voAsignatura.getNombre(), voAsignatura.getDescripcion() );
-					asignaturas.addAsignatura( asignatura );
-				}else {
-					monitor.terminoEscritura();
-					throw new AsignaturaYaExisteException();
-				}
-			}else {
-				monitor.terminoEscritura();
-				throw new ListaLlenaException();
-			}
-			
-			monitor.terminoEscritura();
-		}
-*/
+
 		//Requerimiento 1: Registro de Asignatura		
 				public void registrarAsignatura( VOAsignatura voAsignatura) throws AsignaturaYaExisteException, ListaLlenaException {
 					
@@ -180,6 +154,8 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 					monitor.comienzoLectura();
 					Alumno alumno = alumnos.obtener(Integer.toString(cedula));
 					VOAlumnoDetallado voad = new VOAlumnoDetallado(0," "," "," ",0," ",0," "); 
+					//EL VALOR DE CUOTA VA EN CERO, PORQUE LUEGO DE HABLAR CON EL TUTOR SE DECIDIO QUE ERA UN REQUERIMIENTO
+					//AMBIGUO Y SIN SENTIDO DEVOLVER ESE VALOR. 
 					if(!alumnos.contiene(Integer.toString(cedula))) {
 						monitor.terminoLectura();
 						throw new AlumnoNoExisteException("No existe un alumno con esa cedula");
@@ -196,39 +172,46 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 
 		//Requerimiento 7: Inscripcion a asignatura
 			//	public void inscripcionAsignatura( String codigo, int cedula, VOAlumnoListado voAlumnoListado )throws AlumnoNoExisteException,AsignaturaYaAprobadaException,ErrorAnioInscripcionException,AlumnoYaInscriptoException {
-		   	public void inscripcionAsignatura( String codigo, int cedula, VOInscripcion voInscripcion )throws AlumnoNoExisteException,AsignaturaYaAprobadaException,ErrorAnioInscripcionException,AlumnoYaInscriptoException {
+		   	public void inscripcionAsignatura( String codigo, int cedula, VOInscripcion voInscripcion )throws AlumnoNoExisteException,AsignaturaYaAprobadaException,ErrorAnioInscripcionException,AlumnoYaInscriptoException,AsignaturaNoExisteException {
 			                    
-/*					monitor.comienzoEscritura();
+					monitor.comienzoEscritura();
 					
 					if(alumnos.contiene( Integer.toString(cedula)) ) {
 						monitor.terminoEscritura();
 						throw new AlumnoNoExisteException("No existe  alumno con la misma cedula");
 					}
 					else {//falta un if para ver si existe la asignatura
-						Alumno alumno = alumnos.obtener(Integer.toString(cedula));
-						 
-						if(alumno.asignaturaAprobada(codigo)) {
+						if(!asignaturas.existeAsignatura(codigo) ) {
+							
+							monitor.terminoEscritura();
+							throw new AsignaturaNoExisteException("La asignatura no existe");
+						}
+						
+						else {
+							Alumno alumno = alumnos.obtener(Integer.toString(cedula));
+						 if(alumno.asignaturaAprobada(codigo)) {
 							monitor.terminoEscritura();
 							throw new AsignaturaYaAprobadaException("La asignatura ya fue aprobada");
 							
 						}
 						else {
 							//hacerme un asignatrua en curso en alumno q llame al de insc
-							if(inscripciones.asignaturaEnCurso(codigo, inscripciones.obtenerInscripcion(inscripciones.ultimaInscripcion()).getAnio())) {
+							if(alumno.asignaturaEnCurso(codigo, voInscripcion.getAnioLectivo())) {
 								monitor.terminoEscritura();
 								throw new AlumnoYaInscriptoException("El alumno ya esta inscripto a dicha asignatura");
 								
 							}
 							else {
 								
-								if(!inscripciones.anioInscripcionValido(inscripciones.obtenerInscripcion(inscripciones.ultimaInscripcion()).getAnio())){
+								if(!alumno.anioInscripcionValido(voInscripcion.getAnioLectivo())){
 									monitor.terminoEscritura();
 									throw new ErrorAnioInscripcionException("El anio de para la inscripcion no es correcto");	
 								}
 								else {
 									//creo nueva inscripcion con (numeroInscripcion,anioLectivo,MontoBase,calificacion,Asignatura)
-									Inscripcion nuevaIns = new Inscripcion(inscripciones.ultimaInscripcion()+1,voInscripcion.getAnioLectivo(),voInscripcion.getMontoBase(),asignaturas.obtenerAsignatura(voInscripcion.getCodigo()));
-									inscripciones.addInscripcion(nuevaIns);
+									Inscripcion nuevaIns = new Inscripcion(alumno.ultimaInscripcion() +1,voInscripcion.getAnioLectivo(),voInscripcion.getMontoBase(),asignaturas.obtenerAsignatura(voInscripcion.getCodigo()));
+								
+									alumno.getInscripciones().addInscripcion(nuevaIns);
 									monitor.terminoEscritura();
 									
 								}
@@ -237,8 +220,10 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 						}
 						
 					}
+						
+					}
 	
-	*/				
+					
 				}
 				
 				
@@ -289,8 +274,15 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 					}
 					else {
 						Alumno alumno = alumnos.obtener(Integer.toString(cedula));
-						recaudacion = alumno.montoRecaudado(anioLectivo);
+						if(alumno instanceof Becado) {
+						Becado becado  =  (Becado) alumnos.obtener(Integer.toString(cedula));
+						recaudacion = becado.montoRecaudado(anioLectivo);
 				     	monitor.terminoLectura();
+						}
+						else {
+							recaudacion = alumno.montoRecaudado(anioLectivo);
+							monitor.terminoLectura();
+						}
 					}
 					return recaudacion;
 					

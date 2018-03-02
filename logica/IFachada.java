@@ -8,6 +8,7 @@ import java.util.List;
 import exception.AlumnoNoExisteException;
 import exception.AlumnoYaExisteException;
 import exception.AlumnoYaInscriptoException;
+import exception.AsignaturaNoExisteException;
 import exception.AsignaturaYaAprobadaException;
 import exception.AsignaturaYaExisteException;
 import exception.ErrorAnioInscripcionException;
@@ -41,7 +42,7 @@ public interface IFachada extends Remote {
 	public VOAlumnoDetallado listadoDetalleAlumno( int cedula ) throws AlumnoNoExisteException, RemoteException;
 	
 	//public void inscripcionAsignatura( String niIdea1, int niIdea2, VOAlumnoListado voAlumnoListado ) throws RemoteException, AlumnoNoExisteException,AsignaturaYaAprobadaException,ErrorAnioInscripcionException,AlumnoYaInscriptoException;
-	  public void inscripcionAsignatura( String niIdea1, int niIdea2, VOInscripcion voInscripcion ) throws RemoteException, AlumnoNoExisteException,AsignaturaYaAprobadaException,ErrorAnioInscripcionException,AlumnoYaInscriptoException;
+	  public void inscripcionAsignatura( String niIdea1, int niIdea2, VOInscripcion voInscripcion ) throws RemoteException,AsignaturaNoExisteException, AlumnoNoExisteException,AsignaturaYaAprobadaException,ErrorAnioInscripcionException,AlumnoYaInscriptoException;
 
 	public void registrarCalificacion( int cedula, int niIdea, int nota ) throws RemoteException, AlumnoNoExisteException, AsignaturaYaAprobadaException,InscripcionNoExisteException ;
 	
