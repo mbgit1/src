@@ -17,33 +17,8 @@ public Becado(int cedula, String nombre, String apellido, String domicilio, int 
 	this.descuento = descuento;
 	this.descripcion = descripcion;
 }
-/*
-public int getDescuento() {
-	return descuento;
-}
-
-public void setDescuento(int descuento) {
-	this.descuento = descuento;
-}
-
-public String getDescripcion() {
-	return descripcion;
-}
-
-public void setDescripcion(String descripcion) {
-	this.descripcion = descripcion;
-}
-
-public int montoRecaudado(int anio) {
-	
-	return  super.montoRecaudado(anio) - ((super.montoRecaudado(anio) * this.descuento)/100);       
-
-}
-}
-*/
-
-
-
+ 
+ 
 public int getDescuento() {
 	return descuento;
 }
@@ -64,13 +39,18 @@ public VOBecado voBecado() {
 	 
 	return new VOBecado(getCedula(),getApellido(), getNombre(),getDomicilio(),getTelefono(),getEmail(),descuento,descripcion);
 }
-
+/*
 public int calcularCuota( ) {
 	
 	return super.calcularCuota()  - ((super.calcularCuota()* descuento)/100); 
 }
 
+*/
+public int montoRecaudado(int anio) {
+	
+	return  super.montoRecaudado(anio) - ((super.montoRecaudado(anio) * this.descuento)/100);       
 
+}
 
 }
 	
