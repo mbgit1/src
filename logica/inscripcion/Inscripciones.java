@@ -79,7 +79,12 @@ public class Inscripciones {
 	}	
 
 	public boolean anioInscripcionValido(int anioLectivo) {
-		boolean anioValido = anioLectivo >= this.inscripciones.getLast().anioLectivo;
+		boolean anioValido = true;
+		
+		if(!inscripciones.isEmpty()) {
+			anioValido = anioLectivo >= this.inscripciones.getLast().anioLectivo;
+		}
+		
 		return anioValido;
 	}
 	
