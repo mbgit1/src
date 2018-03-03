@@ -30,8 +30,6 @@ public class Persistencia {
 		} catch (IOException e) {
 			throw new PersistenciaException("Error de lectura del archivo de respaldo");
 		}
-		
-		System.out.println("grabo el archivo");
 	}
 	
 	public static VOFachada recuperar ( String nomArch ) throws IOException, ClassNotFoundException {
