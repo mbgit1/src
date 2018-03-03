@@ -217,7 +217,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 							//creo nueva inscripcion con (numeroInscripcion,anioLectivo,MontoBase,calificacion,Asignatura)
 							Inscripcion nuevaIns = new Inscripcion(alumno.ultimaInscripcion() +1,voInscripcion.getAnioLectivo(),voInscripcion.getMontoBase(),asignaturas.obtenerAsignatura(voInscripcion.getCodigo()));
 
-							alumno.getInscripciones().addInscripcion(nuevaIns);
+							alumno.addInscripcion(nuevaIns);
 						}
 
 					}
