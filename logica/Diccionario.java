@@ -1,10 +1,11 @@
 package logica;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
-public abstract class Diccionario<K, V> {
+public abstract class Diccionario<K, V> implements Serializable {
 	
 	private Map<K, V> mapa;
 	
