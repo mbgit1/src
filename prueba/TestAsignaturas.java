@@ -2,7 +2,7 @@ package prueba;
 
 import java.util.Iterator;
 
-import exception.AsignaturaNoExisteException;
+import exception.AsignaturaYaExisteException;
 import exception.ListaLlenaException;
 import logica.asignatura.Asignatura;
 import logica.asignatura.Asignaturas;
@@ -63,30 +63,18 @@ public class TestAsignaturas {
 	}
 	
 	private static boolean obtengoAsignatura( String codigo, boolean error ) {
-		try {
-			Asignatura a = as.obtenerAsignatura( codigo );
-			a.getDescripcion();
-			if( error )
-				System.out.println( "error en obtengoAsignatura, la asignatura NO debe existir" );
-			return error;
-		} catch (AsignaturaNoExisteException e) {
-			if( !error )
-				System.out.println( "error la asignatura SI debe existir" );
-			return !error;
-		}
+		Asignatura a = as.obtenerAsignatura( codigo );
+		a.getDescripcion();
+		if( error )
+			System.out.println( "error en obtengoAsignatura, la asignatura NO debe existir" );
+		return error;
 	}
 	
 	private static boolean addAsignatura( String codigo, String nombre, String descripcion, boolean error ) {
-		try {
-			as.addAsignatura( new Asignatura( codigo, nombre, descripcion ) );
-			if( error )
-				System.out.println( "error la asignatura NO deberia haberse agregado" );
-			return error;
-		} catch (ListaLlenaException e) {
-			if( !error )
-				System.out.println( "error la asignatura SI deberia haberse agregado" );
-			return !error;
-		}
+		as.addAsignatura( new Asignatura( codigo, nombre, descripcion ) );
+		if( error )
+			System.out.println( "error la asignatura NO deberia haberse agregado" );
+		return error;
 	}
 	
 	private static boolean estaLlena( boolean llena ) {
@@ -103,24 +91,19 @@ public class TestAsignaturas {
 	}
 	
 	private static boolean compararDatos( String codigo, String nombre, String descripcion ) {
-		try {
-			Asignatura a = as.obtenerAsignatura( "5" );
-			if( a.getCodigo() != codigo ) {
-				System.out.println( "el codigo no coincide: " + codigo );
-				return true;
-			}
-			
-			if( a.getNombre() != nombre ) {
-				System.out.println( "el nombre no coincide: " + nombre );
-				return true;
-			}
-			
-			if( a.getDescripcion() != descripcion ) {
-				System.out.println( "la descripcion no coincide: " + descripcion );
-				return true;
-			}
-		} catch (AsignaturaNoExisteException e) {
-			System.out.println( "error al obtener la asignatura: " + codigo );
+		Asignatura a = as.obtenerAsignatura( "5" );
+		if( a.getCodigo() != codigo ) {
+			System.out.println( "el codigo no coincide: " + codigo );
+			return true;
+		}
+		
+		if( a.getNombre() != nombre ) {
+			System.out.println( "el nombre no coincide: " + nombre );
+			return true;
+		}
+		
+		if( a.getDescripcion() != descripcion ) {
+			System.out.println( "la descripcion no coincide: " + descripcion );
 			return true;
 		}
 		return false;
