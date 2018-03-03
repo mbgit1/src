@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 import configuracion.Configuracion;
@@ -30,34 +29,24 @@ import logica.vo.VOBecado;
 import logica.vo.VOEgresado;
 import logica.vo.VOEscolaridad;
 import logica.vo.VOInscripcion;
-import servidor.Servidor;
 
 public class TestFachada {
 	
 	public static void main(String args[]) throws FileNotFoundException, IOException, NotBoundException {
-		
-		/*
-		//Servidor servidor = new Servidor();
-		try {
-			Servidor.main(args);
-		} catch (ClassNotFoundException e3) {
-			// TODO Auto-generated catch block
-			e3.printStackTrace();
-		}
-		*/
-		
 		String servidorIp;
 		String servidorPuerto;
 
 		servidorIp = Configuracion.getProperty("ServidorIp");
 		servidorPuerto = Configuracion.getProperty("ServidorPuerto");
-//		IFachada fachada = (IFachada) Naming.lookup("//" + servidorIp + ":" + servidorPuerto + "/fachada");
+		IFachada fachada = (IFachada) Naming.lookup("//" + servidorIp + ":" + servidorPuerto + "/fachada");
+		
+		/*
 		Fachada fachada = null;
 		try {
 			fachada = new Fachada();
 		} catch (ClassNotFoundException e3) {
 			System.out.println("ClassNotFoundException");
-		}
+		}*/
 		
 		int cantErrores = 0;
 		
