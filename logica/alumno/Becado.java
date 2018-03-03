@@ -1,11 +1,13 @@
 package logica.alumno;
 
+import java.io.Serializable;
+
 import exception.AlumnoYaExisteException;
 import logica.inscripcion.Inscripciones;
 import logica.vo.VOBecado;
 
 @SuppressWarnings("serial")
-public class Becado extends Alumno {
+public class Becado extends Alumno implements Serializable  {
 
 	private int descuento;
 	private String descripcion;

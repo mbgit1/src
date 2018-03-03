@@ -19,7 +19,7 @@ import logica.vo.VOEgresado;
 
 
 @SuppressWarnings("serial")
-public class Alumnos extends Diccionario<String,Alumno> implements Serializable {
+public class Alumnos extends Diccionario<Integer,Alumno> implements Serializable {
 
 	
 	public Alumnos() {
@@ -35,22 +35,24 @@ public class Alumnos extends Diccionario<String,Alumno> implements Serializable 
 		 
 		if ( alumno instanceof Becado) {
 			 Becado becado = new Becado(alumno.getCedula(),alumno.getApellido(),alumno.getNombre(),alumno.getDomicilio(),alumno.getTelefono(),alumno.getEmail(),((Becado) alumno).getDescuento(),((Becado) alumno).getDescripcion());
-			 poner(Integer.toString(becado.getCedula()),becado);
+			 poner(becado.getCedula(),becado);
+			 //poner(Integer.toString(becado.getCedula()),becado);
 		}
 		else {
-			poner(Integer.toString(alumno.getCedula()), alumno);
+			poner(alumno.getCedula(), alumno);
+			//poner(Integer.toString(alumno.getCedula()), alumno);
 		}
 	}
 
 
 	public boolean existeAlumno(int cedula) {
-		
-		return contiene(Integer.toString(cedula));
+		return contiene(cedula);
+		//return contiene(Integer.toString(cedula));
 	}
 	
 	public Alumno obtenerAlumno(int cedula) {
-		
-		return obtener(Integer.toString(cedula));
+		return obtener(cedula);
+		//return obtener(Integer.toString(cedula));
 	}
 /*	
 	public List<VOAlumnoDetallado> listarAlumnos(){
@@ -116,7 +118,8 @@ public void modificarAlumno(Alumno alumno) {
 
 //aqui va el promedio de las materias que tienen mayor o igual que 6
 public float promedioAprobacion (int cedula,boolean total) {
-	return obtener(Integer.toString(cedula)).promedioAprobacion(total);
+	return obtener(cedula).promedioAprobacion(total);
+	//return obtener(Integer.toString(cedula)).promedioAprobacion(total);
 			 
 }
 
