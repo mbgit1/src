@@ -100,7 +100,6 @@ public void addInscripcion(Inscripcion inscripcion){
 
  
 public float montoRecaudado(int anio) {
-System.out.println("en alumno.montoRecaudado, instancia: " + this.getClass() );
  return this.inscripciones.montoRecaudado(anio);	
 }
  
