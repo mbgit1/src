@@ -1,7 +1,9 @@
 package logica.inscripcion;
+import java.io.Serializable;
+
 import logica.asignatura.Asignatura;
 
-public class Inscripcion {
+public class Inscripcion implements Serializable  {
 	int numero;
 	int anioLectivo;
 	int montoBase;

@@ -1,5 +1,6 @@
 package logica.inscripcion;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import logica.alumno.Alumno;
 import logica.inscripcion.Inscripcion;
 import logica.vo.VOEscolaridad;
 
-public class Inscripciones {
+public class Inscripciones implements Serializable  {
 	LinkedList<Inscripcion> inscripciones;
 	
 	public Inscripciones() {
@@ -22,10 +23,10 @@ public class Inscripciones {
 		List<VOEscolaridad> lista = new LinkedList<VOEscolaridad>();
 
 		for(Inscripcion i: inscripciones) {
-			if (i.aprobada())
-				lista.add( new VOEscolaridad( i.numero, i.anioLectivo, 0 , i.calificacion, i.asignatura.getNombre() ) );
-			else if (!parcial)
+			if (!parcial)
 				lista.add( new VOEscolaridad( i.numero, i.anioLectivo, i.montoBase, i.calificacion, i.asignatura.getNombre() ) );
+			else if (i.aprobada())
+				lista.add( new VOEscolaridad( i.numero, i.anioLectivo, 0 , i.calificacion, i.asignatura.getNombre() ) );
 		}
 		
 		return lista;
@@ -95,9 +96,9 @@ public class Inscripciones {
 		
 		while( inscripciones.size() > num && !yaAprobada) {
 			
-		    Inscripcion ins = inscripciones.getFirst();
+		    Inscripcion ins = inscripciones.get(num);
 			
-			if( ins.getAsignatura().getCodigo() == codigoAsignatura) {
+			if( ins.getAsignatura().getCodigo().equals(codigoAsignatura) ) {
 				if(ins.aprobada()) 
 					yaAprobada = true;					
 			}
