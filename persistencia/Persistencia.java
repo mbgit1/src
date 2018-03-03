@@ -1,48 +1,57 @@
 package persistencia;
 
-import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import exception.PersistenciaException;
 import logica.alumno.Alumnos;
 import logica.asignatura.Asignaturas;
 import logica.vo.VOFachada;
 
 public class Persistencia {
 	
-	public static void respaldar ( String nomArch, VOFachada vofachada ) throws IOException {
+	public static void respaldar ( String nomArch, VOFachada vofachada ) throws PersistenciaException {
 		// Abro el archivo y creo un flujo de comunicación hacia él
-		FileOutputStream f = new FileOutputStream( nomArch );
-		ObjectOutputStream o = new ObjectOutputStream( f );
+		FileOutputStream f;
+		try {
+			f = new FileOutputStream( nomArch );
+			ObjectOutputStream o = new ObjectOutputStream( f );
+			
+			// Escribo el archivo a través del flujo
+			o.writeObject( vofachada );
+			o.close();
+			f.close();
+		} catch (FileNotFoundException e) {
+			throw new PersistenciaException("Error el archivo no existe");
+		} catch (IOException e) {
+			throw new PersistenciaException("Error de lectura del archivo de respaldo");
+		}
 		
-		// Escribo el arreglo de vehículos en el archivo a través del flujo
-		o.writeObject( vofachada );
-		o.close();
-		f.close();
+		System.out.println("grabo el archivo");
 	}
 	
 	public static VOFachada recuperar ( String nomArch ) throws IOException, ClassNotFoundException {
 		VOFachada voFachada = null;
-		File file = new File(nomArch);
 		
-		if( file.exists() ) {
-			try {
-				// Abro el archivo y creo un flujo de comunicación hacia él
-				FileInputStream f = new FileInputStream( nomArch );
-				ObjectInputStream o = new ObjectInputStream(f);
-				
-				// Leo el arreglo de vehículos desde el archivo a través del flujo
-				voFachada = (VOFachada) o.readObject();
-				o.close();
-				f.close();
-			} catch( java.io.EOFException ex ) {
-				//no hay info grabada
-			} finally {
-				voFachada = new VOFachada( new Asignaturas(), new Alumnos() );
-			}
+		try {
+			// Abro el archivo y creo un flujo de comunicación hacia él
+			FileInputStream f = new FileInputStream( nomArch );
+			ObjectInputStream o = new ObjectInputStream(f);
+			
+			// Leo el arreglo de vehículos desde el archivo a través del flujo
+			voFachada = (VOFachada) o.readObject();
+			o.close();
+			f.close();
+		} catch( java.io.EOFException ex ) {
+			System.out.println("el archivo está vacío");
+		} catch (FileNotFoundException e) {
+			System.out.println("el archivo no existe");
+		} finally {
+			voFachada = new VOFachada( new Asignaturas(), new Alumnos() );
 		}
 		
 		return voFachada;
