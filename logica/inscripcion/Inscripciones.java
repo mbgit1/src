@@ -133,7 +133,7 @@ public class Inscripciones implements Serializable  {
 
 	//1= parcial, 0= total
 	public float promedioAprobacion (boolean total) {
-		int suma = 0;
+		float suma = 0;
 		int cantidad = 0;
 		float promedio = 0;
 
