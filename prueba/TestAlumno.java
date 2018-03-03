@@ -19,6 +19,19 @@ public class TestAlumno {
 	//Alumnos alumnos;
 	
 	public static void main( String args[] ) {
+		//creamos 10 saignaturas
+		Asignatura as1  = new Asignatura("as1", "Asignatura 1", "Desc As 1");
+		Asignatura as2  = new Asignatura("as2", "Asignatura 2", "Desc As 2");
+		Asignatura as3  = new Asignatura("as3", "Asignatura 3", "Desc As 3");
+		Asignatura as4  = new Asignatura("as4", "Asignatura 4", "Desc As 4");
+		Asignatura as5  = new Asignatura("as5", "Asignatura 5", "Desc As 5");
+		Asignatura as6  = new Asignatura("as6", "Asignatura 6", "Desc As 6");
+		Asignatura as7  = new Asignatura("as7", "Asignatura 7", "Desc As 7");
+		Asignatura as8  = new Asignatura("as8", "Asignatura 8", "Desc As 8");
+		Asignatura as9  = new Asignatura("as9", "Asignatura 9", "Desc As 9");
+		Asignatura as10 = new Asignatura("as10", "Asignatura 10", "Desc As 10");		
+		//
+		
 		Alumnos alumnos = new Alumnos();
 		
 		System.out.println("Agregamos alumnos...\n");
@@ -77,17 +90,6 @@ public class TestAlumno {
 
 		System.out.println("\nAgregamos 10 asignaturas aprobadas para el alumno (40000100 - Osores)...\n");		
 		//
-		
-		Asignatura as1  = new Asignatura("as1", "Asignatura 1", "Desc As 1");
-		Asignatura as2  = new Asignatura("as2", "Asignatura 2", "Desc As 2");
-		Asignatura as3  = new Asignatura("as3", "Asignatura 3", "Desc As 3");
-		Asignatura as4  = new Asignatura("as4", "Asignatura 4", "Desc As 4");
-		Asignatura as5  = new Asignatura("as5", "Asignatura 5", "Desc As 5");
-		Asignatura as6  = new Asignatura("as6", "Asignatura 6", "Desc As 6");
-		Asignatura as7  = new Asignatura("as7", "Asignatura 7", "Desc As 7");
-		Asignatura as8  = new Asignatura("as8", "Asignatura 8", "Desc As 8");
-		Asignatura as9  = new Asignatura("as9", "Asignatura 9", "Desc As 9");
-		Asignatura as10 = new Asignatura("as10", "Asignatura 10", "Desc As 10");
 
 		Inscripciones ins = alumno1.getInscripciones();	
 		int idIns = alumno1.ultimaInscripcion();		
@@ -115,6 +117,37 @@ public class TestAlumno {
 		ins.registrarCalificacion(10, 12);		
 		
 		//
+		System.out.println("\nAgregamos 10 asignaturas aprobadas para el alumno (40000200 - Gabriel)...\n");		
+		//
+
+		Inscripciones ins2 = becado1.getInscripciones();	
+		int idIns2 = becado1.ultimaInscripcion();		
+				
+		becado1.addInscripcion(new Inscripcion(++idIns2, 2015, 1000, as1));				
+		becado1.addInscripcion(new Inscripcion(++idIns2, 2015, 1000, as2));						
+		becado1.addInscripcion(new Inscripcion(++idIns2, 2015, 1000, as3));						
+		becado1.addInscripcion(new Inscripcion(++idIns2, 2015, 1000, as4));						
+		becado1.addInscripcion(new Inscripcion(++idIns2, 2015, 1000, as5));						
+		becado1.addInscripcion(new Inscripcion(++idIns2, 2015, 1000, as6));						
+		becado1.addInscripcion(new Inscripcion(++idIns2, 2015, 1000, as7));						
+		becado1.addInscripcion(new Inscripcion(++idIns2, 2015, 1000, as8));							
+		becado1.addInscripcion(new Inscripcion(++idIns2, 2015, 1000, as9));						
+		becado1.addInscripcion(new Inscripcion(++idIns2, 2015, 1000, as10));		
+
+		ins2.registrarCalificacion(1, 6);
+		ins2.registrarCalificacion(2, 6);
+		ins2.registrarCalificacion(3, 12);	
+		ins2.registrarCalificacion(4, 8);		
+		ins2.registrarCalificacion(5, 8);		
+		ins2.registrarCalificacion(6, 6);
+		ins2.registrarCalificacion(7, 11);		
+		ins2.registrarCalificacion(8, 8);
+		ins2.registrarCalificacion(9, 10);
+		ins2.registrarCalificacion(10, 12);		
+		
+				
+		
+		
 		System.out.println("Promedio de aprobación para el alumno (40000100)...\n");
 		
 		float promedioTotal = alumnos.promedioAprobacion(40000100, true);
@@ -125,6 +158,18 @@ public class TestAlumno {
 		
 		System.out.println("El promedio de aprobación parcial para el alumno "+alumnos.obtenerAlumno(40000100).getApellido()+" es de: "+promedioParcial+"\n");		
 
+
+		System.out.println("Promedio de aprobación para el alumno (40000200)...\n");
+		
+		promedioTotal = alumnos.promedioAprobacion(40000200, true);
+		
+		System.out.println("El promedio de aprobación total para el alumno "+alumnos.obtenerAlumno(40000200).getApellido()+" es de: "+promedioTotal+"\n");
+
+		promedioParcial = alumnos.promedioAprobacion(40000200, false);
+		
+		System.out.println("El promedio de aprobación parcial para el alumno "+alumnos.obtenerAlumno(40000200).getApellido()+" es de: "+promedioParcial+"\n");		
+		
+		
 		
 		System.out.println("\nListado (parcial) de egresados...\n");
 		
