@@ -20,6 +20,8 @@ import exception.ListaLlenaException;
 import exception.PersistenciaException;
 import logica.Fachada;
 import logica.IFachada;
+import logica.asignatura.Asignatura;
+import logica.inscripcion.Inscripcion;
 import logica.vo.VOAlumno;
 import logica.vo.VOAlumnoDetallado;
 import logica.vo.VOAlumnoListado;
@@ -181,10 +183,52 @@ public class TestFachada {
 		System.out.println("\n\n\n");
 		
 		
+		/*solo prueba de egresado*/
+		System.out.println("--- Egreso a 123 ---");
+		try {
+			fachada.registrarAsignatura(new VOAsignatura("as1", "Asignatura 1", "Desc As 1"));
+			fachada.registrarAsignatura(new VOAsignatura("as2", "Asignatura 2", "Desc As 2"));
+			fachada.registrarAsignatura(new VOAsignatura("as3", "Asignatura 3", "Desc As 3"));
+			fachada.registrarAsignatura(new VOAsignatura("as4", "Asignatura 4", "Desc As 4"));
+			fachada.registrarAsignatura(new VOAsignatura("as5", "Asignatura 5", "Desc As 5"));
+			fachada.registrarAsignatura(new VOAsignatura("as6", "Asignatura 6", "Desc As 6"));
+			fachada.registrarAsignatura(new VOAsignatura("as7", "Asignatura 7", "Desc As 7"));
+			fachada.registrarAsignatura(new VOAsignatura("as8", "Asignatura 8", "Desc As 8"));
+			fachada.registrarAsignatura(new VOAsignatura("as9", "Asignatura 9", "Desc As 9"));
+			//fachada.registrarAsignatura(new VOAsignatura("as10", "Asignatura 10", "Desc As 10"));
+			
+			fachada.inscripcionAsignatura(new VOInscripcion(123, "as1", 2018, 1200 ));
+			fachada.inscripcionAsignatura(new VOInscripcion(123, "as2", 2018, 1200 ));
+			fachada.inscripcionAsignatura(new VOInscripcion(123, "as3", 2018, 1200 ));
+			fachada.inscripcionAsignatura(new VOInscripcion(123, "as4", 2018, 1200 ));
+			fachada.inscripcionAsignatura(new VOInscripcion(123, "as5", 2018, 1200 ));
+			fachada.inscripcionAsignatura(new VOInscripcion(123, "as6", 2018, 1200 ));
+			fachada.inscripcionAsignatura(new VOInscripcion(123, "as7", 2018, 1200 ));
+			fachada.inscripcionAsignatura(new VOInscripcion(123, "as8", 2018, 1200 ));
+			fachada.inscripcionAsignatura(new VOInscripcion(123, "as9", 2018, 1200 ));
+			
+			fachada.registrarCalificacion(123, 2, 7);
+			fachada.registrarCalificacion(123, 3, 8);
+			fachada.registrarCalificacion(123, 4, 8);
+			fachada.registrarCalificacion(123, 5, 9);
+			fachada.registrarCalificacion(123, 6, 12);
+			fachada.registrarCalificacion(123, 7, 7);
+			fachada.registrarCalificacion(123, 8, 11);
+			fachada.registrarCalificacion(123, 9, 6);
+			fachada.registrarCalificacion(123, 10, 8);
+			
+		} catch (AsignaturaYaExisteException | ListaLlenaException | AlumnoNoExisteException | AsignaturaYaAprobadaException | ErrorAnioInscripcionException | AlumnoYaInscriptoException | AsignaturaNoExisteException | InscripcionNoExisteException | AsignaturaYaCalificadaException e1) {
+			System.out.println("error por querer egresarlo mas de una vez");
+			// TODO Auto-generated catch block
+			//e1.printStackTrace();
+		}
+		/**/
+		
+		
 		
 		System.out.println("--- MONTO RECAUDADO ---");
 		try {
-			System.out.println(fachada.montoRecaudado(123, 0));
+			System.out.println(fachada.montoRecaudado(123, 2018));
 			System.out.println("OK");
 		} catch (AlumnoNoExisteException e) {
 			System.out.println("AlumnoNoExisteException");
@@ -198,7 +242,7 @@ public class TestFachada {
 		try {
 			lvoe = fachada.escolaridad(123, true);
 			for(VOEscolaridad voe : lvoe) {
-				System.out.println("numero: " + voe.getNumero() + ", aignatura: " + voe.getAsignaturaNombre() + ", año lectivo: " + voe.getAnioLectivo() + ", calificacion: " + voe.getCalificacion() + ", monto base: " + voe.getMontoBase() );
+				//System.out.println("numero: " + voe.getNumero() + ", aignatura: " + voe.getAsignaturaNombre() + ", año lectivo: " + voe.getAnioLectivo() );
 			}
 		} catch (AlumnoNoExisteException e) {
 			System.out.println("AlumnoNoExisteException");

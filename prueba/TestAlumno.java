@@ -42,7 +42,7 @@ public class TestAlumno {
 		alumnos.addAlumno(alumno2);		
 		
 		System.out.println("Agregamos becados...\n");
-		Becado becado1 = new Becado(40000200, "Gabriel", "Novasco", "calle 3", 94000200, "gnovasco@a.com", 30,"desc de prueba");		
+		Becado becado1 = new Becado(40000200, "Gabriel", "Novasco", "calle 3", 94000200, "gnovasco@a.com", 93,"desc de prueba");		
 		alumnos.addAlumno(becado1);
 
 		Becado becado2 = new Becado(40000201, "Alex", "Novasco", "calle 4", 94000201, "anovasco@a.com", 40,"desc de prueba2");		
@@ -191,7 +191,8 @@ public class TestAlumno {
 			
 		}		
 
-		
+		System.out.print( "\nMonto Recaudado para 40000100: " + alumnos.obtener(40000100).montoRecaudado(2015) );
+		System.out.print( "\nMonto Recaudado para 40000200: " + alumnos.obtener(40000200).montoRecaudado(2015) );
 	}
 
 }
