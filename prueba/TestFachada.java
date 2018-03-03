@@ -51,7 +51,13 @@ public class TestFachada {
 
 		servidorIp = Configuracion.getProperty("ServidorIp");
 		servidorPuerto = Configuracion.getProperty("ServidorPuerto");
-		IFachada fachada = (IFachada) Naming.lookup("//" + servidorIp + ":" + servidorPuerto + "/fachada");
+//		IFachada fachada = (IFachada) Naming.lookup("//" + servidorIp + ":" + servidorPuerto + "/fachada");
+		Fachada fachada = null;
+		try {
+			fachada = new Fachada();
+		} catch (ClassNotFoundException e3) {
+			System.out.println("ClassNotFoundException");
+		}
 		
 		int cantErrores = 0;
 		
@@ -166,10 +172,6 @@ public class TestFachada {
 			System.out.println("Error año inscripcion");
 		} catch (AlumnoYaInscriptoException e1) {
 			System.out.println("Aluno ya inscripto");
-		} catch (InscripcionNoExisteException e) {
-			System.out.println("InscripcionNoExisteException");
-		} catch (AsignaturaYaCalificadaException e) {
-			System.out.println("AsignaturaYaCalificadaException");
 		}
 		System.out.println("\n\n\n");
 		
@@ -251,7 +253,7 @@ public class TestFachada {
 		try {
 			fachada.respaldar();
 		} catch (PersistenciaException e) {
-			System.out.println("Error al persistir");
+			System.out.println(e.getMessage());
 		}
 		
 		
