@@ -42,7 +42,6 @@ public class Persistencia {
 			FileInputStream f = new FileInputStream( nomArch );
 			ObjectInputStream o = new ObjectInputStream(f);
 			
-			// Leo el arreglo de vehículos desde el archivo a través del flujo
 			voFachada = (VOFachada) o.readObject();
 			o.close();
 			f.close();
