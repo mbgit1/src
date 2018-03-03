@@ -10,6 +10,7 @@ import exception.AlumnoYaExisteException;
 import exception.AlumnoYaInscriptoException;
 import exception.AsignaturaNoExisteException;
 import exception.AsignaturaYaAprobadaException;
+import exception.AsignaturaYaCalificadaException;
 import exception.AsignaturaYaExisteException;
 import exception.ErrorAnioInscripcionException;
 import exception.InscripcionNoExisteException;
@@ -29,11 +30,11 @@ import logica.vo.VOInscripcion;
 
 public interface IFachada extends Remote {
 	
-	public void registrarAsignatura( VOAsignatura voAsignatura) throws RemoteException,AsignaturaYaExisteException, ListaLlenaException ;
+	public void registrarAsignatura( VOAsignatura voAsignatura) throws RemoteException, AsignaturaYaExisteException, ListaLlenaException ;
 	
 	public void registrarAlumno( VOAlumno voAlumno ) throws RemoteException, AlumnoYaExisteException;
 	
-	public void modificarAlumno( VOAlumnoModificar voAlumnoModificar ) throws RemoteException,AlumnoNoExisteException;
+	public void modificarAlumno( VOAlumnoModificar voAlumnoModificar ) throws RemoteException, AlumnoNoExisteException;
 	
 	public List<VOAsignatura> listarAsignaturas() throws RemoteException; //revisar si no deberia devolver un vo especifico para el listado
 	
@@ -41,14 +42,13 @@ public interface IFachada extends Remote {
 	
 	public VOAlumnoDetallado listadoDetalleAlumno( int cedula ) throws AlumnoNoExisteException, RemoteException;
 	
-	//public void inscripcionAsignatura( String niIdea1, int niIdea2, VOAlumnoListado voAlumnoListado ) throws RemoteException, AlumnoNoExisteException,AsignaturaYaAprobadaException,ErrorAnioInscripcionException,AlumnoYaInscriptoException;
-	  public void inscripcionAsignatura( String niIdea1, int niIdea2, VOInscripcion voInscripcion ) throws RemoteException,AsignaturaNoExisteException, AlumnoNoExisteException,AsignaturaYaAprobadaException,ErrorAnioInscripcionException,AlumnoYaInscriptoException;
+	public void inscripcionAsignatura( VOInscripcion voInscripcion ) throws RemoteException, AlumnoNoExisteException, InscripcionNoExisteException, AsignaturaYaCalificadaException, AsignaturaYaAprobadaException, ErrorAnioInscripcionException, AlumnoYaInscriptoException, AsignaturaNoExisteException;
 
-	public void registrarCalificacion( int cedula, int niIdea, int nota ) throws RemoteException, AlumnoNoExisteException, AsignaturaYaAprobadaException,InscripcionNoExisteException ;
+	public void registrarCalificacion( int cedula, int nroInscripcion, int nota ) throws RemoteException, AlumnoNoExisteException, InscripcionNoExisteException, AsignaturaYaCalificadaException ;
 	
-	public int montoRecaudado( int cedula, int niIdea ) throws RemoteException,AlumnoNoExisteException;
+	public int montoRecaudado( int cedula, int anioLectivo ) throws RemoteException, AlumnoNoExisteException;
 	
-	public List<VOEscolaridad> escolaridad( int cedula, boolean parcial ) throws RemoteException,AlumnoNoExisteException;
+	public List<VOEscolaridad> escolaridad( int cedula, boolean parcial ) throws RemoteException, AlumnoNoExisteException;
 	
 	public List<VOEgresado> listadoEgresados( boolean parcial ) throws RemoteException;
 	
