@@ -94,17 +94,21 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 
 	public void registrarAlumno( VOAlumno voAlumno ) throws AlumnoYaExisteException{
 		monitor.comienzoEscritura();
+	
+		Alumno alumno;
 		
-		Alumno alumno = new Alumno( voAlumno.getCedula(), voAlumno.getNombre(), voAlumno.getApellido(), voAlumno.getDomicilio(), voAlumno.getTelefono(), voAlumno.getEmail() );
-
-		if(alumnos.contiene( alumno.getCedula()) ) {
+		if(alumnos.contiene( voAlumno.getCedula()) ) {
 			monitor.terminoEscritura();
 			throw new AlumnoYaExisteException("Ya se registro un alumno con la misma cedula");
 		}
 		else {
-			//la pregunta de si es becado o no, la  hace el metodo addAlumno en Alumnos
-			alumnos.addAlumno(alumno); 
-			
+			if(voAlumno instanceof VOBecado) {
+				alumno = new Becado( voAlumno.getCedula(), voAlumno.getNombre(), voAlumno.getApellido(), voAlumno.getDomicilio(), voAlumno.getTelefono(), voAlumno.getEmail(), ((VOBecado)voAlumno).getDescuento(), ((VOBecado)voAlumno).getDescripcion() );
+			}else {
+				alumno = new Alumno( voAlumno.getCedula(), voAlumno.getNombre(), voAlumno.getApellido(), voAlumno.getDomicilio(), voAlumno.getTelefono(), voAlumno.getEmail() );
+			}
+				
+			alumnos.addAlumno(alumno); 			
 		}
 		
 		monitor.terminoEscritura();
@@ -147,8 +151,9 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 
 	public List<VOAlumnoListado> listarAlumnos( String apellido ){
 		monitor.comienzoLectura();
-		List<VOAlumnoListado> listarAlumnos = null;
-		listarAlumnos=  alumnos.listarAlumnosPorApellido(apellido);
+		
+		List<VOAlumnoListado> listarAlumnos = alumnos.listarAlumnosPorApellido(apellido);
+		
 		monitor.terminoLectura();
 		return listarAlumnos;
 	}
@@ -157,8 +162,8 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 	public VOAlumnoDetallado listadoDetalleAlumno( int cedula ) throws AlumnoNoExisteException{
 		monitor.comienzoLectura();
 		
-		Alumno alumno = alumnos.obtener(cedula);
-		VOAlumnoDetallado voad = new VOAlumnoDetallado(0," "," "," ",0," ",0," "); 
+		VOAlumnoDetallado voad = null;
+		 
 		//EL VALOR DE CUOTA VA EN CERO, PORQUE LUEGO DE HABLAR CON EL TUTOR SE DECIDIO QUE ERA UN REQUERIMIENTO
 		//AMBIGUO Y SIN SENTIDO DEVOLVER ESE VALOR. 
 		if(!alumnos.contiene(cedula)) {
@@ -166,9 +171,8 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 			throw new AlumnoNoExisteException("No existe un alumno con esa cedula");
 		}	
 		else {
-
+			Alumno alumno = alumnos.obtener(cedula);
 			voad = alumno.listadoDetalleAlumno(); 
-
 		}
 		
 		monitor.terminoLectura();

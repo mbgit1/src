@@ -134,11 +134,19 @@ public boolean egresado() {
 }
 
 public VOAlumno voSalida() {
-	return new VOAlumno(cedula,nombre,  apellido,  domicilio,  telefono,  email);
+	return new VOAlumno(cedula, nombre,  apellido,  domicilio,  telefono,  email);
 }
 
 public VOAlumnoListado voAlumnoListado() {
-	return new VOAlumnoListado(cedula,nombre,  apellido," ");
+	String tipo;
+	
+	if ( this instanceof Becado) {
+		tipo = "becado";
+	}else {
+		tipo = "común";
+	}
+
+	return new VOAlumnoListado(cedula, nombre, apellido, tipo);
 }
 
 
@@ -161,41 +169,21 @@ public void modificarAlumno(String domicilio, int telefono, String email  ) {
 }
 
 public VOAlumnoDetallado listadoDetalleAlumno(){
-	 
-	//Alumno alumno;
-	//Iterator<Alumno> iteradorAlumno = iterador();
-	//List<VOAlumnoDetallado> alumnoSalida = new ArrayList<VOAlumnoDetallado>();
-	VOAlumnoDetallado voad = new VOAlumnoDetallado(0," "," "," ",0," ",0," "); 
-	//while (iteradorAlumno.hasNext()) {
-	//	alumno = iteradorAlumno.next();
-		if ( this instanceof Becado) {
-			 Becado becado = new Becado(this.getCedula(),this.getApellido(),this.getNombre(),this.getDomicilio(),this.getTelefono(),this.getEmail(),((Becado) this).getDescuento(),((Becado) this).getDescripcion());
-		//aca preguntar con instans of si es becado o no.. y ahi hacer la diferencia de vo.. 
-		//tomo de aqui si es becado (me devuelvo true) saco el tipo. 
-		//agregar en VOAlumnoListado el atributo tipo 
-			  voad.setCedula(becado.getCedula());
-			  voad.setApellido(becado.getApellido());
-			  voad.setNombre(becado.getNombre());
-			  voad.setDomicilio(becado.getDomicilio());
-			  voad.setTelefono(becado.getTelefono());
-			  voad.setEmail(becado.getEmail());
-			 // voad.setMontoCuota(becado.calcularCuota());
-			  voad.setTipo("becado");
- 
-			
-		}
-		else {
-			  voad.setCedula(this.getCedula());
-			  voad.setApellido(this.getApellido());
-			  voad.setNombre(this.getNombre());
-			  voad.setDomicilio(this.getDomicilio());
-			  voad.setTelefono(this.getTelefono());
-			  voad.setEmail(this.getEmail());
-			 // voad.setMontoCuota(this.calcularCuota());
-			  voad.setTipo("comun");
-		}	
-         return voad;
+	VOAlumnoDetallado voad;
+	int montoCuota = 0;
+	String tipo;
+
+	if ( this instanceof Becado) {		
+		//montoCuota = this.calcularCuota();
+		tipo = "becado";
+	}else {
+		//montoCuota = this.calcularCuota();
+		tipo = "comun";
+	}
 	
+	voad = new VOAlumnoDetallado(cedula, nombre, apellido, domicilio, telefono, email, montoCuota, tipo);
+	
+	return voad;
 }
 
 //Aqui va el promedio de todas las materias (incluso si la calificacion es cero)

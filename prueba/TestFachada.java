@@ -80,17 +80,6 @@ public class TestFachada {
 		
 		
 		
-		System.out.println("--- REGISTRAR ALUMNO ---");
-		VOAlumno voAlumno= new VOAlumno(123, "Guille", "Osores", "calle falsa 1234", 12345, "a@a.com");
-		try {
-			fachada.registrarAlumno(voAlumno);
-			System.out.println("ok");
-		} catch (AlumnoYaExisteException e2) {
-			System.out.println("Alumno ya existe");
-		}
-		System.out.println("\n\n\n");
-		
-		
 		System.out.println("--- REGISTRAR BECADO ---");
 		VOBecado voBecado= new VOBecado(456, "Gabriel", "Novasco", "cuidad de la costa", 415, "gatutus@gmail.com", 30, "treinta");
 		try {
@@ -98,6 +87,18 @@ public class TestFachada {
 			System.out.println("ok");
 		} catch (AlumnoYaExisteException e2) {
 			System.out.println("Elbecado ya existe");
+		}
+		System.out.println("\n\n\n");
+		
+		
+		
+		System.out.println("--- REGISTRAR ALUMNO ---");
+		VOAlumno voAlumno= new VOAlumno(123, "Guille", "Osores", "calle falsa 1234", 12345, "a@a.com");
+		try {
+			fachada.registrarAlumno(voAlumno);
+			System.out.println("ok");
+		} catch (AlumnoYaExisteException e2) {
+			System.out.println("Alumno ya existe");
 		}
 		System.out.println("\n\n\n");
 		
@@ -127,7 +128,7 @@ public class TestFachada {
 		System.out.println("--- LISTADO DE ALUMNOS POR APELLIDO---");
 		List<VOAlumnoListado> lvoalL = fachada.listarAlumnos("o");
 		for(VOAlumnoListado voa : lvoalL) {
-			System.out.println("cedula: " + voa.getCedula() + ", nombre: " + voa.getNombre() + ", apellido: " + voa.getApellido());
+			System.out.println("cedula: " + voa.getCedula() + ", nombre: " + voa.getNombre() + ", apellido: " + voa.getApellido() + ", tipo: " + voa.getTipo());
 		}
 		System.out.println("\n\n\n");
 		
@@ -238,13 +239,13 @@ public class TestFachada {
 		System.out.println("\n\n\n");
 		
 		
-		
+		/*
 		try {
 			fachada.respaldar();
 		} catch (PersistenciaException e) {
 			System.out.println(e.getMessage());
 		}
-		
+		*/
 		
 		
 	}
