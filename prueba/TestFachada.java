@@ -283,13 +283,13 @@ public class TestFachada {
 		System.out.println("\n\n\n");
 		
 		
-		/*
+		
 		try {
 			fachada.respaldar();
 		} catch (PersistenciaException e) {
 			System.out.println(e.getMessage());
 		}
-		*/
+		
 		
 		
 	}
