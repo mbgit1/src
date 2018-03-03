@@ -1,5 +1,6 @@
 package logica;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -15,6 +16,7 @@ import exception.AsignaturaYaCalificadaException;
 import exception.AsignaturaYaExisteException;
 import exception.ErrorAnioInscripcionException;
 import exception.ListaLlenaException;
+import exception.PersistenciaException;
 import logica.alumno.Alumno;
 import logica.alumno.Alumnos;
 import logica.alumno.Becado;
@@ -52,17 +54,15 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 			voFachadaPersistencia = Persistencia.recuperar( Configuracion.getProperty("ArchivoRespaldo") );
 
 			if ( voFachadaPersistencia != null ) {
-				asignaturas = new Asignaturas( voFachadaPersistencia.getAsignaturas() );
-				alumnos = new Alumnos( voFachadaPersistencia.getAlumnos() );
-			}else {
-				asignaturas = new Asignaturas();
-				alumnos = new Alumnos();
+				asignaturas = voFachadaPersistencia.getAsignaturas();
+				alumnos = voFachadaPersistencia.getAlumnos();
 			}
 
 			monitor = new Monitor();
-		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			System.out.println("ClassNotFoundException");
+		} catch (IOException e) {
+			System.out.println("IOException");
 		}
 	}
 
@@ -288,7 +288,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 	}
 	
 	//Requerimiento 10: Respaldo de datos
-	public void respaldar() throws RemoteException, IOException {
+	public void respaldar() throws PersistenciaException, FileNotFoundException, IOException {
 		monitor.comienzoEscritura();
 
 		VOFachada voFachada = new VOFachada( asignaturas, alumnos );

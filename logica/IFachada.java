@@ -1,5 +1,6 @@
 package logica;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -42,7 +43,7 @@ public interface IFachada extends Remote {
 	
 	public VOAlumnoDetallado listadoDetalleAlumno( int cedula ) throws AlumnoNoExisteException, RemoteException;
 	
-	public void inscripcionAsignatura( VOInscripcion voInscripcion ) throws RemoteException, AlumnoNoExisteException, InscripcionNoExisteException, AsignaturaYaCalificadaException, AsignaturaYaAprobadaException, ErrorAnioInscripcionException, AlumnoYaInscriptoException, AsignaturaNoExisteException;
+	public void inscripcionAsignatura( VOInscripcion voInscripcion ) throws RemoteException, AlumnoNoExisteException, AsignaturaYaAprobadaException, ErrorAnioInscripcionException, AlumnoYaInscriptoException, AsignaturaNoExisteException;
 
 	public void registrarCalificacion( int cedula, int nroInscripcion, int nota ) throws RemoteException, AlumnoNoExisteException, InscripcionNoExisteException, AsignaturaYaCalificadaException ;
 	
@@ -52,7 +53,7 @@ public interface IFachada extends Remote {
 	
 	public List<VOEgresado> listadoEgresados( boolean parcial ) throws RemoteException;
 	
-	public void respaldar()  throws RemoteException, PersistenciaException, IOException;
+	public void respaldar()  throws RemoteException, PersistenciaException, FileNotFoundException, IOException;
 
 
 
