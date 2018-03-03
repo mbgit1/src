@@ -48,10 +48,9 @@ public int calcularCuota( ) {
 }
 
 */
-public int montoRecaudado(int anio) {
-	
-	return  super.montoRecaudado(anio) - ((super.montoRecaudado(anio) * this.descuento)/100);       
 
+public float montoRecaudado(int anio) {	
+	return  super.montoRecaudado(anio) - ((super.montoRecaudado(anio) * this.descuento)/100);       
 }
 
 }

@@ -47,7 +47,7 @@ public interface IFachada extends Remote {
 
 	public void registrarCalificacion( int cedula, int nroInscripcion, int nota ) throws RemoteException, AlumnoNoExisteException, InscripcionNoExisteException, AsignaturaYaCalificadaException ;
 	
-	public int montoRecaudado( int cedula, int anioLectivo ) throws RemoteException, AlumnoNoExisteException;
+	public float montoRecaudado( int cedula, int anioLectivo ) throws RemoteException, AlumnoNoExisteException;
 	
 	public List<VOEscolaridad> escolaridad( int cedula, boolean parcial ) throws RemoteException, AlumnoNoExisteException;
 	

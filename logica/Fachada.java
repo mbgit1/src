@@ -268,16 +268,18 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 	}
 
 	//Requerimiento 9: Monto recaudado por inscripciones
-	public int montoRecaudado( int cedula, int anioLectivo )throws AlumnoNoExisteException {
+	public float montoRecaudado( int cedula, int anioLectivo )throws AlumnoNoExisteException {
 		monitor.comienzoLectura();
 		
-		int recaudacion = 0;
+		float recaudacion = 0;
 		if(!alumnos.contiene( cedula) ) {
 			monitor.terminoLectura();
 			throw new AlumnoNoExisteException("No existe  alumno con la misma cedula");
 		}
 		else {
 			Alumno alumno = alumnos.obtener(cedula);
+			recaudacion = alumno.montoRecaudado(anioLectivo);
+			/*
 			if(alumno instanceof Becado) {
 				Becado becado  =  (Becado) alumnos.obtener(cedula);
 				recaudacion = becado.montoRecaudado(anioLectivo);
@@ -285,6 +287,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 			else {
 				recaudacion = alumno.montoRecaudado(anioLectivo);
 			}
+			*/
 		}
 		
 		monitor.terminoLectura();
