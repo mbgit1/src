@@ -33,7 +33,7 @@ public class Asignaturas implements Serializable {
 		
 		while( i < asignaturas.size() && !encontrada ) {
 			a = asignaturas.get( i );
-			if( a.codigo == codigo )
+			if( a.getCodigo() == codigo )
 				encontrada = true;
 			i++;
 		}
@@ -46,7 +46,7 @@ public class Asignaturas implements Serializable {
 		
 		while( i < asignaturas.size() && !existe) {
 			Asignatura a = asignaturas.get( i );
-			if( a.codigo.equals(codigo) ) {
+			if( a.getCodigo().equals(codigo) ) {
 				existe = true;
 			}
 			i++;
@@ -63,7 +63,7 @@ public class Asignaturas implements Serializable {
 		
 		for( int i = 0; i < asignaturas.size(); i++) {
 			Asignatura a = asignaturas.get( i );
-			lista.add( new VOAsignatura( a.codigo, a.nombre, a.descripcion ) );
+			lista.add( new VOAsignatura( a.getCodigo(), a.getNombre(), a.getDescripcion() ) );
 		}
 		
 		return lista;

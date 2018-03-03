@@ -3,12 +3,13 @@ import java.io.Serializable;
 
 import logica.asignatura.Asignatura;
 
+@SuppressWarnings("serial")
 public class Inscripcion implements Serializable  {
-	int numero;
-	int anioLectivo;
-	int montoBase;
-	int calificacion;
-	Asignatura asignatura;
+	private int numero;
+	private int anioLectivo;
+	private int montoBase;
+	private int calificacion;
+	private Asignatura asignatura;
 	
 	public Inscripcion( int numero, int anioLectivo, int montoBase, Asignatura asignatura ) {
 		this.numero				= numero;

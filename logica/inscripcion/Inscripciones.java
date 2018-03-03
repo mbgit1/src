@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-import logica.alumno.Alumno;
 import logica.inscripcion.Inscripcion;
 import logica.vo.VOEscolaridad;
 
+@SuppressWarnings("serial")
 public class Inscripciones implements Serializable  {
 	LinkedList<Inscripcion> inscripciones;
 	
@@ -24,9 +24,9 @@ public class Inscripciones implements Serializable  {
 
 		for(Inscripcion i: inscripciones) {
 			if (!parcial)
-				lista.add( new VOEscolaridad( i.numero, i.anioLectivo, i.montoBase, i.calificacion, i.asignatura.getNombre() ) );
+				lista.add( new VOEscolaridad( i.getNumero(), i.getAnio(), i.getMonto(), i.getCalificacion(), i.getAsignatura().getNombre() ) );
 			else if (i.aprobada())
-				lista.add( new VOEscolaridad( i.numero, i.anioLectivo, 0 , i.calificacion, i.asignatura.getNombre() ) );
+				lista.add( new VOEscolaridad( i.getNumero(), i.getAnio(), 0 , i.getCalificacion(), i.getAsignatura().getNombre() ) );
 		}
 		
 		return lista;
@@ -42,7 +42,7 @@ public class Inscripciones implements Serializable  {
 		int ultimaIns = 0;
 		
 		if (!inscripciones.isEmpty())
-			ultimaIns = inscripciones.getLast().numero;
+			ultimaIns = inscripciones.getLast().getNumero();
 		
 		return ultimaIns;
 	}
@@ -61,8 +61,8 @@ public class Inscripciones implements Serializable  {
 		int monto = 0;
 		
 		for(Inscripcion i: inscripciones) {
-			if (i.anioLectivo == anioLectivo)
-				monto+= i.montoBase;
+			if (i.getAnio() == anioLectivo)
+				monto+= i.getMonto();
 		}
 		
 		return monto*10;
@@ -83,7 +83,7 @@ public class Inscripciones implements Serializable  {
 		boolean anioValido = true;
 		
 		if(!inscripciones.isEmpty()) {
-			anioValido = anioLectivo >= this.inscripciones.getLast().anioLectivo;
+			anioValido = anioLectivo >= this.inscripciones.getLast().getAnio();
 		}
 		
 		return anioValido;

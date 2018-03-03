@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Asignatura implements Serializable  {
-	String codigo;
-	String nombre;
-	String descripcion;
+	private String codigo;
+	private String nombre;
+	private String descripcion;
 	
 	public Asignatura( String codigo, String nombre, String descripcion ) {
 		this.codigo 		= codigo;
