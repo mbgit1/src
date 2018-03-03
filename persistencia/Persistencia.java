@@ -47,9 +47,9 @@ public class Persistencia {
 			f.close();
 		} catch( java.io.EOFException ex ) {
 			System.out.println("el archivo está vacío");
+			voFachada = new VOFachada( new Asignaturas(), new Alumnos() );
 		} catch (FileNotFoundException e) {
 			System.out.println("el archivo no existe");
-		} finally {
 			voFachada = new VOFachada( new Asignaturas(), new Alumnos() );
 		}
 		
