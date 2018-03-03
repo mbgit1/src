@@ -42,14 +42,16 @@ public class Asignaturas implements Serializable {
 	
 	public boolean existeAsignatura( String codigo ) {
 		int i = 0;
+		boolean existe = false;
 		
-		while( i < asignaturas.size() ) {
+		while( i < asignaturas.size() && !existe) {
 			Asignatura a = asignaturas.get( i );
-			if( a.codigo == codigo )
-				return true;
+			if( a.codigo.equals(codigo) ) {
+				existe = true;
+			}
 			i++;
 		}
-		return false; 
+		return existe; 
 	}
 	
 	public boolean estaLlena() {

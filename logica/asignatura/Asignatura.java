@@ -1,6 +1,9 @@
 package logica.asignatura;
 
-public class Asignatura {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Asignatura implements Serializable  {
 	String codigo;
 	String nombre;
 	String descripcion;
