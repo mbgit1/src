@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
+@SuppressWarnings("serial")
 public abstract class Diccionario<K, V> implements Serializable {
 	
 	private Map<K, V> mapa;

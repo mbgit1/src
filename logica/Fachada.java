@@ -23,7 +23,6 @@ import logica.alumno.Becado;
 import logica.asignatura.Asignatura;
 import logica.asignatura.Asignaturas;
 import logica.inscripcion.Inscripcion;
-import logica.inscripcion.Inscripciones;
 import logica.vo.VOAlumno;
 import logica.vo.VOAlumnoDetallado;
 import logica.vo.VOAlumnoListado;
@@ -38,8 +37,6 @@ import persistencia.Persistencia;
 import logica.IFachada;
 import logica.Monitor;
 import exception.InscripcionNoExisteException;
-
-
 
 @SuppressWarnings("serial")
 public class Fachada extends UnicastRemoteObject implements IFachada {

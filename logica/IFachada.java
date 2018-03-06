@@ -22,12 +22,9 @@ import logica.vo.VOAlumnoDetallado;
 import logica.vo.VOAlumnoListado;
 import logica.vo.VOAlumnoModificar;
 import logica.vo.VOAsignatura;
-import logica.vo.VOBecado;
 import logica.vo.VOEgresado;
 import logica.vo.VOEscolaridad;
 import logica.vo.VOInscripcion;
-
-
 
 public interface IFachada extends Remote {
 	
