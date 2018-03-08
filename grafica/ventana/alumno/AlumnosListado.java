@@ -118,7 +118,7 @@ public class AlumnosListado extends Ventana{
 		btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if( table.getSelectedRow() > 0 ) {
+				if( table.getSelectedRow() >= 0 ) {
 					int cedula = (int)table.getValueAt(table.getSelectedRow(), 0);
 					
 					if (alumnoModificar != null)
