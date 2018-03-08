@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,10 +18,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 
+import grafica.controlador.Controlador;
+import grafica.controlador.alumno.ControladorAlumnosListado;
 import grafica.ventana.alumno.AlumnoNuevo;;
 
 @SuppressWarnings("serial")
-public class Alumnos extends JFrame {
+public class AlumnosListado extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtFltApellido;
@@ -29,6 +32,8 @@ public class Alumnos extends JFrame {
 	private JButton btnModificar;
 	private AlumnoNuevo alumnoNuevo;
 	private AlumnoModificar alumnoModificar;
+	
+	ControladorAlumnosListado controlador;
 
 	/**
 	 * Launch the application.
@@ -37,7 +42,7 @@ public class Alumnos extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Alumnos frame = new Alumnos();
+					AlumnosListado frame = new AlumnosListado();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,10 +54,12 @@ public class Alumnos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Alumnos() {
+	public AlumnosListado() {
+		controlador = new ControladorAlumnosListado( this );
+		
 		setTitle("Listado de Alumnos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 576, 320);
+		setBounds(100, 100, 599, 320);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -107,7 +114,7 @@ public class Alumnos extends JFrame {
 				alumnoNuevo.setVisible(true);
 			}
 		});
-		btnAgregar.setBounds(474, 59, 85, 20);
+		btnAgregar.setBounds(474, 59, 100, 20);
 		contentPane.add(btnAgregar);
 		
 		btnModificar = new JButton("Modificar");
@@ -122,35 +129,29 @@ public class Alumnos extends JFrame {
 				alumnoModificar.setVisible(true);
 			}
 		});
-		btnModificar.setBounds(474, 90, 85, 20);
+		btnModificar.setBounds(474, 90, 100, 20);
 		contentPane.add(btnModificar);
 		
 		cargarTabla();
 	}
 	
 	private void cargarTabla() {
-		try {
-			DefaultTableModel dtm = ((DefaultTableModel)table.getModel());
-			logica.Fachada fachada = new logica.Fachada();
-			java.util.List<logica.vo.VOAlumnoListado> lvoa = fachada.listarAlumnos(txtFltApellido.getText());
-			
-			for(int row = table.getModel().getRowCount() - 1 ; row >= 0 ; row--)
-				dtm.removeRow(row);
-			
-			for(logica.vo.VOAlumnoListado voa : lvoa) {
-				dtm.addRow(new Object[]{voa.getCedula(), voa.getNombre(), voa.getApellido(), voa.getTipo()});;
-			}
-			table.repaint();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		DefaultTableModel dtm = ((DefaultTableModel)table.getModel());
+		
+		List<logica.vo.VOAlumnoListado> lvoa = controlador.listarAlumnos( txtFltApellido.getText() );
+		
+		for(int row = table.getModel().getRowCount() - 1 ; row >= 0 ; row--)
+			dtm.removeRow(row);
+		
+		for(logica.vo.VOAlumnoListado voa : lvoa) {
+			dtm.addRow(new Object[]{voa.getCedula(), voa.getNombre(), voa.getApellido(), voa.getTipo()});;
 		}
+		table.repaint();
+	}
+	
+	public void showMessageDialog( String mensaje ) {
+		//System.out.println("ventana mensaje?: " + mensaje);
+		javax.swing.JOptionPane.showMessageDialog( null, mensaje );
 	}
 
 }

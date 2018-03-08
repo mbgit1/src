@@ -130,7 +130,7 @@ public class AlumnoModificar extends JFrame {
 									if ( soloNumeros( txtTelefono.getText() ) ) {
 										int cedula = Integer.parseInt( strCedula );
 										int telefono = Integer.parseInt( strTelefono );
-										
+										showMessageDialog( "El domicilio en ventana: " + domicilio);
 										controlador.grabar( cedula, domicilio, telefono, email );
 									}else {
 										showMessageDialog( "El teléfono debe ser numérico" );

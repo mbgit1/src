@@ -21,6 +21,7 @@ public class ControladorAlumnoModificar extends Controlador {
 	}
 	
 	public void grabar( int cedula, String domicilio, int telefono, String email ) {
+		showMessageDialog( "domicilio en controlador: " + domicilio);
 		VOAlumnoModificar voAlumnoModificar = new VOAlumnoModificar( cedula, domicilio, telefono, email );
 		try {
 			fachada.modificarAlumno(voAlumnoModificar);
