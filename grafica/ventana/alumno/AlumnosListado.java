@@ -3,8 +3,6 @@ package grafica.ventana.alumno;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -18,12 +16,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 
-import grafica.controlador.Controlador;
 import grafica.controlador.alumno.ControladorAlumnosListado;
+import grafica.ventana.Ventana;
 import grafica.ventana.alumno.AlumnoNuevo;;
 
 @SuppressWarnings("serial")
-public class AlumnosListado extends JFrame {
+public class AlumnosListado extends Ventana{
 
 	private JPanel contentPane;
 	private JTextField txtFltApellido;
@@ -120,13 +118,17 @@ public class AlumnosListado extends JFrame {
 		btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int cedula = (int)table.getValueAt(table.getSelectedRow(), 0);
-				
-				if (alumnoModificar != null)
-					alumnoModificar.dispose();
-				
-				alumnoModificar = new AlumnoModificar( cedula );
-				alumnoModificar.setVisible(true);
+				if( table.getSelectedRow() > 0 ) {
+					int cedula = (int)table.getValueAt(table.getSelectedRow(), 0);
+					
+					if (alumnoModificar != null)
+						alumnoModificar.dispose();
+					
+					alumnoModificar = new AlumnoModificar( cedula );
+					alumnoModificar.setVisible(true);	
+				}else {
+					showMessageDialog( "Seleccione un alumno para modificar" );
+				}
 			}
 		});
 		btnModificar.setBounds(474, 90, 100, 20);

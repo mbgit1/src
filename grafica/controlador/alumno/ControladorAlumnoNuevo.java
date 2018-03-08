@@ -9,12 +9,12 @@ import logica.vo.VOAlumno;
 
 public class ControladorAlumnoNuevo extends Controlador {
 	
-	AlumnoNuevo ventana;
+	//AlumnoNuevo ventana;
 	
 	public ControladorAlumnoNuevo( AlumnoNuevo alumnoNuevo) {
 		//super(alumnoNuevo);
-		super();
-		ventana = alumnoNuevo;
+		super( alumnoNuevo );
+		//ventana = alumnoNuevo;
 	}
 	
 	public void grabar( int cedula, String nombre, String apellido, String domicilio, int telefono, String email ) {

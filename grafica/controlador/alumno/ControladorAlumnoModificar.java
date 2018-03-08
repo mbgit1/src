@@ -3,21 +3,18 @@ package grafica.controlador.alumno;
 import java.rmi.RemoteException;
 
 import exception.AlumnoNoExisteException;
-import exception.AlumnoYaExisteException;
 import grafica.controlador.Controlador;
 import grafica.ventana.alumno.AlumnoModificar;
-import grafica.ventana.alumno.AlumnoNuevo;
-import logica.vo.VOAlumno;
 import logica.vo.VOAlumnoDetallado;
 import logica.vo.VOAlumnoModificar;
 
 public class ControladorAlumnoModificar extends Controlador {
 
-	AlumnoModificar ventana;
+	//AlumnoModificar ventana;
 	
 	public ControladorAlumnoModificar( AlumnoModificar alumnoModificar ) {
-		super();
-		ventana = alumnoModificar;
+		super( alumnoModificar );
+		//ventana = alumnoModificar;
 	}
 	
 	public void grabar( int cedula, String domicilio, int telefono, String email ) {

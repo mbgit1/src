@@ -13,10 +13,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import grafica.controlador.alumno.ControladorAlumnoModificar;
+import grafica.ventana.Ventana;
 import logica.vo.VOAlumnoDetallado;
 
 @SuppressWarnings("serial")
-public class AlumnoModificar extends JFrame {
+public class AlumnoModificar extends Ventana {
 
 	private JPanel contentPane;
 	private JTextField txtCedula;
@@ -83,6 +84,7 @@ public class AlumnoModificar extends JFrame {
 		
 		txtCedula = new JTextField();
 		txtCedula.setBounds(90, 28, 205, 20);
+		txtCedula.setEnabled( false );
 		contentPane.add(txtCedula);
 		txtCedula.setColumns(10);
 		
@@ -167,16 +169,6 @@ public class AlumnoModificar extends JFrame {
 		cargoDatos( cedula );
 	}
 	
-	private boolean soloNumeros( String string ) {
-        Pattern pattern = Pattern.compile( "^[0-9]*$" );
-
-        Matcher matcher = pattern.matcher( string );
-        boolean matches = matcher.matches();
-        
-        return matches;
-		//return string.regionMatches(true, 0, "[0-9]", 0, string.length());
-	}
-	
 	private void cargoDatos( int cedula ) {
 		VOAlumnoDetallado voad = controlador.obtenerAlumno( cedula );
 		if( voad != null ) {
@@ -187,11 +179,6 @@ public class AlumnoModificar extends JFrame {
 			txtTelefono.setText( Integer.toString( voad.getTelefono() ) );
 			txtEmail.setText( voad.getEmail() );
 		}
-	}
-	
-	public void showMessageDialog( String mensaje ) {
-		//System.out.println("ventana mensaje?: " + mensaje);
-		javax.swing.JOptionPane.showMessageDialog( null, mensaje );
 	}
 
 }

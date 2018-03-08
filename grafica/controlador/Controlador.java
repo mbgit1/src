@@ -6,15 +6,16 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 
 import configuracion.Configuracion;
+import grafica.ventana.Ventana;
 import logica.IFachada;
 
 public abstract class Controlador {
 	
-	//protected clase ventana;
+	protected Ventana ventana;
 	protected IFachada fachada;
 	
-	public Controlador() {
-		//this.ventana = ventana;
+	public Controlador( Ventana ventana) {
+		this.ventana = ventana;
 		
 		String servidorIp;
 		String servidorPuerto;

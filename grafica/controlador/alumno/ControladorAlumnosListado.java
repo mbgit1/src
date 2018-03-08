@@ -8,11 +8,11 @@ import grafica.controlador.Controlador;
 
 public class ControladorAlumnosListado extends Controlador {
 	
-	AlumnosListado ventana;
+	//AlumnosListado ventana;
 	
 	public ControladorAlumnosListado( AlumnosListado alumnosListado) {
-		super();
-		ventana = alumnosListado;
+		super( alumnosListado );
+		//ventana = alumnosListado;
 	}
 	
 	public List<logica.vo.VOAlumnoListado> listarAlumnos( String apellido ){
