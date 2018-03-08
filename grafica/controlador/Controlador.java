@@ -41,7 +41,7 @@ public abstract class Controlador {
 	}
 	
 	public void showMessageDialog( String string ) {
-		System.out.println("mensaje en controlador? fuuuuck: " + string);
+		//System.out.println("mensaje en controlador?: " + string);
 	}
 
 }

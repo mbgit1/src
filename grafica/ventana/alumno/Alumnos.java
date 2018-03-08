@@ -1,22 +1,25 @@
-package grafica;
+package grafica.ventana.alumno;
 
-import java.awt.Dialog.ModalExclusionType;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.ListSelectionModel;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.awt.event.ActionEvent;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JLabel;
+
+import grafica.ventana.alumno.AlumnoNuevo;;
+
+@SuppressWarnings("serial")
 public class Alumnos extends JFrame {
 
 	private JPanel contentPane;
@@ -24,7 +27,8 @@ public class Alumnos extends JFrame {
 	private JTable table;
 	private JButton btnAgregar;
 	private JButton btnModificar;
-	private Alumno alumno;
+	private AlumnoNuevo alumnoNuevo;
+	private AlumnoModificar alumnoModificar;
 
 	/**
 	 * Launch the application.
@@ -46,20 +50,20 @@ public class Alumnos extends JFrame {
 	 * Create the frame.
 	 */
 	public Alumnos() {
-		setTitle("Alumnos");
+		setTitle("Listado de Alumnos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 578, 424);
+		setBounds(100, 100, 576, 320);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblFltApellido = new JLabel("Apellido:");
-		lblFltApellido.setBounds(10, 13, 46, 14);
+		lblFltApellido.setBounds(10, 13, 66, 14);
 		contentPane.add(lblFltApellido);
 		
 		txtFltApellido = new JTextField();
-		txtFltApellido.setBounds(66, 10, 178, 20);
+		txtFltApellido.setBounds(60, 10, 178, 20);
 		contentPane.add(txtFltApellido);
 		txtFltApellido.setColumns(10);
 		
@@ -69,52 +73,56 @@ public class Alumnos extends JFrame {
 				cargarTabla();
 			}
 		});
-		btnBuscar.setBounds(254, 10, 65, 20);
+		btnBuscar.setBounds(248, 10, 90, 20);
 		contentPane.add(btnBuscar);
 		
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
-				{null, null, null, null, null},
+				{null, null, null, null},
 			},
 			new String[] {
-				"CI", "Nombre", "Apellido", "Email", "Tel\u00E9fono"
+				"CI", "Nombre", "Apellido", "Tipo"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				Integer.class, String.class, String.class, String.class, String.class
+				Integer.class, String.class, String.class, String.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
 		});
 		table.setBounds(10, 106, 454, 211);
-		contentPane.add(table);
+		JScrollPane jScrollPane = new JScrollPane(table);
+		jScrollPane.setBounds(10, 55, 454, 211);
+		contentPane.add(jScrollPane);
 		
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (alumno != null)
-					alumno.dispose();
-				alumno = new Alumno(0, 0);
-				alumno.setVisible(true);
+				if (alumnoNuevo != null)
+					alumnoNuevo.dispose();
+				alumnoNuevo = new AlumnoNuevo();
+				alumnoNuevo.setVisible(true);
 			}
 		});
-		btnAgregar.setBounds(481, 119, 71, 20);
+		btnAgregar.setBounds(474, 59, 85, 20);
 		contentPane.add(btnAgregar);
 		
 		btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (alumno != null)
-					alumno.dispose();
-				alumno = new Alumno(1, (int)table.getValueAt(table.getSelectedRow(), 0) );
-				alumno.setVisible(true);
+				int cedula = (int)table.getValueAt(table.getSelectedRow(), 0);
+				
+				if (alumnoModificar != null)
+					alumnoModificar.dispose();
+				
+				alumnoModificar = new AlumnoModificar( cedula );
+				alumnoModificar.setVisible(true);
 			}
 		});
-		btnModificar.setBounds(481, 150, 71, 20);
+		btnModificar.setBounds(474, 90, 85, 20);
 		contentPane.add(btnModificar);
 		
 		cargarTabla();
@@ -126,7 +134,7 @@ public class Alumnos extends JFrame {
 			logica.Fachada fachada = new logica.Fachada();
 			java.util.List<logica.vo.VOAlumnoListado> lvoa = fachada.listarAlumnos(txtFltApellido.getText());
 			
-			for(int row = 0; row < table.getModel().getRowCount(); row++)
+			for(int row = table.getModel().getRowCount() - 1 ; row >= 0 ; row--)
 				dtm.removeRow(row);
 			
 			for(logica.vo.VOAlumnoListado voa : lvoa) {
@@ -144,4 +152,5 @@ public class Alumnos extends JFrame {
 			e.printStackTrace();
 		}
 	}
+
 }

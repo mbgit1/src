@@ -15,10 +15,6 @@ public class ControladorAlumnoNuevo extends Controlador {
 		//super(alumnoNuevo);
 		super();
 		ventana = alumnoNuevo;
-		System.out.println("fachada == null?: " + fachada == null);
-		if (fachada == null) {
-			ventana.dispose();
-		}
 	}
 	
 	public void grabar( int cedula, String nombre, String apellido, String domicilio, int telefono, String email ) {
@@ -26,6 +22,7 @@ public class ControladorAlumnoNuevo extends Controlador {
 		try {
 			fachada.registrarAlumno( voAlumno );
 			showMessageDialog( "Alumno creado" );
+			ventana.dispose();
 		} catch (RemoteException e) {
 			showMessageDialog( "El servidor está caído" );
 		} catch (AlumnoYaExisteException e) {
@@ -35,7 +32,7 @@ public class ControladorAlumnoNuevo extends Controlador {
 	
 	@Override
 	public void showMessageDialog( String string ) {
-		System.out.println("mensaje?: " + string);
+		//System.out.println("mensaje?: " + string);
 		ventana.showMessageDialog( string );
 	}
 }

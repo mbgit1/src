@@ -8,15 +8,15 @@ import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-
-import grafica.controlador.alumno.ControladorAlumnoNuevo;
+import grafica.controlador.alumno.ControladorAlumnoModificar;
+import logica.vo.VOAlumnoDetallado;
 
 @SuppressWarnings("serial")
-public class AlumnoNuevo extends JFrame {
+public class AlumnoModificar extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtCedula;
@@ -26,7 +26,7 @@ public class AlumnoNuevo extends JFrame {
 	private JTextField txtTelefono;
 	private JTextField txtEmail;
 	
-	ControladorAlumnoNuevo controladorAlumnoNuevo;
+	private ControladorAlumnoModificar controlador;
 
 	/**
 	 * Launch the application.
@@ -35,7 +35,7 @@ public class AlumnoNuevo extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AlumnoNuevo frame = new AlumnoNuevo();
+					AlumnoModificar frame = new AlumnoModificar(0);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,16 +47,16 @@ public class AlumnoNuevo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AlumnoNuevo() {
-		controladorAlumnoNuevo = new ControladorAlumnoNuevo( this );
+	public AlumnoModificar( int cedula ) {
+		controlador = new ControladorAlumnoModificar( this );
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 325, 258);
+		setBounds(100, 100, 336, 255);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		setContentPane(contentPane);
+
 		JLabel lblCedula = new JLabel("C\u00E9dula:");
 		lblCedula.setBounds(34, 31, 46, 14);
 		contentPane.add(lblCedula);
@@ -89,11 +89,13 @@ public class AlumnoNuevo extends JFrame {
 		txtNombre = new JTextField();
 		txtNombre.setColumns(10);
 		txtNombre.setBounds(90, 53, 205, 20);
+		txtNombre.setEnabled( false );
 		contentPane.add(txtNombre);
 		
 		txtApellido = new JTextField();
 		txtApellido.setColumns(10);
 		txtApellido.setBounds(90, 78, 205, 20);
+		txtApellido.setEnabled( false );
 		contentPane.add(txtApellido);
 		
 		txtDomicilio = new JTextField();
@@ -111,57 +113,47 @@ public class AlumnoNuevo extends JFrame {
 		txtEmail.setBounds(90, 153, 205, 20);
 		contentPane.add(txtEmail);
 		
-		JButton btnGuardar = new JButton("Guardar");
-		btnGuardar.addActionListener(new ActionListener() {
+		JButton btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				String strCedula	= txtCedula.getText();
-				String nombre		= txtNombre.getText();
-				String apellido		= txtApellido.getText();
 				String domicilio	= txtDomicilio.getText();
 				String strTelefono	= txtTelefono.getText();
 				String email		= txtEmail.getText();
 				
 				if( !strCedula.isEmpty() ) {
-					if( !nombre.isEmpty() ) {
-						if( !apellido.isEmpty() ) {
-							if( ! domicilio.isEmpty() ) {
-								if( !strTelefono.isEmpty() ) {
-									if( !email.isEmpty() ) {
-										if ( soloNumeros( txtCedula.getText() ) ) {
-											if ( soloNumeros( txtTelefono.getText() ) ) {
-												int cedula = Integer.parseInt( strCedula );
-												int telefono = Integer.parseInt( strTelefono );
-												
-												controladorAlumnoNuevo.grabar( cedula, nombre, apellido, domicilio, telefono, email );
-											}else {
-												showMessageDialog( "El teléfono debe ser numérico" );
-											}
-										}else {
-											showMessageDialog( "La cédula debe ser numérica");
-										}
+					if( ! domicilio.isEmpty() ) {
+						if( !strTelefono.isEmpty() ) {
+							if( !email.isEmpty() ) {
+								if ( soloNumeros( txtCedula.getText() ) ) {
+									if ( soloNumeros( txtTelefono.getText() ) ) {
+										int cedula = Integer.parseInt( strCedula );
+										int telefono = Integer.parseInt( strTelefono );
+										
+										controlador.grabar( cedula, domicilio, telefono, email );
 									}else {
-										showMessageDialog( "El email no puede ser vacío" );
+										showMessageDialog( "El teléfono debe ser numérico" );
 									}
 								}else {
-									showMessageDialog( "El telefono no puede ser vacío" );
+									showMessageDialog( "La cédula debe ser numérica");
 								}
 							}else {
-								showMessageDialog( "El domicilio no puede ser vacío" );
+								showMessageDialog( "El email no puede ser vacío" );
 							}
 						}else {
-							showMessageDialog( "El apellido no puede ser vacío" );
-						}	
+							showMessageDialog( "El telefono no puede ser vacío" );
+						}
 					}else {
-						showMessageDialog( "El nombre no puede ser vacío" );
+						showMessageDialog( "El domicilio no puede ser vacío" );
 					}
 				}else {
 					showMessageDialog( "La cédula no puede ser vacío" );
 				}
 			}
 		});
-		btnGuardar.setBounds(111, 184, 89, 23);
-		contentPane.add(btnGuardar);
+		btnModificar.setBounds(100, 184, 89, 23);
+		contentPane.add(btnModificar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
@@ -169,8 +161,10 @@ public class AlumnoNuevo extends JFrame {
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(210, 184, 89, 23);
+		btnCancelar.setBounds(206, 184, 89, 23);
 		contentPane.add(btnCancelar);
+		
+		cargoDatos( cedula );
 	}
 	
 	private boolean soloNumeros( String string ) {
@@ -181,6 +175,18 @@ public class AlumnoNuevo extends JFrame {
         
         return matches;
 		//return string.regionMatches(true, 0, "[0-9]", 0, string.length());
+	}
+	
+	private void cargoDatos( int cedula ) {
+		VOAlumnoDetallado voad = controlador.obtenerAlumno( cedula );
+		if( voad != null ) {
+			txtCedula.setText( Integer.toString( voad.getCedula() ) );
+			txtNombre.setText( voad.getNombre() );
+			txtApellido.setText( voad.getApellido() );
+			txtDomicilio.setText( voad.getDomicilio() );
+			txtTelefono.setText( Integer.toString( voad.getTelefono() ) );
+			txtEmail.setText( voad.getEmail() );
+		}
 	}
 	
 	public void showMessageDialog( String mensaje ) {
