@@ -20,9 +20,9 @@ public class ControladorAlumnoNuevo extends Controlador {
 	public void grabar( int cedula, String nombre, String apellido, String domicilio, int telefono, String email ) {
 		VOAlumno voAlumno = new VOAlumno( cedula, nombre, apellido, domicilio, telefono, email );
 		try {
-			fachada.registrarAlumno( voAlumno );
+			getFachada().registrarAlumno( voAlumno );
 			showMessageDialog( "Alumno creado" );
-			ventana.dispose();
+			getVentana().dispose();
 		} catch (RemoteException e) {
 			showMessageDialog( "El servidor está caído" );
 		} catch (AlumnoYaExisteException e) {
@@ -33,6 +33,6 @@ public class ControladorAlumnoNuevo extends Controlador {
 	@Override
 	public void showMessageDialog( String string ) {
 		//System.out.println("mensaje?: " + string);
-		ventana.showMessageDialog( string );
+		getVentana().showMessageDialog( string );
 	}
 }

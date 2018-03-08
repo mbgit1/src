@@ -19,7 +19,7 @@ public class ControladorAlumnosListado extends Controlador {
 		List<logica.vo.VOAlumnoListado> lvoa = null;
 		
 		try {
-			lvoa = fachada.listarAlumnos( apellido );
+			lvoa = getFachada().listarAlumnos( apellido );
 		} catch (RemoteException e) {
 			showMessageDialog( "El servidor está caído" );
 		}
@@ -30,7 +30,7 @@ public class ControladorAlumnosListado extends Controlador {
 	@Override
 	public void showMessageDialog( String string ) {
 		//System.out.println("mensaje?: " + string);
-		ventana.showMessageDialog( string );
+		getVentana().showMessageDialog( string );
 	}
 
 }

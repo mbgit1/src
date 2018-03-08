@@ -21,9 +21,9 @@ public class ControladorAlumnoModificar extends Controlador {
 		showMessageDialog( "domicilio en controlador: " + domicilio);
 		VOAlumnoModificar voAlumnoModificar = new VOAlumnoModificar( cedula, domicilio, telefono, email );
 		try {
-			fachada.modificarAlumno(voAlumnoModificar);
+			getFachada().modificarAlumno(voAlumnoModificar);
 			showMessageDialog( "Alumno modificado" );
-			ventana.dispose();
+			getVentana().dispose();
 		} catch (RemoteException e) {
 			showMessageDialog( "El servidor está caído" );
 		} catch (AlumnoNoExisteException e) {
@@ -34,24 +34,24 @@ public class ControladorAlumnoModificar extends Controlador {
 	@Override
 	public void showMessageDialog( String string ) {
 		//System.out.println("mensaje?: " + string);
-		ventana.showMessageDialog( string );
+		getVentana().showMessageDialog( string );
 	}
 	
 	public VOAlumnoDetallado obtenerAlumno( int cedula ) {
 		VOAlumnoDetallado voad = null;
 		
 		try {
-			voad = fachada.listadoDetalleAlumno( cedula );
+			voad = getFachada().listadoDetalleAlumno( cedula );
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 			showMessageDialog( "El servidor está caído" );
-			ventana.dispose();
+			getVentana().dispose();
 		} catch (AlumnoNoExisteException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 			showMessageDialog( "El alumno no existe" );
-			ventana.dispose();
+			getVentana().dispose();
 		}
 		
 		return voad;

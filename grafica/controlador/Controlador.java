@@ -11,8 +11,8 @@ import logica.IFachada;
 
 public abstract class Controlador {
 	
-	protected Ventana ventana;
-	protected IFachada fachada;
+	private Ventana ventana;
+	private IFachada fachada;
 	
 	public Controlador( Ventana ventana) {
 		this.ventana = ventana;
@@ -41,8 +41,16 @@ public abstract class Controlador {
 		
 	}
 	
+	public Ventana getVentana() {
+		return ventana;
+	}
+
+	public IFachada getFachada() {
+		return fachada;
+	}
+	
 	public void showMessageDialog( String string ) {
 		//System.out.println("mensaje en controlador?: " + string);
 	}
-
+	
 }
