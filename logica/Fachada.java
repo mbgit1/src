@@ -117,15 +117,15 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 	public void modificarAlumno( VOAlumnoModificar voAlumnoModificar ) throws AlumnoNoExisteException{
 		monitor.comienzoEscritura();
 		
-		Alumno alumno = alumnos.obtener(voAlumnoModificar.getCedula());
+		Alumno alumno = null;
 
 		if(!alumnos.contiene(voAlumnoModificar.getCedula())) {
 			monitor.terminoEscritura();
 			throw new AlumnoNoExisteException("No existe un alumno con esa cedula");
 		}	
 		else {
-
-			alumno.modificarAlumno(alumno.getDomicilio(),alumno.getTelefono(),alumno.getEmail());
+			alumno = alumnos.obtener(voAlumnoModificar.getCedula());
+			alumno.modificarAlumno(voAlumnoModificar.getDomicilio(), voAlumnoModificar.getTelefono(), voAlumnoModificar.getEmail());
 			
 		}
 		
