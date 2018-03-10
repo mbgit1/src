@@ -20,4 +20,18 @@ public final class Configuracion {
 		return propiedad;
 	}
 	
+	public static boolean debug() {
+		boolean debug = false;
+		Properties configuracion = new Properties();
+		try {
+			configuracion.load (new FileInputStream (RUTA_ARCHIVO_CONFIG));
+			String propiedad = configuracion.getProperty( "Debug" );
+			debug = Boolean.parseBoolean( propiedad );
+		} catch (IOException e) {
+			//e.printStackTrace();
+		}
+		
+		return debug;
+	}
+	
 }
