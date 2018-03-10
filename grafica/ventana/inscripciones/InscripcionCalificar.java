@@ -2,6 +2,8 @@ package grafica.ventana.inscripciones;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,8 +18,8 @@ import javax.swing.JSpinner;
 public class InscripcionCalificar extends Ventana {
 
 	private JPanel contentPane;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField textCedula;
+	private JTextField textNroInsc;
 
 	/**
 	 * Launch the application.
@@ -57,26 +59,42 @@ public class InscripcionCalificar extends Ventana {
 		lblCdula.setBounds(10, 31, 46, 14);
 		contentPane.add(lblCdula);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(110, 28, 134, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		textCedula = new JTextField();
+		textCedula.setEnabled(false);
+		textCedula.setBounds(110, 28, 134, 20);
+		contentPane.add(textCedula);
+		textCedula.setColumns(10);
 		
 		JLabel lblNInscripcin = new JLabel("N\u00B0 Inscripci\u00F3n");
 		lblNInscripcin.setBounds(10, 56, 90, 14);
 		contentPane.add(lblNInscripcin);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(110, 53, 134, 20);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
+		textNroInsc = new JTextField();
+		textNroInsc.setEnabled(false);
+		textNroInsc.setBounds(110, 53, 134, 20);
+		contentPane.add(textNroInsc);
+		textNroInsc.setColumns(10);
+	
+		JSpinner calificacion = new JSpinner();
+		calificacion.setBounds(110, 76, 134, 20);
+		contentPane.add(calificacion);		
 		
 		JButton btnCalificar = new JButton("Calificar");
 		btnCalificar.setBounds(155, 127, 89, 23);
+		btnCalificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String cedula = textCedula.getText();
+				String nroInsc = textNroInsc.getText();
+				Integer calif = (Integer)calificacion.getValue();
+				
+				controlador.calificar(cedula, nroInsc, calif);
+
+			}
+		});
+		
+		
 		contentPane.add(btnCalificar);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(110, 76, 134, 20);
-		contentPane.add(spinner);
 	}
 }
