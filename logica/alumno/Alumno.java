@@ -3,6 +3,7 @@ package logica.alumno;
 import java.io.Serializable;
 import java.util.List;
 
+import configuracion.Configuracion;
 import logica.inscripcion.Inscripcion;
 import logica.inscripcion.Inscripciones;
 import logica.vo.VOAlumno;
@@ -140,7 +141,7 @@ public class Alumno implements Serializable {
 
 
 	public VOAlumnoDetallado voAlumnoDetallado() {
-		return new VOAlumnoDetallado(cedula,apellido,nombre,domicilio,telefono,email,0, " ");
+		return new VOAlumnoDetallado(cedula, apellido, nombre, domicilio, telefono, email, 0, "", 0, "");
 	}
 	/*
 public int calcularCuota( ) {
@@ -154,6 +155,9 @@ public int calcularCuota( ) {
 		this.setDomicilio(domicilio);
 		this.setTelefono(telefono);
 		this.setEmail(email);
+		if( Configuracion.debug() ) {
+			System.out.println( "Modificar alumno cedula: " + cedula + ", domicilio: " + domicilio + ", telefono: " + telefono + ", email: " + email);
+		}
 	}
 
 	public VOAlumnoDetallado listadoDetalleAlumno(){
@@ -169,7 +173,7 @@ public int calcularCuota( ) {
 			tipo = "comun";
 		}
 
-		voad = new VOAlumnoDetallado(cedula, nombre, apellido, domicilio, telefono, email, montoCuota, tipo);
+		voad = new VOAlumnoDetallado(cedula, nombre, apellido, domicilio, telefono, email, montoCuota, tipo, 0, "");
 
 		return voad;
 	}
@@ -177,7 +181,7 @@ public int calcularCuota( ) {
 	//Aqui va el promedio de todas las materias (incluso si la calificacion es cero)
 	public float promedioAprobacion(boolean total) {
 		return this.inscripciones.promedioAprobacion(total);
-
+		
 	}
 
 	public int ultimaInscripcion() {

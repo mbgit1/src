@@ -2,6 +2,7 @@ package logica.alumno;
 
 import java.io.Serializable;
 
+import logica.vo.VOAlumnoDetallado;
 import logica.vo.VOBecado;
 
 @SuppressWarnings("serial")
@@ -51,5 +52,13 @@ public int calcularCuota( ) {
 		return  super.montoRecaudado(anio) - ((super.montoRecaudado(anio) * this.descuento)/100);       
 	}
 
+	public VOAlumnoDetallado listadoDetalleAlumno(){
+		VOAlumnoDetallado voad;
+		int montoCuota = 0;
+
+		voad = new VOAlumnoDetallado(getCedula(), getNombre(), getApellido(), getDomicilio(), getTelefono(), getEmail(), montoCuota, "becado", descuento, descripcion);
+
+		return voad;
+	}
 }
 
