@@ -1,5 +1,6 @@
 package servidor;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
@@ -10,21 +11,32 @@ import logica.Fachada;
 
 public class Servidor {
 	
-	public static void main (String [] args) throws ClassNotFoundException, IOException {
+	public static void main (String [] args) {
 		
 		String ipServidor;
 		String puertoServidor;
 
-		ipServidor = Configuracion.getProperty("ServidorIp");
-		puertoServidor = Configuracion.getProperty("ServidorPuerto");
-		
-		// pongo a correr el rmiregistry
-		LocateRegistry.createRegistry(Integer.parseInt(puertoServidor));
-		// instancio mi Objeto Remoto y lo publico
-		Fachada fachada = new Fachada();
-		System.out.println("Antes de publicar");
-		Naming.rebind("//" + ipServidor + ":" + puertoServidor + "/fachada", fachada);
-        System.out.println("Luego de publicar");
+		try {
+			
+			ipServidor = Configuracion.getProperty("ServidorIp");
+			puertoServidor = Configuracion.getProperty("ServidorPuerto");
+			
+			LocateRegistry.createRegistry(Integer.parseInt(puertoServidor));
+			Fachada fachada = new Fachada();
+			Naming.rebind("//" + ipServidor + ":" + puertoServidor + "/fachada", fachada);
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(1);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(2);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.exit(3);
+		}
+
+        System.out.println("Corriendo... ");
         
 	}
 	
