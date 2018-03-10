@@ -10,12 +10,8 @@ import logica.vo.VOBecado;
 
 public class ControladorAlumnoNuevo extends Controlador {
 
-	//AlumnoNuevo ventana;
-
 	public ControladorAlumnoNuevo( AlumnoNuevo alumnoNuevo) {
-		//super(alumnoNuevo);
 		super( alumnoNuevo );
-		//ventana = alumnoNuevo;
 	}
 
 	public void grabar( String cedula, String nombre, String apellido, String domicilio, String telefono, String email, boolean becado, String descuento, String descripcion ) {
@@ -81,9 +77,4 @@ public class ControladorAlumnoNuevo extends Controlador {
 		}
 	}
 
-	@Override
-	public void showMessageDialog( String string ) {
-		//System.out.println("mensaje?: " + string);
-		getVentana().showMessageDialog( string );
-	}
 }

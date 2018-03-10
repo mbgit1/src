@@ -8,11 +8,8 @@ import grafica.controlador.Controlador;
 
 public class ControladorAlumnosListado extends Controlador {
 	
-	//AlumnosListado ventana;
-	
 	public ControladorAlumnosListado( AlumnosListado alumnosListado) {
 		super( alumnosListado );
-		//ventana = alumnosListado;
 	}
 	
 	public List<logica.vo.VOAlumnoListado> listarAlumnos( String apellido ){
@@ -25,12 +22,6 @@ public class ControladorAlumnosListado extends Controlador {
 		}
 		
 		return lvoa;
-	}
-	
-	@Override
-	public void showMessageDialog( String string ) {
-		//System.out.println("mensaje?: " + string);
-		getVentana().showMessageDialog( string );
 	}
 
 }

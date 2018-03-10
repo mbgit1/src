@@ -43,11 +43,6 @@ public class ControladorAlumnoModificar extends Controlador {
 		}
 	}
 	
-	@Override
-	public void showMessageDialog( String string ) {
-		getVentana().showMessageDialog( string );
-	}
-	
 	public VOAlumnoDetallado obtenerAlumno( int cedula ) {
 		VOAlumnoDetallado voad = null;
 		
