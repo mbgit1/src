@@ -52,7 +52,7 @@ public abstract class Controlador {
 	}
 	
 	public void showMessageDialog( String string ) {
-		//System.out.println("mensaje en controlador?: " + string);
+		ventana.showMessageDialog( string );
 	}
 	
 	protected boolean soloNumeros( String string ) {
