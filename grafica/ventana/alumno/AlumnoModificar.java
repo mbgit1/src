@@ -26,7 +26,7 @@ public class AlumnoModificar extends Ventana {
 	private JTextField txtDomicilio;
 	private JTextField txtTelefono;
 	private JTextField txtEmail;
-	
+
 	private ControladorAlumnoModificar controlador;
 
 	/**
@@ -49,8 +49,9 @@ public class AlumnoModificar extends Ventana {
 	 * Create the frame.
 	 */
 	public AlumnoModificar( int cedula ) {
+		setTitle("Modificar alumno");
 		controlador = new ControladorAlumnoModificar( this );
-		
+
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 336, 255);
 		contentPane = new JPanel();
@@ -61,102 +62,77 @@ public class AlumnoModificar extends Ventana {
 		JLabel lblCedula = new JLabel("C\u00E9dula:");
 		lblCedula.setBounds(34, 31, 46, 14);
 		contentPane.add(lblCedula);
-		
+
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setBounds(34, 56, 46, 14);
 		contentPane.add(lblNombre);
-		
+
 		JLabel lblApellido = new JLabel("Apellido:");
 		lblApellido.setBounds(34, 81, 46, 14);
 		contentPane.add(lblApellido);
-		
+
 		JLabel lblDomicilio = new JLabel("Domicilio:");
 		lblDomicilio.setBounds(34, 106, 46, 14);
 		contentPane.add(lblDomicilio);
-		
+
 		JLabel lblTelefono = new JLabel("Tel\u00E9fono:");
 		lblTelefono.setBounds(34, 131, 46, 14);
 		contentPane.add(lblTelefono);
-		
+
 		JLabel lblEmail = new JLabel("EMail:");
 		lblEmail.setBounds(34, 156, 46, 14);
 		contentPane.add(lblEmail);
-		
+
 		txtCedula = new JTextField();
 		txtCedula.setBounds(90, 28, 205, 20);
 		txtCedula.setEnabled( false );
 		contentPane.add(txtCedula);
 		txtCedula.setColumns(10);
-		
+
 		txtNombre = new JTextField();
 		txtNombre.setColumns(10);
 		txtNombre.setBounds(90, 53, 205, 20);
 		txtNombre.setEnabled( false );
 		contentPane.add(txtNombre);
-		
+
 		txtApellido = new JTextField();
 		txtApellido.setColumns(10);
 		txtApellido.setBounds(90, 78, 205, 20);
 		txtApellido.setEnabled( false );
 		contentPane.add(txtApellido);
-		
+
 		txtDomicilio = new JTextField();
 		txtDomicilio.setColumns(10);
 		txtDomicilio.setBounds(90, 103, 205, 20);
 		contentPane.add(txtDomicilio);
-		
+
 		txtTelefono = new JTextField();
 		txtTelefono.setColumns(10);
 		txtTelefono.setBounds(90, 128, 205, 20);
 		contentPane.add(txtTelefono);
-		
+
 		txtEmail = new JTextField();
 		txtEmail.setColumns(10);
 		txtEmail.setBounds(90, 153, 205, 20);
 		contentPane.add(txtEmail);
-		
+
 		JButton btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				String strCedula	= txtCedula.getText();
+
+				String cedula		= txtCedula.getText();
 				String domicilio	= txtDomicilio.getText();
-				String strTelefono	= txtTelefono.getText();
+				String telefono		= txtTelefono.getText();
 				String email		= txtEmail.getText();
+
+				controlador.grabar( cedula, domicilio, telefono, email );
 				
-				if( !strCedula.isEmpty() ) {
-					if( ! domicilio.isEmpty() ) {
-						if( !strTelefono.isEmpty() ) {
-							if( !email.isEmpty() ) {
-								if ( soloNumeros( txtCedula.getText() ) ) {
-									if ( soloNumeros( txtTelefono.getText() ) ) {
-										int cedula = Integer.parseInt( strCedula );
-										int telefono = Integer.parseInt( strTelefono );
-										showMessageDialog( "El domicilio en ventana: " + domicilio);
-										controlador.grabar( cedula, domicilio, telefono, email );
-									}else {
-										showMessageDialog( "El teléfono debe ser numérico" );
-									}
-								}else {
-									showMessageDialog( "La cédula debe ser numérica");
-								}
-							}else {
-								showMessageDialog( "El email no puede ser vacío" );
-							}
-						}else {
-							showMessageDialog( "El telefono no puede ser vacío" );
-						}
-					}else {
-						showMessageDialog( "El domicilio no puede ser vacío" );
-					}
-				}else {
-					showMessageDialog( "La cédula no puede ser vacío" );
-				}
 			}
 		});
+		
 		btnModificar.setBounds(100, 184, 89, 23);
 		contentPane.add(btnModificar);
-		
+
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -165,10 +141,10 @@ public class AlumnoModificar extends Ventana {
 		});
 		btnCancelar.setBounds(206, 184, 89, 23);
 		contentPane.add(btnCancelar);
-		
+
 		cargoDatos( cedula );
 	}
-	
+
 	private void cargoDatos( int cedula ) {
 		VOAlumnoDetallado voad = controlador.obtenerAlumno( cedula );
 		if( voad != null ) {

@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import configuracion.Configuracion;
 import grafica.ventana.Ventana;
@@ -53,4 +55,12 @@ public abstract class Controlador {
 		//System.out.println("mensaje en controlador?: " + string);
 	}
 	
+	protected boolean soloNumeros( String string ) {
+        Pattern pattern = Pattern.compile( "^[0-9]*$" );
+
+        Matcher matcher = pattern.matcher( string );
+        boolean matches = matcher.matches();
+        
+        return matches;
+	}
 }

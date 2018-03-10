@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,6 +16,7 @@ import javax.swing.JLabel;
 
 import grafica.controlador.alumno.ControladorAlumnoNuevo;
 import grafica.ventana.Ventana;
+import javax.swing.JRadioButton;
 
 @SuppressWarnings("serial")
 public class AlumnoNuevo extends Ventana {
@@ -28,6 +30,8 @@ public class AlumnoNuevo extends Ventana {
 	private JTextField txtEmail;
 	
 	ControladorAlumnoNuevo controladorAlumnoNuevo;
+	private JTextField txtDescuento;
+	private JTextField txtDescripcion;
 
 	/**
 	 * Launch the application.
@@ -49,120 +53,69 @@ public class AlumnoNuevo extends Ventana {
 	 * Create the frame.
 	 */
 	public AlumnoNuevo() {
+		setTitle("Nuevo alumno");
 		controladorAlumnoNuevo = new ControladorAlumnoNuevo( this );
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 325, 258);
+		setBounds(100, 100, 381, 354);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblCedula = new JLabel("C\u00E9dula:");
-		lblCedula.setBounds(34, 31, 46, 14);
+		lblCedula.setBounds(34, 31, 71, 14);
 		contentPane.add(lblCedula);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(34, 56, 46, 14);
+		lblNombre.setBounds(34, 56, 71, 14);
 		contentPane.add(lblNombre);
 		
 		JLabel lblApellido = new JLabel("Apellido:");
-		lblApellido.setBounds(34, 81, 46, 14);
+		lblApellido.setBounds(34, 81, 71, 14);
 		contentPane.add(lblApellido);
 		
 		JLabel lblDomicilio = new JLabel("Domicilio:");
-		lblDomicilio.setBounds(34, 106, 46, 14);
+		lblDomicilio.setBounds(34, 106, 71, 14);
 		contentPane.add(lblDomicilio);
 		
 		JLabel lblTelefono = new JLabel("Tel\u00E9fono:");
-		lblTelefono.setBounds(34, 131, 46, 14);
+		lblTelefono.setBounds(34, 131, 71, 14);
 		contentPane.add(lblTelefono);
 		
 		JLabel lblEmail = new JLabel("EMail:");
-		lblEmail.setBounds(34, 156, 46, 14);
+		lblEmail.setBounds(34, 156, 71, 14);
 		contentPane.add(lblEmail);
 		
 		txtCedula = new JTextField();
-		txtCedula.setBounds(90, 28, 205, 20);
+		txtCedula.setBounds(131, 28, 205, 20);
 		contentPane.add(txtCedula);
 		txtCedula.setColumns(10);
 		
 		txtNombre = new JTextField();
 		txtNombre.setColumns(10);
-		txtNombre.setBounds(90, 53, 205, 20);
+		txtNombre.setBounds(131, 53, 205, 20);
 		contentPane.add(txtNombre);
 		
 		txtApellido = new JTextField();
 		txtApellido.setColumns(10);
-		txtApellido.setBounds(90, 78, 205, 20);
+		txtApellido.setBounds(131, 78, 205, 20);
 		contentPane.add(txtApellido);
 		
 		txtDomicilio = new JTextField();
 		txtDomicilio.setColumns(10);
-		txtDomicilio.setBounds(90, 103, 205, 20);
+		txtDomicilio.setBounds(131, 103, 205, 20);
 		contentPane.add(txtDomicilio);
 		
 		txtTelefono = new JTextField();
 		txtTelefono.setColumns(10);
-		txtTelefono.setBounds(90, 128, 205, 20);
+		txtTelefono.setBounds(131, 128, 205, 20);
 		contentPane.add(txtTelefono);
 		
 		txtEmail = new JTextField();
 		txtEmail.setColumns(10);
-		txtEmail.setBounds(90, 153, 205, 20);
+		txtEmail.setBounds(131, 153, 205, 20);
 		contentPane.add(txtEmail);
-		
-		JButton btnGuardar = new JButton("Guardar");
-		btnGuardar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				String strCedula	= txtCedula.getText();
-				String nombre		= txtNombre.getText();
-				String apellido		= txtApellido.getText();
-				String domicilio	= txtDomicilio.getText();
-				String strTelefono	= txtTelefono.getText();
-				String email		= txtEmail.getText();
-				
-				if( !strCedula.isEmpty() ) {
-					if( !nombre.isEmpty() ) {
-						if( !apellido.isEmpty() ) {
-							if( ! domicilio.isEmpty() ) {
-								if( !strTelefono.isEmpty() ) {
-									if( !email.isEmpty() ) {
-										if ( soloNumeros( txtCedula.getText() ) ) {
-											if ( soloNumeros( txtTelefono.getText() ) ) {
-												int cedula = Integer.parseInt( strCedula );
-												int telefono = Integer.parseInt( strTelefono );
-												
-												controladorAlumnoNuevo.grabar( cedula, nombre, apellido, domicilio, telefono, email );
-											}else {
-												showMessageDialog( "El teléfono debe ser numérico" );
-											}
-										}else {
-											showMessageDialog( "La cédula debe ser numérica");
-										}
-									}else {
-										showMessageDialog( "El email no puede ser vacío" );
-									}
-								}else {
-									showMessageDialog( "El telefono no puede ser vacío" );
-								}
-							}else {
-								showMessageDialog( "El domicilio no puede ser vacío" );
-							}
-						}else {
-							showMessageDialog( "El apellido no puede ser vacío" );
-						}	
-					}else {
-						showMessageDialog( "El nombre no puede ser vacío" );
-					}
-				}else {
-					showMessageDialog( "La cédula no puede ser vacío" );
-				}
-			}
-		});
-		btnGuardar.setBounds(111, 184, 89, 23);
-		contentPane.add(btnGuardar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
@@ -170,8 +123,61 @@ public class AlumnoNuevo extends Ventana {
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(210, 184, 89, 23);
+		btnCancelar.setBounds(251, 282, 89, 23);
 		contentPane.add(btnCancelar);
+		
+		ButtonGroup buttonGroup = new ButtonGroup();
+		JRadioButton rbtnTipoComun = new JRadioButton("com\u00FAn");
+		rbtnTipoComun.setBounds(131, 180, 71, 23);
+		rbtnTipoComun.setSelected( true );
+		contentPane.add(rbtnTipoComun);
+		buttonGroup.add(rbtnTipoComun);
+		JRadioButton rbtnTipoBecado = new JRadioButton("becado");
+		rbtnTipoBecado.setBounds(227, 180, 71, 23);
+		contentPane.add(rbtnTipoBecado);
+		buttonGroup.add(rbtnTipoBecado);				
+		
+		txtDescuento = new JTextField();
+		txtDescuento.setColumns(10);
+		txtDescuento.setBounds(131, 210, 205, 20);
+		contentPane.add(txtDescuento);
+		
+		txtDescripcion = new JTextField();
+		txtDescripcion.setColumns(10);
+		txtDescripcion.setBounds(131, 241, 205, 20);
+		contentPane.add(txtDescripcion);
+		
+		JLabel lblDescuento = new JLabel("Descuento:");
+		lblDescuento.setBounds(34, 213, 71, 14);
+		contentPane.add(lblDescuento);
+		
+		JLabel lblDescripcin = new JLabel("Descripci\u00F3n:");
+		lblDescripcin.setBounds(34, 244, 71, 14);
+		contentPane.add(lblDescripcin);
+		
+		JLabel lblTipo = new JLabel("Tipo:");
+		lblTipo.setBounds(34, 184, 71, 14);
+		contentPane.add(lblTipo);
+		
+		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String cedula		= txtCedula.getText();
+				String nombre		= txtNombre.getText();
+				String apellido		= txtApellido.getText();
+				String domicilio	= txtDomicilio.getText();
+				String telefono		= txtTelefono.getText();
+				String email		= txtEmail.getText();
+				boolean becado		= rbtnTipoBecado.isSelected();
+				String descuento	= txtDescuento.getText();
+				String descripcion	= txtDescripcion.getText();
+				
+				controladorAlumnoNuevo.grabar( cedula, nombre, apellido, domicilio, telefono, email, becado, descuento, descripcion );
+		
+			}
+		});
+		btnGuardar.setBounds(152, 282, 89, 23);
+		contentPane.add(btnGuardar);
 	}
-
 }
