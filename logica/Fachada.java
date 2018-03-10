@@ -47,6 +47,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 
 	public Fachada() throws RemoteException, IOException, ClassNotFoundException {
 		VOFachada voFachadaPersistencia;
+		
 		try {
 			voFachadaPersistencia = Persistencia.recuperar( Configuracion.getProperty("ArchivoRespaldo") );
 
@@ -57,9 +58,11 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 
 			monitor = new Monitor();
 		} catch (ClassNotFoundException e) {
-			System.out.println("ClassNotFoundException");
+			e.printStackTrace();
+			System.exit(4);
 		} catch (IOException e) {
-			System.out.println("IOException");
+			e.printStackTrace();
+			System.exit(5);
 		}
 	}
 
@@ -213,7 +216,6 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 						else {
 							//creo nueva inscripcion con (numeroInscripcion,anioLectivo,MontoBase,calificacion,Asignatura)
 							Inscripcion nuevaIns = new Inscripcion(alumno.ultimaInscripcion() +1,voInscripcion.getAnioLectivo(),voInscripcion.getMontoBase(),asignaturas.obtenerAsignatura(voInscripcion.getCodigo()));
-
 							alumno.addInscripcion(nuevaIns);
 						}
 
@@ -314,7 +316,7 @@ public class Fachada extends UnicastRemoteObject implements IFachada {
 			Alumno alumno = alumnos.obtener(cedula);
 
 			listaVoe =  alumno.escolaridad(parcial);
-			
+		
 		}
 		
 		monitor.terminoLectura();

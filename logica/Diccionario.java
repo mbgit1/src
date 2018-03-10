@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
+import configuracion.Configuracion;
+
 @SuppressWarnings("serial")
 public abstract class Diccionario<K, V> implements Serializable {
 	
@@ -16,6 +18,9 @@ public abstract class Diccionario<K, V> implements Serializable {
 	
 	public void poner(K clave, V valor) {
 		mapa.put(clave, valor);
+		if( Configuracion.debug() ) {
+			System.out.println( "Modificar alumno cedula: " + clave + ", domicilio: " + valor.toString() );
+		}
 	}
 	
 	public void ponerTodos(Diccionario<K, V> diccionario) {

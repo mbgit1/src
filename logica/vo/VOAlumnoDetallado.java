@@ -11,16 +11,20 @@ public class VOAlumnoDetallado implements Serializable  {
 	private String email;
 	private int montoCuota;
 	private String tipo;
+	private int descuento;
+	private String descripcion;
 	
-	public VOAlumnoDetallado( int cedula, String nombre, String apellido, String domicilio, int telefono, String email,int montoCuota,String tipo ) {
-		this.cedula		= cedula;
-		this.nombre		= nombre;
-		this.apellido	= apellido;
-		this.domicilio	= domicilio;
-		this.telefono	= telefono;
-		this.email		= email;
-		this.montoCuota = montoCuota;
-		this.tipo       = tipo;
+	public VOAlumnoDetallado( int cedula, String nombre, String apellido, String domicilio, int telefono, String email,int montoCuota, String tipo, int descuento, String descripcion ) {
+		this.cedula			= cedula;
+		this.nombre			= nombre;
+		this.apellido		= apellido;
+		this.domicilio		= domicilio;
+		this.telefono		= telefono;
+		this.email			= email;
+		this.montoCuota		= montoCuota;
+		this.tipo       	= tipo;
+		this.descuento		= descuento;
+		this.descripcion	= descripcion;
 	}
 
 	public int getCedula() {
@@ -87,5 +91,20 @@ public class VOAlumnoDetallado implements Serializable  {
 		this.tipo = tipo;
 	}
 	
+	public int getDescuento() {
+		return descuento;
+	}
+
+	public void setDescuento(int descuento) {
+		this.descuento = descuento;
+	}
+	
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 
 }
