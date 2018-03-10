@@ -18,10 +18,7 @@ import exception.ErrorAnioInscripcionException;
 import exception.InscripcionNoExisteException;
 import exception.ListaLlenaException;
 import exception.PersistenciaException;
-import logica.Fachada;
 import logica.IFachada;
-import logica.asignatura.Asignatura;
-import logica.inscripcion.Inscripcion;
 import logica.vo.VOAlumno;
 import logica.vo.VOAlumnoDetallado;
 import logica.vo.VOAlumnoListado;
@@ -242,7 +239,7 @@ public class TestFachada {
 		try {
 			lvoe = fachada.escolaridad(123, true);
 			for(VOEscolaridad voe : lvoe) {
-				//System.out.println("numero: " + voe.getNumero() + ", aignatura: " + voe.getAsignaturaNombre() + ", año lectivo: " + voe.getAnioLectivo() );
+				System.out.println("numero: " + voe.getNumero() + ", asignatura: " + voe.getAsignaturaNombre() + ", año lectivo: " + voe.getAnioLectivo() );
 			}
 		} catch (AlumnoNoExisteException e) {
 			System.out.println("AlumnoNoExisteException");
@@ -258,6 +255,7 @@ public class TestFachada {
 			for(VOEscolaridad voe : lvoe) {
 				System.out.println("numero: " + voe.getNumero() + ", aignatura: " + voe.getAsignaturaNombre() + ", año lectivo: " + voe.getAnioLectivo() + ", calificacion: " + voe.getCalificacion() + ", monto base: " + voe.getMontoBase() );
 			}
+			
 		} catch (AlumnoNoExisteException e) {
 			System.out.println("AlumnoNoExisteException");
 		}
