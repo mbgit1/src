@@ -33,7 +33,7 @@ public class Asignaturas implements Serializable {
 		
 		while( i < asignaturas.size() && !encontrada ) {
 			a = asignaturas.get( i );
-			if( a.getCodigo() == codigo )
+			if( a.getCodigo().trim().equals( codigo ) )
 				encontrada = true;
 			i++;
 		}
