@@ -15,12 +15,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import exception.AlumnoNoExisteException;
 
 import javax.swing.JLabel;
 
 import grafica.controlador.inscripciones.ControladorInscripcionesListado;
-import grafica.controlador.Controlador;
+
 import grafica.ventana.Ventana;
 
 import grafica.ventana.inscripciones.InscripcionNueva;
@@ -102,10 +101,9 @@ public class InscripcionesListado extends Ventana{
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null},
 			},
 			new String[] {
-				"N° Inscripción", "Nombre Asignatura", "Año Lectivo", "Calificación", "Monto Base"
+				"N\u00B0 Inscripci\u00F3n", "Nombre Asignatura", "A\u00F1o Lectivo", "Calificaci\u00F3n", "Monto Base"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
